@@ -16,4 +16,9 @@ class Pengumuman extends Model
     public function listUser(){
     	return $this->hasMany('App\PengumumanUser');
     }
+
+    public function listBarang()
+    {
+    	return $this->hasMany('App\PengumumanBarang');
+    }
 }
