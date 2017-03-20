@@ -36,8 +36,8 @@ Route::get('logout',[
 	'as'=>'logout'
 ]);
 
-Route::get('generate_cluster','PublickController@generateCluster');
-Route::get('generate_user','PublickController@generateUser');
+// Route::get('generate_cluster','PublickController@generateCluster');
+// Route::get('generate_user','PublickController@generateUser');
 
 Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
 	Route::get('/beranda',[
