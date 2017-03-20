@@ -11,6 +11,54 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/',[
+	'uses'=>'PublickController@homePage',
+	'as'=>'home'
+]);
+
+Route::get('tentang',[
+	'uses'=>'PublickController@tentangPage',
+	'as'=>'tentang'
+]);
+
+Route::get('kontak',[
+	'uses'=>'PublickController@kontakPage',
+	'as'=>'kontak'
+]);
+
+Route::get('login',[
+	'uses'=>'PublickController@loginPage',
+	'as'=>'login'
+]);
+
+Route::get('logout',[
+	'uses'=>'PublickController@logout',
+	'as'=>'logout'
+]);
+
+Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
+	Route::get('/beranda',[
+		'uses'=>'GeneralController@berandaPage',
+		'as'=>'beranda'
+	]);	
+
+	Route::get('/subkontraktor',[
+		'uses'=>'GeneralController@subkontraktorPage',
+		'as'=>'subkontraktor'
+	]);
+
+	Route::get('/cluster',[
+		'uses'=>'GeneralController@clusterPage',
+		'as'=>'cluster'
+	]);
+
+	Route::get('/barang',[
+		'uses'=>'GeneralController@barangPage',
+		'as'=>'barang'
+	]);
+
+	Route::get('/pengumuman',[
+		'uses'=>'GeneralController@pengumumanPage',
+		'as'=>'pengumuman'
+	]);
 });
