@@ -11,6 +11,8 @@
 |
 */
 
+// Route::get('tes_email','GeneralController@htmlmail');
+
 Route::get('/',[
 	'uses'=>'PublickController@homePage',
 	'as'=>'home'
@@ -26,8 +28,8 @@ Route::get('kontak',[
 	'as'=>'kontak'
 ]);
 
-Route::get('login',[
-	'uses'=>'PublickController@loginPage',
+Route::post('login',[
+	'uses'=>'PublickController@loginCheck',
 	'as'=>'login'
 ]);
 
@@ -39,7 +41,7 @@ Route::get('logout',[
 // Route::get('generate_cluster','PublickController@generateCluster');
 // Route::get('generate_user','PublickController@generateUser');
 
-Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
+Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],function(){
 	Route::get('/beranda',[
 		'uses'=>'GeneralController@berandaPage',
 		'as'=>'beranda'

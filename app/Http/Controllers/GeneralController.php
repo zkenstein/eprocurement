@@ -7,21 +7,19 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Mail;
+use App\User;
 
 class GeneralController extends Controller
 {
 
-    public function htmlmail()
+    private function invite($to,$name,$subject)
     {
         $data = array('name'=>"Our Code World");
-        // Path or name to the blade template to be rendered
         $template_path = 'mail_undangan';
 
         Mail::send($template_path, $data, function($message) {
-            // Set the receiver and subject of the mail.
-            $message->to('kontraktor1@herobimbel.id', 'Kontraktor 1')->subject('Laravel HTML Mail');
-            // Set the sender
-            $message->from('kurniawan@herobimbel.id','Our Code World');
+            $message->to($to, $name)->subject($subject);
+            $message->from(env('MAIL_USERNAME'),$subject);
         });
 
         return "Basic email sent, check your inbox.";
@@ -36,6 +34,7 @@ class GeneralController extends Controller
     public function subkontraktorPage(Request $request)
     {
     	$data['TAG'] = 'subkontraktor';
+    	$data['subkontraktor'] = User::where('role','subkontraktor')->get();
     	return view('pages.subkontraktor',$data);
     }
 

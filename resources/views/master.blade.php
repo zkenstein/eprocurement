@@ -35,11 +35,17 @@
         .breadcrumb, .modal-primary .modal-header, .btn-primary{
             background-color: #2b609e;
         }
+        .breadcrumb li, .breadcrumb li a{
+            color: white !important;
+        }
         .modal-primary .modal-content, .btn-primary{
             border-color: #2b609e;
         }
         a.login{
             color: #2b609e !important;
+        }
+        a.logout{
+            color: #f86c6b !important;
         }
     </style>
 </head>
@@ -63,15 +69,22 @@
             <li class="nav-item px-1">
                 <a class="nav-link <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
             </li>
+            @if(session('role')!='admin' && session('role')!='subkontraktor')
             <li class="nav-item px-1">
                 <a class="nav-link login" href="#" data-toggle="modal" data-target="#login-modal"><i class="icon-login"></i> Masuk</a>
             </li>
+            @else
+            <li class="nav-item px-1">
+                <a class="nav-link logout" href="{{route('logout')}}"><i class="icon-logout"></i> Keluar</a>
+            </li>
+            @endif
         </ul>
         @if(session('role')=='admin')
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item hidden-md-down">
                 <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
             </li>
+            <?php /*
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <!--<img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">-->
@@ -101,6 +114,7 @@
                     <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
                 </div>
             </li>
+            */ ?>
             <li class="nav-item hidden-md-down">
                 <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
             </li>
@@ -114,7 +128,7 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-item <?=$TAG=='beranda'?'active':''?>">
-                        <a class="nav-link" href="{{route('home')}}"><i class="icon-speedometer"></i> Beranda</a>
+                        <a class="nav-link" href="{{route('admin.beranda')}}"><i class="icon-speedometer"></i> Beranda</a>
                     </li>
                     <li class="nav-title">
                         Data Master
@@ -620,6 +634,34 @@
         $("#login-modal").submit(function(e){
             e.preventDefault();
             $("#button-login").addClass('disabled');
+            $("#button-login").text('Mengirim');
+            $.ajax({
+                url:"{{route('login')}}",
+                method:"POST",
+                data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}"},
+                success:function(res){
+                    console.log(res);
+                    if(res.result==true){
+                        if(res.data.role=='admin'){
+                            window.location.href = "{{route('admin.beranda')}}";
+                        }else{
+                            location.reload();
+                        }
+                    }else if(res.message=='not match'){
+                        alert("email maupun password tidak pas");
+                    }else if(res.message=='expired'){
+                        alert("Pengajuan tidak dapat dilakukan");
+                    }
+                    $("#button-login").removeClass('disabled');
+                    $("#button-login").text('Masuk');
+                },
+                statusCode: {
+                    500: function() {
+                        alert("Token login kadaluarsa, silahkan ulangi login anda");
+                        location.reload();
+                    }
+                }
+            })
         });
     </script>
     <!-- Plugins and scripts required by this views -->

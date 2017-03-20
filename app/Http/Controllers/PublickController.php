@@ -11,10 +11,24 @@ use App\Cluster;
 
 class PublickController extends Controller
 {
-    public function loginPage(Request $request)
-    {
-    	return view('login');
-    }
+	public function loginCheck(Request $request)
+	{
+		$email = $request->input('email');
+		$password = $request->input('password');
+		$user = User::where(['email'=>$email,'password'=>$password])->first();
+		if($user!=null){
+			if($user->role!='admin'){
+				if($user->aktif<=\Carbon\Carbon::now() && $user->kadaluarsa>\Carbon\Carbon::now()){
+					session()->put('role',$user->role);
+					return response()->json(['result'=>true,'data'=>$user]);
+				}
+				return response()->json(['result'=>false,'message'=>'expired']);
+			}
+			session()->put('role',$user->role);
+			return response()->json(['data'=>$user,'result'=>true]);
+		}
+		return response()->json(['result'=>false,'message'=>'not match']);
+	}
 
     public function homePage(Request $request)
     {
@@ -34,6 +48,12 @@ class PublickController extends Controller
     	return view('pages.kontak',$data);
     }
 
+    public function logout(Request $request)
+    {
+    	$request->session()->flush();
+    	return redirect()->route('home');
+    }
+/*
     public function generateCluster(Request $request)
     {
     	for($i=0;$i<5;$i++){
@@ -81,4 +101,6 @@ class PublickController extends Controller
     		]);
     	}
     }
+
+    */
 }
