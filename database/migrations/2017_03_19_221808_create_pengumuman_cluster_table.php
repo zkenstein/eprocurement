@@ -15,9 +15,9 @@ class CreatePengumumanClusterTable extends Migration
         Schema::create('pengumuman_cluster', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pengumuman_id')->unsigned();
-            $table->foreign('pengumuman_id')->references('id')->on('pengumuman');
+            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');;
             $table->integer('cluster_id')->unsigned();
-            $table->foreign('cluster_id')->references('id')->on('cluster');
+            $table->foreign('cluster_id')->references('id')->on('cluster')->onDelete('cascade');;
             $table->timestamps();
         });
     }

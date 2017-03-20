@@ -21,14 +21,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'user';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['kode', 'nama', 'email','password','telp','aktif','kadaluarsa','cluster_id'];
+    protected $fillable = ['kode', 'nama', 'email','password','telp','aktif','kadaluarsa','cluster_id','session_id','role'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -32,8 +32,11 @@
             margin-left: 0px !important;
         }
         @endif
-        .breadcrumb{
+        .breadcrumb, .modal-primary .modal-header, .btn-primary{
             background-color: #2b609e;
+        }
+        .modal-primary .modal-content, .btn-primary{
+            border-color: #2b609e;
         }
         a.login{
             color: #2b609e !important;
@@ -430,7 +433,7 @@
     </div>
 
     @if(session('role')!='admin')
-    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -440,42 +443,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-login" action="" method="post">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user"></i>
-                                </span>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Username">
-                            </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i>
+                            </span>
+                            <input autocomplete="false" type="email" id="email-login" name="email" class="form-control" placeholder="Email">
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i>
-                                </span>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i>
+                            </span>
+                            <input autocomplete="false" type="password" id="password-login" name="password" class="form-control" placeholder="Kode">
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i>
-                                </span>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="form-group form-actions">
-                            <button type="submit" class="btn btn-sm btn-success">Submit</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary">Masuk</button>
+                    <button type="submit" class="btn btn-primary" id="button-login">Masuk</button>
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-    </div>
+    </form>
     <!-- /.modal -->
     @endif
 
@@ -625,6 +616,12 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $("#login-modal").submit(function(e){
+            e.preventDefault();
+            $("#button-login").addClass('disabled');
+        });
+    </script>
     <!-- Plugins and scripts required by this views -->
 
     <!-- Custom scripts required by this view -->

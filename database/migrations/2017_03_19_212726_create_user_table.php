@@ -17,12 +17,14 @@ class CreateUserTable extends Migration
             $table->string('kode')->unique();
             $table->string('nama');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('telp')->unique();
-            $table->dateTime('aktif');
-            $table->dateTime('kadaluarsa');
-            $table->integer('cluster_id')->unsigned();
-            $table->foreign('cluster_id')->references('id')->on('cluster');
+            $table->string('session_id')->nullable();
+            $table->enum('role',['admin','subkontraktor']);
+            $table->dateTime('aktif')->nullable();
+            $table->dateTime('kadaluarsa')->nullable();
+            $table->integer('cluster_id')->unsigned()->nullable();
+            $table->foreign('cluster_id')->references('id')->on('cluster')->onDelete('cascade');;
             $table->timestamps();
         });
     }
