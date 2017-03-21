@@ -34,7 +34,6 @@ class GeneralController extends Controller
     public function subkontraktorPage(Request $request)
     {
     	$data['TAG'] = 'subkontraktor';
-    	$data['subkontraktor'] = User::where('role','subkontraktor')->get();
     	return view('pages.subkontraktor',$data);
     }
 

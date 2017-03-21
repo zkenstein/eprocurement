@@ -1,5 +1,13 @@
 @extends('master')
 
+@section('style')
+	<style type="text/css">
+		#subkontraktor-data{
+			width: 100% !important;
+		}
+	</style>
+@stop
+
 @section('content')
 	<ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
@@ -20,7 +28,6 @@
                             <table id="subkontraktor-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                    	<th>No</th>
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Telp</th>
@@ -77,47 +84,42 @@
                 "search": "Cari "
             },
             "columnDefs": [
-                {
-                    "className":"no-print",
-                    "orderable":false,
+                { 
                     "targets": 0,
-                    "render": function(data, type, row, meta){
-                        return "1";
-                    }
-                },{ 
-                    "targets": 1,
                     "render": function(data, type, row, meta){
                         var nama = row.nama;
                         return nama;
                     }
                 },
                 { 
-                    "targets": 2,
+                    "targets": 1,
                     "render": function(data, type, row, meta){
                         var email = row.email;
                         return email;
                     }
                 },
                 { 
-                    "targets": 3,
+                    "targets": 2,
                     "render": function(data, type, row, meta){
                         return row.telp;
                     }
                 },
                 {
-                    "targets": 4,
+                    "targets": 3,
                     "render": function(data, type, row, meta){
                         return row.cluster;
                     }
                 },
                 {
-                	"targets": 5,
+                	"className":"no-print",
+                    "orderable":false,
+                	"targets": 4,
                     "render": function(data, type, row, meta){
                         return "0";
                     }	
                 }
             ],
-            aaSorting: [[3, 'desc']],
+            aaSorting: [[0, 'desc']],
         });
 	</script>
 @stop

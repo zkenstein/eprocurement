@@ -14,66 +14,42 @@ class SubkontraktorController extends Controller
     {	
     	$orderBy = '';
         switch($request->input('order.0.column')){
+            case "0":
+                $orderBy = 'user.nama';
+            break;
             case "1":
-                $orderBy = 'pemesan.username';
+                $orderBy = 'user.email';
             break;
             case "2":
-                $orderBy = 'pengirim.username';
+                $orderBy = 'user.telp';
             break;
             case "3":
-                $orderBy = 'waktu_pemesanan';
-            break;
-            case "4": 
-                $orderBy = 'status';
+                $orderBy = 'cluster.nama';
             break;
         }
-        $subkontraktor = user::join('cluster','cluster.id','=','user.cluster_id')->select(['cluster.nama as cluster','user.nama as nama','user.email as email','user.telp as telp'])->where('role','subkontraktor')->get();
-        return response()->json([
-            'draw'=>$request->input('draw'),
-            'recordsTotal'=>count($subkontraktor)/$request->input('length'),
-            'data'=>$subkontraktor,
-            'request'=>$request->all()
-        ],200);
-        $pemesanan = Pemesanan::with(['listItemPesanan.pasarIteminfo.itemInfo.satuanInfo','listItemPesanan.pasarIteminfo.pasarInfo'])->
-            join('user as pemesan', 'pemesan.id', '=', 'pemesanan.pemesan_id')
-            ->leftJoin('user as pengirim', 'pengirim.id', '=', 'pemesanan.pengirim_id')
-            ->select([
-                'pemesanan.id',
-                'pemesan.nama as nama_pemesan',
-                'pemesan.username as username_pemesan',
-                'pemesan.nomor_telp as telp_pemesan',
-                'pemesan.id as id_pemesan',
-                'pengirim.nama as nama_pengirim',
-                'pengirim.username as username_pengirim',
-                'pengirim.nomor_telp as telp_pengirim',
-                'pengirim.id as id_pengirim',
-                'pemesanan.total_belanja',
-                'pemesanan.biaya_pengiriman',
-                'pemesanan.status',
-                'pemesanan.created_at as waktu_pemesanan',
-                'pemesanan.waktu_pengiriman',
-                'pemesanan.alamat_pengiriman'
-                ]);
+
+        $subkontraktor = user::leftJoin('cluster','cluster.id','=','user.cluster_id')->select(['cluster.kode as cluster_kode','cluster.nama as cluster','user.nama as nama','user.email as email','user.telp as telp']);
 
         if($request->input('search.value')!=''){
-            $pemesanan = $pemesanan
-                ->where(\DB::raw('total_belanja + biaya_pengiriman'),'like','%'.$request->input('search.value').'%')
-                ->orWhere('pemesan.nama','like','%'.$request->input('search.value').'%')
-                ->orWhere('pengirim.nama','like','%'.$request->input('search.value').'%')
-                ->orWhere('pemesanan.status','like','%'.$request->input('search.value').'%')
-                ->orWhere('pemesanan.created_at','like','%'.$request->input('search.value').'%');
+            $subkontraktor = $subkontraktor
+                ->where('user.nama','like','%'.$request->input('search.value').'%')
+                ->orWhere('user.email','like','%'.$request->input('search.value').'%')
+                ->orWhere('user.telp','like','%'.$request->input('search.value').'%')
+                ->orWhere('cluster.nama','like','%'.$request->input('search.value').'%')
+                ->orWhere('cluster.kode','like','%'.$request->input('search.value').'%');
         }
 
-        $recordsFiltered = $pemesanan->count();
+        $subkontraktor = $subkontraktor->where('role','subkontraktor');
 
-        $pemesanan = $pemesanan->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
+        $recordsFiltered = $subkontraktor->count();
+
+        $subkontraktor = $subkontraktor->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
         return response()->json([
-            'draw'=>$request->input('draw'),
-            'recordsTotal'=>count($pemesanan)/$request->input('length'),
+        	'draw'=>$request->input('draw'),
+            'recordsTotal'=>count($subkontraktor)/$request->input('length'),
             'recordsFiltered'=>$recordsFiltered,
-            'data'=>$pemesanan,
-            'request'=>$request->all()
-        ]);
-        
+            'data'=>$subkontraktor,
+            'request'=>$request->all(),
+        ],200);
     }
 }
