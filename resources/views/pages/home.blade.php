@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-block">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 padding-side">
                                 	<p>E-Procurement PT.PAL memungkinkan Tender untuk mengunduh jadwal lelang bebas biaya dan mengajukan tawaran online melalui situs ini.</p>
                                 	<p>Syarat dan ketentuan : 
                                 	<ol>
