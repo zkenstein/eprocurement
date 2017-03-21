@@ -51,6 +51,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'GeneralController@subkontraktorPage',
 		'as'=>'subkontraktor'
 	]);
+	Route::get('/subkontraktor_data',[
+		'uses'=>'SubkontraktorController@getData',
+		'as'=>'subkontraktor_data'
+	]);
 
 	Route::get('/cluster',[
 		'uses'=>'GeneralController@clusterPage',

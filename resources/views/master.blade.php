@@ -548,17 +548,6 @@
         }
         //$("main.main ol.breadcrumb li.breadcrumb-menu.hidden-md-down").remove();
         $(document).ready(function($){
-            $(".datatables").DataTable({
-                info:false,
-                "language": {
-                    "lengthMenu": "_MENU_",
-                    "zeroRecords": "Maaf data tidak ditemukan",
-                    "info": "_PAGE_ dari _PAGES_",
-                    "infoEmpty": "Data Tidak Ditemukan",
-                    "infoFiltered": "(filtered from _MAX_ total records)",
-                    "search": "Cari "
-                }
-            });
             // Add class .active to current link
             $.navigation.find('a').each(function(){
 
@@ -693,7 +682,7 @@
 
     <!-- Custom scripts required by this view -->
     <!-- <script src="/js/views/main.js"></script> -->
-
+    @yield('script')
 </body>
 
 </html>

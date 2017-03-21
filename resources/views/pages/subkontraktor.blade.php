@@ -17,56 +17,18 @@
                             <i class="fa fa-align-justify"></i> Data Subkontraktor
                         </div>
                         <div class="card-block">
-                            <table class="table table-bordered table-striped datatables">
+                            <table id="subkontraktor-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Username</th>
-                                        <th>Date registered</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
+                                    	<th>No</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Telp</th>
+                                        <th>Cluster</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Vishnu Serghei</td>
-                                        <td>2012/01/01</td>
-                                        <td>Member</td>
-                                        <td>
-                                            <span class="badge badge-success">Active</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zbyněk Phoibos</td>
-                                        <td>2012/02/01</td>
-                                        <td>Staff</td>
-                                        <td>
-                                            <span class="badge badge-danger">Banned</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Einar Randall</td>
-                                        <td>2012/02/01</td>
-                                        <td>Admin</td>
-                                        <td>
-                                            <span class="badge badge-default">Inactive</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Félix Troels</td>
-                                        <td>2012/03/01</td>
-                                        <td>Member</td>
-                                        <td>
-                                            <span class="badge badge-warning">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Aulus Agmundr</td>
-                                        <td>2012/01/21</td>
-                                        <td>Staff</td>
-                                        <td>
-                                            <span class="badge badge-success">Active</span>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                             <!--
@@ -97,4 +59,65 @@
         </div>
 
     </div>
+@stop
+
+@section('script')
+	<script type="text/javascript">
+		$("#subkontraktor-data").DataTable({
+			"processing": true,
+	        "serverSide": true,
+	        "ajax": "{{route('admin.subkontraktor_data')}}",
+            info:false,
+            "language": {
+                "lengthMenu": "_MENU_",
+                "zeroRecords": "Maaf data tidak ditemukan",
+                "info": "_PAGE_ dari _PAGES_",
+                "infoEmpty": "Data Tidak Ditemukan",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Cari "
+            },
+            "columnDefs": [
+                {
+                    "className":"no-print",
+                    "orderable":false,
+                    "targets": 0,
+                    "render": function(data, type, row, meta){
+                        return "1";
+                    }
+                },{ 
+                    "targets": 1,
+                    "render": function(data, type, row, meta){
+                        var nama = row.nama;
+                        return nama;
+                    }
+                },
+                { 
+                    "targets": 2,
+                    "render": function(data, type, row, meta){
+                        var email = row.email;
+                        return email;
+                    }
+                },
+                { 
+                    "targets": 3,
+                    "render": function(data, type, row, meta){
+                        return row.telp;
+                    }
+                },
+                {
+                    "targets": 4,
+                    "render": function(data, type, row, meta){
+                        return row.cluster;
+                    }
+                },
+                {
+                	"targets": 5,
+                    "render": function(data, type, row, meta){
+                        return "0";
+                    }	
+                }
+            ],
+            aaSorting: [[3, 'desc']],
+        });
+	</script>
 @stop

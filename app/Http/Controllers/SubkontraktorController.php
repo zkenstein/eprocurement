@@ -11,7 +11,7 @@ use App\User;
 class SubkontraktorController extends Controller
 {
     public function getData(Request $request)
-    {
+    {	
     	$orderBy = '';
         switch($request->input('order.0.column')){
             case "1":
@@ -27,6 +27,13 @@ class SubkontraktorController extends Controller
                 $orderBy = 'status';
             break;
         }
+        $subkontraktor = user::join('cluster','cluster.id','=','user.cluster_id')->select(['cluster.nama as cluster','user.nama as nama','user.email as email','user.telp as telp'])->where('role','subkontraktor')->get();
+        return response()->json([
+            'draw'=>$request->input('draw'),
+            'recordsTotal'=>count($subkontraktor)/$request->input('length'),
+            'data'=>$subkontraktor,
+            'request'=>$request->all()
+        ],200);
         $pemesanan = Pemesanan::with(['listItemPesanan.pasarIteminfo.itemInfo.satuanInfo','listItemPesanan.pasarIteminfo.pasarInfo'])->
             join('user as pemesan', 'pemesan.id', '=', 'pemesanan.pemesan_id')
             ->leftJoin('user as pengirim', 'pengirim.id', '=', 'pemesanan.pengirim_id')
@@ -67,5 +74,6 @@ class SubkontraktorController extends Controller
             'data'=>$pemesanan,
             'request'=>$request->all()
         ]);
+        
     }
 }
