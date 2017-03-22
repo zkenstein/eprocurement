@@ -52,13 +52,40 @@
         table.dataTable{
             border-collapse: collapse !important;
         }
-        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl{
-            padding-left: 0px;
-            padding-right: 0px;
+        @media (min-width: 1200px){
+           .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl{
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+            .padding-side{
+                padding-left: 15px;
+                padding-right: 15px;
+            }
         }
-        .padding-side{
-            padding-left: 15px;
-            padding-right: 15px;
+        .wide-only{
+            font-size: 22px;
+        }
+        @media(min-width: 991px){
+            .wide-only{
+                display: none;
+            }
+        }
+        @media(max-width: 991px){
+            .wide-only{
+                display: inherit;
+            }
+        }
+        .input-sm{
+            height: 35px;
+        }
+        .form-group label{
+            font-weight: bold;
+        }
+        .text-danger{
+            color: #f86c6b;;
+        }
+        .text-normal{
+            color: #263238;
         }
     </style>
 
@@ -68,7 +95,9 @@
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
     <header class="app-header navbar">
+        @if(session('role')=='admin')
         <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
+        @endif
         <a class="navbar-brand" href="#"></a>
         <ul class="nav navbar-nav hidden-md-down">
             @if(session('role')=='admin')
@@ -95,47 +124,34 @@
             </li>
             @endif
         </ul>
-        @if(session('role')=='admin')
-        <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item hidden-md-down">
-                <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
-            </li>
-            <?php /*
+        
+        <ul class="nav navbar-nav ml-auto wide-only">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <!--<img src="/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">-->
-                    <span class="hidden-md-down">admin</span>
+                    ☰
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
 
                     <div class="dropdown-header text-center">
-                        <strong>Account</strong>
+                        <strong>Menu</strong>
                     </div>
 
-                    <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="badge badge-success">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>
+                    <a class="dropdown-item <?=$TAG=='home'?'active':''?>" href="{{route('home')}}">Home</a>
+                    <a class="dropdown-item <?=$TAG=='tentang'?'active':''?>" href="{{route('tentang')}}">Tentang</a>
+                    <a class="dropdown-item <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
+                    @if(session('role')!='admin' && session('role')!='subkontraktor')
+                        <a class="dropdown-item login" data-toggle="modal" data-target="#login-modal" href="#"><i class="icon-login"></i> Masuk</a>
 
-                    <div class="dropdown-header text-center">
-                        <strong>Settings</strong>
-                    </div>
-
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-default">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
-                    <div class="divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+                    @else
+                        <a class="dropdown-item logout" href="{{route('logout')}}"><i class="icon-logout"></i> Keluar</a>
+                    @endif
+                        
                 </div>
             </li>
-            */ ?>
-            <li class="nav-item hidden-md-down">
+<!--             <li class="nav-item hidden-md-down">
                 <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
-            </li>
+            </li> -->
         </ul>
-        @endif
     </header>
 
     <div class="app-body">
@@ -462,7 +478,7 @@
         @endif
     </div>
 
-    @if(session('role')!='admin')
+    @if(session('role')!='admin' && session('role')!='subkontraktor')
     <form class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
@@ -549,7 +565,7 @@
                 window.dispatchEvent(new Event('resize'));
             }, 62.5);
         }
-        //$("main.main ol.breadcrumb li.breadcrumb-menu.hidden-md-down").remove();
+        
         $(document).ready(function($){
             // Add class .active to current link
             $.navigation.find('a').each(function(){
@@ -590,7 +606,7 @@
             });
 
         });
-
+        
         /****
         * CARDS ACTIONS
         */
@@ -647,6 +663,7 @@
         });
     </script>
 
+    @if(session('role')!='admin' && session('role')!='subkontraktor')
     <script type="text/javascript">
         $("#login-modal").submit(function(e){
             e.preventDefault();
@@ -681,6 +698,48 @@
             })
         });
     </script>
+    @endif
+
+    <script type="text/javascript">
+        $("input.needvalidate").change(function(){
+            var element = $(this);
+            var name = element.attr('name');
+            if($(this).val().length>=3){
+                $.ajax({
+                    url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
+                    method:"GET",
+                    success:function(res){
+                        element.parent(".form-group").removeClass('has-danger');
+                        element.parent(".form-group").addClass('has-success');
+                        element.removeClass('form-control-danger');
+                        element.addClass('form-control-success');
+                        element.next().text('');
+                        element.next().removeClass('text-danger');
+                    },
+                    statusCode:{
+                        422:function(res){
+                            element.parent(".form-group").removeClass('has-success');
+                            element.parent(".form-group").addClass('has-danger');
+                            element.removeClass('form-control-success');
+                            element.addClass('form-control-danger');
+                            element.next().text(res.responseJSON[name][0]);
+                            element.next().removeClass('text-normal');
+                            element.next().addClass('text-danger');
+                        }
+                    }
+                });
+            }else{
+                element.parent(".form-group").removeClass('has-success');
+                element.parent(".form-group").addClass('has-danger');
+                element.removeClass('form-control-success');
+                element.addClass('form-control-danger');
+                element.next().text('minimal 3 karakter');
+                element.next().removeClass('text-normal');
+                element.next().addClass('text-danger');
+            }
+        });
+    </script>
+
     <!-- Plugins and scripts required by this views -->
 
     <!-- Custom scripts required by this view -->

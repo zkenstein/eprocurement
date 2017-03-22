@@ -5,12 +5,15 @@
 		#subkontraktor-data{
 			width: 100% !important;
 		}
+        .table-responsive{
+            width: 100%;
+            overflow-x: scroll;
+        }
 	</style>
 @stop
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
         </li>
         <li class="breadcrumb-item active">Sub Kontraktor</li>
@@ -18,6 +21,60 @@
 
     <div class="container-fluid">
         <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> Tambah Data Subkontraktor
+                        </div>
+                        <div class="card-block">
+                            <form id="form-add" action="" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label" for="inputSuccess1">Nama</label>
+                                            <input id="add-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,nama" placeholder="Nama Sub Kontraktor">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label" for="inputSuccess1">Email</label>
+                                            <input id="add-email" type="email" required name="email" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,email|email" placeholder="Email Sub Kontraktor">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label" for="inputSuccess1">Telp</label>
+                                            <input id="add-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,telp|min:11" placeholder="Telp Sub Kontraktor">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label" for="inputSuccess1">Cluster</label>
+                                            <select id="add-cluster" class="form-control input-sm will-clear" name="cluster">
+                                                @foreach($list_cluster as $cluster)
+                                                <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <button id="add-submit" class="btn btn-primary pull-right" type="submit">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -32,37 +89,16 @@
                                         <th>Email</th>
                                         <th>Telp</th>
                                         <th>Cluster</th>
-                                        <th></th>
+                                        <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
-                            <!--
-                            <nav>
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Prev</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            -->
                         </div>
                     </div>
                 </div>
-                <!--/.col-->
             </div>
-            <!--/.row-->
         </div>
 
     </div>
@@ -70,7 +106,9 @@
 
 @section('script')
 	<script type="text/javascript">
+        var csrf = "{{csrf_token()}}";
 		$("#subkontraktor-data").DataTable({
+            "autoWidth": false,
 			"processing": true,
 	        "serverSide": true,
 	        "ajax": "{{route('admin.subkontraktor_data')}}",
@@ -115,11 +153,32 @@
                     "orderable":false,
                 	"targets": 4,
                     "render": function(data, type, row, meta){
-                        return "0";
-                    }	
+                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm"><i class="icon-trash"></i></button></div>';
+                    }
                 }
             ],
             aaSorting: [[0, 'desc']],
         });
+        // $( document ).ajaxError(function( event, request, settings ) {
+        //     alert("Koneksi tidak stabil");
+        //     $("#add-submit").removeClass('disabled');
+        // });
+        $("#form-add").submit(function(e){
+            $("#add-submit").addClass('disabled');
+            e.preventDefault();
+            var nama = $("#add-nama").val();
+            var email = $("#add-email").val();
+            var telp = $("#add-telp").val();
+            var cluster = $("#add-cluster").val();
+            $.ajax({
+                url:"",
+                method:"POST",
+                data:{nama:nama,email:email,telp:telp,cluster:cluster,_token:csrf},
+                success:function(res){
+                    $("#add-submit").removeClass('disabled');
+                    $("input").val('');
+                }
+            });
+        })
 	</script>
 @stop

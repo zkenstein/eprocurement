@@ -23,8 +23,6 @@ class CreateUserTable extends Migration
             $table->enum('role',['admin','subkontraktor']);
             $table->dateTime('aktif')->nullable();
             $table->dateTime('kadaluarsa')->nullable();
-            $table->integer('cluster_id')->unsigned()->nullable();
-            $table->foreign('cluster_id')->references('id')->on('cluster')->onDelete('cascade');;
             $table->timestamps();
         });
     }

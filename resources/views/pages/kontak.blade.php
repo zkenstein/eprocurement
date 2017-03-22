@@ -1,9 +1,12 @@
 @extends('master')
 
 @section('content')
-	<ol class="breadcrumb">
-
-	</ol>
+    <ol class="breadcrumb">
+        @if(session('role')=='admin' || session('role')=='subkontraktor')
+        <li class="breadcrumb-item"><a href="{{route('kontak')}}">Kontak</a>
+        </li>
+        @endif
+    </ol>
 
 	<div class="container-fluid">
         <div class="animated fadeIn">

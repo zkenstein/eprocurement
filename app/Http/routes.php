@@ -38,10 +38,12 @@ Route::get('logout',[
 	'as'=>'logout'
 ]);
 
-// Route::get('generate_cluster','PublickController@generateCluster');
-// Route::get('generate_user','PublickController@generateUser');
-
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],function(){
+	Route::get('/validate_input/{name?}',[
+		'uses'=>'GeneralController@validateInput',
+		'as'=>'validate'
+	]);
+
 	Route::get('/beranda',[
 		'uses'=>'GeneralController@berandaPage',
 		'as'=>'beranda'
@@ -55,15 +57,26 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'SubkontraktorController@getData',
 		'as'=>'subkontraktor_data'
 	]);
+	Route::post('/subkontraktor',[
+		'uses'=>'SubkontraktorController@addData'
+	]);
 
 	Route::get('/cluster',[
 		'uses'=>'GeneralController@clusterPage',
 		'as'=>'cluster'
 	]);
+	Route::get('/cluster_data',[
+		'uses'=>'ClusterController@getData',
+		'as'=>'cluster_data'
+	]);
 
 	Route::get('/barang',[
 		'uses'=>'GeneralController@barangPage',
 		'as'=>'barang'
+	]);
+	Route::get('/barang_data',[
+		'uses'=>'BarangController@getData',
+		'as'=>'barang_data'
 	]);
 
 	Route::get('/pengumuman',[

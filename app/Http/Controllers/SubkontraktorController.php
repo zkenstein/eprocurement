@@ -52,4 +52,15 @@ class SubkontraktorController extends Controller
             'request'=>$request->all(),
         ],200);
     }
+
+    public function addData(Request $request)
+    {
+        // $this->validate($request,[
+        //     'email' => 'unique:user,email',
+        //     'telp' => 'unique:user,telp',
+        //     'nama' => 'unique:user,nama'
+        // ]);
+        User::create($request->except(['_token']));
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
 }

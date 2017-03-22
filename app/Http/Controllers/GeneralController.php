@@ -8,11 +8,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Mail;
 use App\User;
+use App\Cluster;
+use App\Barang;
+use App\Pengumuman;
 
 class GeneralController extends Controller
 {
 
-    private function invite($to,$name,$subject)
+    public function invite($to,$name,$subject)
     {
         $data = array('name'=>"Our Code World");
         $template_path = 'mail_undangan';
@@ -28,12 +31,17 @@ class GeneralController extends Controller
     public function berandaPage(Request $request)
     {
     	$data['TAG'] = 'beranda';
+        $data['count_subkontraktor'] = User::where('role','subkontraktor')->count();
+        $data['count_cluster'] = Cluster::count();
+        $data['count_barang'] = Barang::count();
+        $data['count_pengumuman'] = Pengumuman::count();
     	return view('pages.beranda',$data);
     }
 
     public function subkontraktorPage(Request $request)
     {
     	$data['TAG'] = 'subkontraktor';
+        $data['list_cluster'] = Cluster::all();
     	return view('pages.subkontraktor',$data);
     }
 
@@ -53,5 +61,12 @@ class GeneralController extends Controller
     {
     	$data['TAG'] = 'pengumuman';
     	return view('pages.pengumuman',$data);
+    }
+
+    public function validateInput(Request $request, $name)
+    {
+        $this->validate($request,[
+            $name=>$request->input('_rule')
+        ]);
     }
 }
