@@ -30,6 +30,13 @@
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
                                 <div class="row">
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Kode</label>
+                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,kode" placeholder="Kode Sub Kontraktor">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label" for="inputSuccess1">Nama</label>
@@ -55,13 +62,19 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label" for="inputSuccess1">Cluster</label>
-                                            <select id="add-cluster" class="form-control input-sm will-clear" name="cluster">
+                                            <label class="form-form-control-label">Cluster</label>
+                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker" multiple name="cluster">
                                                 @foreach($list_cluster as $cluster)
                                                 <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                                 @endforeach
                                             </select>
                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Bidang Usaha</label>
+                                            <textarea id="add-bidang-usaha" class="form-control will-clear" rows="2" required name="bidang_usaha"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +120,7 @@
 @section('script')
 	<script type="text/javascript">
         var csrf = "{{csrf_token()}}";
-		$("#subkontraktor-data").DataTable({
+		var table = $("#subkontraktor-data").DataTable({
             "autoWidth": false,
 			"processing": true,
 	        "serverSide": true,
@@ -166,17 +179,28 @@
         $("#form-add").submit(function(e){
             $("#add-submit").addClass('disabled');
             e.preventDefault();
+            var kode = $("#add-kode").val();
             var nama = $("#add-nama").val();
             var email = $("#add-email").val();
             var telp = $("#add-telp").val();
             var cluster = $("#add-cluster").val();
+            var bidang_usaha = $("#add-bidang-usaha").val();
             $.ajax({
                 url:"",
                 method:"POST",
-                data:{nama:nama,email:email,telp:telp,cluster:cluster,_token:csrf},
+                data:{kode:kode,nama:nama,email:email,telp:telp,cluster:cluster,bidang_usaha:bidang_usaha,_token:csrf},
                 success:function(res){
                     $("#add-submit").removeClass('disabled');
                     $("input").val('');
+                    $("input.needvalidate").parent(".form-group").removeClass('has-success');
+                    $("input.needvalidate").parent(".form-group").removeClass('has-danger');
+                    $("input.needvalidate").removeClass('form-control-danger');
+                    $("input.needvalidate").removeClass('form-control-success');
+                    $("input.needvalidate").next().removeClass('text-danger');
+                    $("input.needvalidate").next().text('');
+                    $('.selectpicker').selectpicker('deselectAll');
+                    csrf = res.token;
+                    table.ajax.reload();
                 }
             });
         })

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Cluster;
+use App\UserCluster;
 
 class PublickController extends Controller
 {
@@ -53,16 +54,24 @@ class PublickController extends Controller
     	$request->session()->flush();
     	return redirect()->route('home');
     }
-/*
+
     public function generateCluster(Request $request)
     {
-    	for($i=0;$i<5;$i++){
-    		$cluster = new Cluster();
-    		$cluster->kode = 'KODE '.$i;
-    		$cluster->nama = 'CLUSTER '.$i;
-    		$cluster->save();
-    	}
+        $cluster = [
+            "PIPING, VALVE AND PROPULSI",
+            "BOTTOM CLEANING DAN REPLATING",
+            "ELECTRIKAL DAN MECANICAL",
+            "DT AND NDT",
+            "GENERAL SERVICE"
+        ];
+        foreach ($cluster as $key => $value) {
+            Cluster::create([
+                'kode'=>$key+1,
+                'nama'=>$value
+            ]);
+        }
     }
+
 
     public function generateUser(Request $request)
     {
@@ -74,9 +83,13 @@ class PublickController extends Controller
     	$user->telp = '03210987651';
     	$user->session_id = null;
     	$user->role = 'admin';
-    	$user->aktif = \Carbon\Carbon::now();
-    	$user->kadaluarsa = \Carbon\Carbon::now()->addDay(2);
+    	$user->aktif = null;
+    	$user->kadaluarsa = null;
     	$user->save();
+    /*
+        $subkontraktor = [
+            
+        ];
 
     	$listCluster = collect(Cluster::select('id')->get())->toArray();
 
@@ -84,7 +97,11 @@ class PublickController extends Controller
     		$listCluster[$key] = $value['id'];
     	}
 
-		// dd($listCluster[array_rand($listCluster)]);
+        $rand_keys = array_rand($listCluster, rand(1,5));
+
+        foreach ($rand_keys as $r) {
+            
+        }
 
     	for($i=1;$i<=10;$i++){
     		User::create([
@@ -96,11 +113,11 @@ class PublickController extends Controller
     			'session_id'=>null,
     			'role'=>'subkontraktor',
     			'aktif'=>null,
-    			'kadaluarsa'=>null,
-    			'cluster_id'=>$listCluster[array_rand($listCluster)]
+    			'kadaluarsa'=>null
+    			// 'cluster_id'=>$listCluster[array_rand($listCluster)]
     		]);
     	}
-    }
-
     */
+    }
+    
 }

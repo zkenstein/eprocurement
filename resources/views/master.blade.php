@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="/bower_components/datatables/media/css/dataTables.bootstrap4.min.css">
     <!-- Main styles for this application -->
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <style type="text/css">
         header.navbar .navbar-brand{
             background-image:url("/img/logo_pal_.png") !important;
@@ -87,6 +88,27 @@
         .text-normal{
             color: #263238;
         }
+        
+        .bootstrap-select.btn-group .dropdown-menu li{
+            padding: 5px 15px;
+        }
+        .bootstrap-select>.dropdown-toggle{
+            background-color: white;
+            border: 1px solid #d9d9d9;
+            color: gray;
+            font-weight: bold;
+        }
+        .bootstrap-select.btn-group .dropdown-menu li a{
+            width: inherit;
+        }
+        .bootstrap-select.btn-group .dropdown-menu li.selected a span.text{
+            color: gray;
+            font-weight: bold;
+        }
+        .bootstrap-select.btn-group .dropdown-menu li.selected a span.check-mark{
+            margin-right: 50px;
+        }
+        
     </style>
 
     @yield('style')
@@ -534,6 +556,8 @@
     <!-- Plugins and scripts required by all views -->
     <script src="/bower_components/chart.js/dist/Chart.min.js"></script>
 
+    <!-- Multiple Select -->
+    <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>    
     <script type="text/javascript">
         $.navigation = $('nav > ul.nav');
         $.panelIconOpened = 'icon-arrow-up';

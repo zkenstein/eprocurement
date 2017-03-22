@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserCluster;
 
 class SubkontraktorController extends Controller
 {
@@ -28,7 +29,7 @@ class SubkontraktorController extends Controller
             break;
         }
 
-        $subkontraktor = user::leftJoin('cluster','cluster.id','=','user.cluster_id')->select(['cluster.kode as cluster_kode','cluster.nama as cluster','user.nama as nama','user.email as email','user.telp as telp']);
+        $subkontraktor = User::with(['listCluster']);
 
         if($request->input('search.value')!=''){
             $subkontraktor = $subkontraktor
@@ -55,12 +56,13 @@ class SubkontraktorController extends Controller
 
     public function addData(Request $request)
     {
-        // $this->validate($request,[
-        //     'email' => 'unique:user,email',
-        //     'telp' => 'unique:user,telp',
-        //     'nama' => 'unique:user,nama'
-        // ]);
-        User::create($request->except(['_token']));
+        $user = User::create($request->except(['_token','cluster']));
+        foreach ($request->input('cluster') as $cluster) {
+            UserCluster::create([
+                'user_id'=>$user->id,
+                'cluster_id'=>$cluster
+            ]);
+        }
         return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
 }

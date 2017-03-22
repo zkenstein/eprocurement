@@ -38,6 +38,9 @@ Route::get('logout',[
 	'as'=>'logout'
 ]);
 
+// Route::get('gc','PublickController@generateCluster');
+// Route::get('gu','PublickController@generateUser');
+
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],function(){
 	Route::get('/validate_input/{name?}',[
 		'uses'=>'GeneralController@validateInput',
