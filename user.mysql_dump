@@ -1,0 +1,42 @@
+-- Adminer 4.2.5 MySQL dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `kode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nama` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `bidang_usaha` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role` enum('admin','subkontraktor') COLLATE utf8_unicode_ci NOT NULL,
+  `aktif` datetime DEFAULT NULL,
+  `kadaluarsa` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_kode_unique` (`kode`),
+  UNIQUE KEY `user_email_unique` (`email`),
+  UNIQUE KEY `user_telp_unique` (`telp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `created_at`, `updated_at`) VALUES
+(1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	NULL,	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	NULL,	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-22 18:36:15'),
+(2,	'AKA02AS',	'AKASIA TEKNOLOGI PT.',	'kontraktor2@herobimbel.id',	NULL,	'3211234562',	'KONSTRUKSI DAN PERMESINAN',	NULL,	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:38:37',	'2017-03-22 18:38:37'),
+(3,	'ALR01AS',	'ALREDHO TEKNIK PT.',	'kontraktor3@herobimbel.id',	NULL,	'03211234563',	'PENGELASAN,TANK CLEANING,AKOMODASI ,PENGGERAK UTAMA,POMPA,MACHINING,BALANCING,AC,MOTOR GENERATOR',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(4,	'AME14AS',	'AMERTA TIRTA BUWANA PT.',	'kontraktor4@herobimbel.id',	NULL,	'03211234564',	'ASIS TUG BOAT',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(5,	'ARV01AS',	'ARVET UNGGUL JAYA PT.',	'kontraktor5@herobimbel.id',	NULL,	'03211234565',	'GENERAL SERVICE,MEKANIKAL DAN ELEKTRIKAL,PIPING VALVE DAN PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(6,	'AUL03AS',	'AULIA KARYA PERDANA PT.',	'kontraktor6@herobimbel.id',	NULL,	'03211234566',	'KONSTRUKSI KAPAL, PIPING, ELECTRICAL SYSTEM',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(7,	'BAN13AS',	'BANGUN PERKASA JAYA ENGINEERING PT.',	'kontraktor7@herobimbel.id',	NULL,	'03211234567',	'MEKANIKAL & ELEKTRIKAL, PIPING, VALVE & SYSTEM PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(8,	'BDP01AS',	'BDP INDONESIA PT.',	'kontraktor8@herobimbel.id',	NULL,	'03211234568',	'PENGURUSAN TRANSPORTASI MATERIAL HANDLING LAUT & UDARA,CUTOM CLEARANCE',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(9,	'DAL05AS',	'DALUT NUSANTARA BARU PT.',	'kontraktor9@herobimbel.id',	NULL,	'03211234569',	'NDT ( NON DESTRUCTIVE TEST) NON RADIASI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(10,	'DUA01AS',	'DUA-DUA KUTAI UTAMA PT.',	'kontraktor10@herobimbel.id',	NULL,	'032112345610',	'BOTTOM CLEANING & REPLATING ,PIPING,VALVE, PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(11,	'KODE-0',	'Administrator',	'kurniawan@herobimbel.id',	'12345',	'03210987651',	NULL,	NULL,	'admin',	NULL,	NULL,	'2017-03-22 18:48:28',	'2017-03-22 18:48:28');
+
+-- 2017-03-22 20:08:19

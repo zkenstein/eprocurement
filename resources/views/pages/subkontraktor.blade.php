@@ -188,7 +188,7 @@
             $.ajax({
                 url:"",
                 method:"POST",
-                data:{kode:kode,nama:nama,email:email,telp:telp,cluster:cluster,bidang_usaha:bidang_usaha,_token:csrf},
+                data:{kode:kode,nama:nama,email:email,telp:telp,cluster:cluster,bidang_usaha:bidang_usaha,role:2,_token:csrf},
                 success:function(res){
                     $("#add-submit").removeClass('disabled');
                     $("input").val('');
