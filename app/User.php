@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['kode', 'nama', 'email','password','telp','aktif','kadaluarsa','cluster_id','session_id','role'];
+    protected $fillable = ['kode', 'nama', 'email','password','telp','aktif','kadaluarsa','session_id','role'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -40,5 +40,10 @@ class User extends Model implements AuthenticatableContract,
     public function listPengumuman()
     {
         return $this->hasMany('App\PengumumanUser');
+    }
+
+    public function listCluster()
+    {
+        return $this->hasMany('App\UserCluster');
     }
 }

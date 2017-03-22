@@ -13,4 +13,9 @@ class Cluster extends Model
     {
     	return $this->hasMany('App\PengumumanCluster');
     }
+
+    public function listUser()
+    {
+    	return $this->hasMany('App\UserCluster');
+    }
 }
