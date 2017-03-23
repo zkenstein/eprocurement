@@ -26,10 +26,17 @@
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 padding-side">
+                                    <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:barang,kode|alpha_num" placeholder="Kode Barang">
+                                            <input id="add-kode" style="height: 42px;" type="text" required name="kode" class="form-control will-clear needvalidate" data-rule="required|unique:barang,kode|alpha_num" placeholder="Kode Barang">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Gambar</label>
+                                            <input id="add-gambar" type="file" name="gambar" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:1000|image" placeholder="Gambar Barang" accept="image/*">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -83,6 +90,20 @@
 
 @section('script')
 	<script type="text/javascript">
+        $("#button-file").click(function() {
+            $.FileDialog({
+                accept:"image/*",
+                cancelButton: "Batal",
+                dropheight: 100,
+                multiple: false,
+                title: ""
+            }).on('files.bs.filedialog', function(ev) {
+                var file = ev.files;
+                console.log(file);
+            });
+        });
+
+
 		var csrf = "{{csrf_token()}}";
         var table = $("#barang-data").DataTable({
             "autoWidth": false,

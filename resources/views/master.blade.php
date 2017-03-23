@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="/bower_components/datatables/media/css/dataTables.bootstrap4.min.css">
     <!-- Main styles for this application -->
     <link href="/css/style.css" rel="stylesheet">
+    <!-- Multiple Select -->
     <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <style type="text/css">
         header.navbar .navbar-brand{
@@ -108,7 +109,9 @@
         .bootstrap-select.btn-group .dropdown-menu li.selected a span.check-mark{
             margin-right: 50px;
         }
-        
+        .file-input{
+            height: 100%;
+        }
     </style>
 
     @yield('style')
@@ -557,7 +560,7 @@
     <script src="/bower_components/chart.js/dist/Chart.min.js"></script>
 
     <!-- Multiple Select -->
-    <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>    
+    <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script type="text/javascript">
         $.navigation = $('nav > ul.nav');
         $.panelIconOpened = 'icon-arrow-up';
@@ -727,41 +730,63 @@
     <script type="text/javascript">
         function validate(element) {
             var name = element.attr('name');
-            if(element.val().length>=1){
+            if(element.attr('type')=='file'){
+                var form = new FormData();
+                form.append('gambar',element);
                 $.ajax({
-                    url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
-                    method:"GET",
-                    success:function(res){
-                        element.parent(".form-group").removeClass('has-danger');
-                        element.parent(".form-group").addClass('has-success');
-                        element.removeClass('form-control-danger');
-                        element.addClass('form-control-success');
-                        element.next().text('');
-                        element.next().removeClass('text-danger');
-                    },
-                    statusCode:{
-                        422:function(res){
-                            element.parent(".form-group").removeClass('has-success');
-                            element.parent(".form-group").addClass('has-danger');
-                            element.removeClass('form-control-success');
-                            element.addClass('form-control-danger');
-                            element.next().text(res.responseJSON[name][0]);
-                            element.next().removeClass('text-normal');
-                            element.next().addClass('text-danger');
-                        }
+                    url: "{{route('admin.validate')}}/"+name+"?_rule="+element.data('rule'),
+                    type: "POST",
+                    data: form,
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(res){
+                        console.log(res);
                     }
                 });
             }else{
-                element.parent(".form-group").removeClass('has-success');
-                element.parent(".form-group").addClass('has-danger');
-                element.removeClass('form-control-success');
-                element.addClass('form-control-danger');
-                element.next().text('minimal 1 karakter');
-                element.next().removeClass('text-normal');
-                element.next().addClass('text-danger');
+                if(element.val().length>=1){
+                    $.ajax({
+                        url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
+                        method:"GET",
+                        success:function(res){
+                            element.parent(".form-group").removeClass('has-danger');
+                            element.parent(".form-group").addClass('has-success');
+                            element.removeClass('form-control-danger');
+                            element.addClass('form-control-success');
+                            element.next().text('');
+                            element.next().removeClass('text-danger');
+                        },
+                        statusCode:{
+                            422:function(res){
+                                element.parent(".form-group").removeClass('has-success');
+                                element.parent(".form-group").addClass('has-danger');
+                                element.removeClass('form-control-success');
+                                element.addClass('form-control-danger');
+                                element.next().text(res.responseJSON[name][0]);
+                                element.next().removeClass('text-normal');
+                                element.next().addClass('text-danger');
+                                element.css('border-color','red');
+                            }
+                        }
+                    });
+                }else{
+                    element.parent(".form-group").removeClass('has-success');
+                    element.parent(".form-group").addClass('has-danger');
+                    element.removeClass('form-control-success');
+                    element.addClass('form-control-danger');
+                    element.next().text('minimal 1 karakter');
+                    element.next().removeClass('text-normal');
+                    element.next().addClass('text-danger');
+                    element.css('border-color','red');
+                }
             }
         }
         $("input.needvalidate").keyup(function(){
+            var element = $(this);
+            validate(element);
+        });
+        $("input.needvalidate_file").change(function(){
             var element = $(this);
             validate(element);
         });

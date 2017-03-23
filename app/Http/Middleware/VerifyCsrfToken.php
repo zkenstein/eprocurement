@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        "admin/validate_input"
+        "admin/validate_input*"
     ];
 }

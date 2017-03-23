@@ -49,6 +49,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'GeneralController@validateInput',
 		'as'=>'validate'
 	]);
+	Route::post('/validate_input/{name?}',[
+		'uses'=>'GeneralController@validateInput',
+		'as'=>'validate'
+	]);
 
 	// HALAMAN BERANDA
 	Route::get('/beranda',[
