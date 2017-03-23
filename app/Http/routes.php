@@ -60,9 +60,15 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'SubkontraktorController@getData',
 		'as'=>'subkontraktor_data'
 	]);
+	Route::get('/subkontraktor_data/{id?}',[
+		'uses'=>'SubkontraktorController@getSingleData',
+		'as'=>'subkontraktor_single_data'
+	]);
 	Route::post('/subkontraktor',[
 		'uses'=>'SubkontraktorController@addData'
 	]);
+	Route::patch('/subkontraktor/{id?}','SubkontraktorController@editData');
+	Route::delete('/subkontraktor/{id?}','SubkontraktorController@deleteData');
 
 	Route::get('/cluster',[
 		'uses'=>'GeneralController@clusterPage',

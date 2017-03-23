@@ -16,28 +16,37 @@ class SubkontraktorController extends Controller
     	$orderBy = '';
         switch($request->input('order.0.column')){
             case "0":
-                $orderBy = 'user.nama';
+                $orderBy = 'kode';
             break;
             case "1":
-                $orderBy = 'user.email';
+                $orderBy = 'nama';
             break;
             case "2":
-                $orderBy = 'user.telp';
+                $orderBy = 'email';
             break;
             case "3":
-                $orderBy = 'cluster.nama';
+                $orderBy = 'telp';
+            break;
+            default:
+                $orderBy = 'kode';
             break;
         }
 
-        $subkontraktor = User::with(['listCluster']);
+        $subkontraktor = User::with(['listCluster.clusterInfo']);
 
         if($request->input('search.value')!=''){
             $subkontraktor = $subkontraktor
-                ->where('user.nama','like','%'.$request->input('search.value').'%')
-                ->orWhere('user.email','like','%'.$request->input('search.value').'%')
-                ->orWhere('user.telp','like','%'.$request->input('search.value').'%')
-                ->orWhere('cluster.nama','like','%'.$request->input('search.value').'%')
-                ->orWhere('cluster.kode','like','%'.$request->input('search.value').'%');
+                ->where('nama','like','%'.$request->input('search.value').'%')
+                ->orWhere('email','like','%'.$request->input('search.value').'%')
+                ->orWhere('telp','like','%'.$request->input('search.value').'%')
+                ->orWhere('kode','like','%'.$request->input('search.value').'%')
+                ->orWhere('bidang_usaha','like','%'.$request->input('search.value').'%')
+                ->orWhereHas('listCluster',function($q1) use($request){
+                    $q1->whereHas('clusterInfo',function($q2) use($request){
+                        $q2->where('kode','like','%'.$request->input('search.value').'%')
+                        ->orWhere('nama','like','%'.$request->input('search.value').'%');
+                    });
+                });
         }
 
         $subkontraktor = $subkontraktor->where('role','subkontraktor');
@@ -54,6 +63,12 @@ class SubkontraktorController extends Controller
         ],200);
     }
 
+    public function getSingleData(Request $request, $id)
+    {
+        $data = User::with('listCluster')->find($id);
+        return response()->json(['result'=>true,'data'=>$data]);
+    }
+
     public function addData(Request $request)
     {
         $user = User::create($request->except(['_token','cluster']));
@@ -63,6 +78,25 @@ class SubkontraktorController extends Controller
                 'cluster_id'=>$cluster
             ]);
         }
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
+
+    public function editData(Request $request, $id)
+    {
+        User::where('id',$id)->update($request->except(['_token','_method','cluster']));
+        UserCluster::where('user_id',$id)->delete();
+        foreach ($request->input('cluster') as $cluster) {
+            UserCluster::create([
+                'user_id'=>$id,
+                'cluster_id'=>$cluster
+            ]);
+        }
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
+
+    public function deleteData(Request $request, $id)
+    {
+        User::where('id',$id)->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
 }

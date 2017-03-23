@@ -19,7 +19,7 @@ class CreateUserTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('telp')->unique();
-            $table->string('bidang_usaha')->nullable();
+            $table->text('bidang_usaha');
             $table->string('session_id')->nullable();
             $table->enum('role',['admin','subkontraktor']);
             $table->dateTime('aktif')->nullable();

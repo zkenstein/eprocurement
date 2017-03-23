@@ -725,10 +725,9 @@
     @endif
 
     <script type="text/javascript">
-        $("input.needvalidate").change(function(){
-            var element = $(this);
+        function validate(element) {
             var name = element.attr('name');
-            if($(this).val().length>=3){
+            if(element.val().length>=3){
                 $.ajax({
                     url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
                     method:"GET",
@@ -761,6 +760,10 @@
                 element.next().removeClass('text-normal');
                 element.next().addClass('text-danger');
             }
+        }
+        $("input.needvalidate").change(function(){
+            var element = $(this);
+            validate(element);
         });
     </script>
 
