@@ -67,7 +67,7 @@
                                     <tr>
                                         <th>Kode</th>
                                         <th>Nama</th>
-                                        <th></th>
+                                        <th style="width:3%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,7 +78,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <form class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true" data-id="">

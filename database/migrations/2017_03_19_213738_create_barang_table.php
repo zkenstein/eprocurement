@@ -16,7 +16,7 @@ class CreateBarangTable extends Migration
             $table->increments('id');
             $table->string('kode')->unique();
             $table->text('deskripsi');
-            $table->string('gambar')->nullable();
+            $table->string('gambar')->nullable()->default('default.gif');
             $table->timestamps();
         });
     }
