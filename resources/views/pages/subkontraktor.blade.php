@@ -274,15 +274,15 @@
                 data:{kode:kode,nama:nama,email:email,telp:telp,bidang_usaha:bidang_usaha,role:2,cluster:cluster,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
-                    $("input").val('');
-                    $("textarea").val('');
-                    $("input.needvalidate").parent(".form-group").removeClass('has-success');
-                    $("input.needvalidate").parent(".form-group").removeClass('has-danger');
-                    $("input.needvalidate").removeClass('form-control-danger');
-                    $("input.needvalidate").removeClass('form-control-success');
-                    $("input.needvalidate").next().removeClass('text-danger');
-                    $("input.needvalidate").next().text('');
-                    $('.selectpicker').selectpicker('deselectAll');
+                    $("#form-add input").val('');
+                    $("#form-add textarea").val('');
+                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
+                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
+                    $("#form-add input.needvalidate").removeClass('form-control-danger');
+                    $("#form-add input.needvalidate").removeClass('form-control-success');
+                    $("#form-add input.needvalidate").next().removeClass('text-danger');
+                    $("#form-add input.needvalidate").next().text('');
+                    $('#form-add .selectpicker').selectpicker('deselectAll');
                     csrf = res.token;
                     table.ajax.reload();
                 }

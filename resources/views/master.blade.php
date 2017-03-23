@@ -727,7 +727,7 @@
     <script type="text/javascript">
         function validate(element) {
             var name = element.attr('name');
-            if(element.val().length>=3){
+            if(element.val().length>=1){
                 $.ajax({
                     url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
                     method:"GET",
@@ -756,12 +756,12 @@
                 element.parent(".form-group").addClass('has-danger');
                 element.removeClass('form-control-success');
                 element.addClass('form-control-danger');
-                element.next().text('minimal 3 karakter');
+                element.next().text('minimal 1 karakter');
                 element.next().removeClass('text-normal');
                 element.next().addClass('text-danger');
             }
         }
-        $("input.needvalidate").change(function(){
+        $("input.needvalidate").keyup(function(){
             var element = $(this);
             validate(element);
         });

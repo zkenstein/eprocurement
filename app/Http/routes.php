@@ -64,9 +64,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'SubkontraktorController@getSingleData',
 		'as'=>'subkontraktor_single_data'
 	]);
-	Route::post('/subkontraktor',[
-		'uses'=>'SubkontraktorController@addData'
-	]);
+	Route::post('/subkontraktor','SubkontraktorController@addData');
 	Route::patch('/subkontraktor/{id?}','SubkontraktorController@editData');
 	Route::delete('/subkontraktor/{id?}','SubkontraktorController@deleteData');
 
@@ -78,6 +76,13 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'ClusterController@getData',
 		'as'=>'cluster_data'
 	]);
+	Route::get('/cluster_data/{id?}',[
+		'uses'=>'ClusterController@getSingleData',
+		'as'=>'cluster_single_data'
+	]);
+	Route::post('/cluster','ClusterController@addData');
+	Route::patch('/cluster/{id?}','ClusterController@editData');
+	Route::delete('/cluster/{id?}','ClusterController@deleteData');
 
 	Route::get('/barang',[
 		'uses'=>'GeneralController@barangPage',
