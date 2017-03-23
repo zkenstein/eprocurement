@@ -41,17 +41,23 @@ Route::get('logout',[
 // Route::get('gc','PublickController@generateCluster');
 // Route::get('gu','PublickController@generateUser');
 
+// HARUS LOGIN SEBAGAI ADMIN
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],function(){
+	
+	// VALIDASI UMUM
 	Route::get('/validate_input/{name?}',[
 		'uses'=>'GeneralController@validateInput',
 		'as'=>'validate'
 	]);
 
+	// HALAMAN BERANDA
 	Route::get('/beranda',[
 		'uses'=>'GeneralController@berandaPage',
 		'as'=>'beranda'
 	]);	
 
+
+	// SUB KONTRAKTOR
 	Route::get('/subkontraktor',[
 		'uses'=>'GeneralController@subkontraktorPage',
 		'as'=>'subkontraktor'
@@ -68,6 +74,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 	Route::patch('/subkontraktor/{id?}','SubkontraktorController@editData');
 	Route::delete('/subkontraktor/{id?}','SubkontraktorController@deleteData');
 
+
+
+	// CLUSTER
 	Route::get('/cluster',[
 		'uses'=>'GeneralController@clusterPage',
 		'as'=>'cluster'
@@ -83,6 +92,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 	Route::post('/cluster','ClusterController@addData');
 	Route::patch('/cluster/{id?}','ClusterController@editData');
 	Route::delete('/cluster/{id?}','ClusterController@deleteData');
+
+
+
 
 	Route::get('/barang',[
 		'uses'=>'GeneralController@barangPage',
