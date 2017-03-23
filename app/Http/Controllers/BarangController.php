@@ -43,4 +43,27 @@ class BarangController extends Controller
             'request'=>$request->all(),
         ],200);
     }
+
+    public function addData(Request $request)
+    {
+        $gambar = 'default.gif';
+        if($request->hasFile('gambar')){
+            $gambar = $request->input('kode').'_'.date_format(date_create(),'U').'.'.$request->file('gambar')->getClientOriginalExtension();
+            \Storage::disk('public')->put('img/barang/'.$gambar, \File::get($request->file('gambar')));
+        }
+        $barang = new Barang($request->except(['gambar','_token','_method']));
+        $barang->gambar = $gambar;
+        $barang->save();
+        return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
+    }
+
+    public function deleteData(Request $request, $id)
+    {
+        $barang = Barang::find($id);
+        if($barang->gambar!="default.gif"){
+            \File::delete(public_path('img/barang/'.$barang->gambar));
+        }
+        $barang->delete();
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
 }

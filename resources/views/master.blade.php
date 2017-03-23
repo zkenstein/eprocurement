@@ -518,7 +518,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i>
                             </span>
-                            <input autocomplete="false" type="email" id="email-login" name="email" class="form-control" placeholder="Email">
+                            <input autocomplete="false" type="email" id="email-login" name="email" class="form-control" placeholder="Email" autofocus="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -561,6 +561,7 @@
 
     <!-- Multiple Select -->
     <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.form.min.js"></script>
     <script type="text/javascript">
         $.navigation = $('nav > ul.nav');
         $.panelIconOpened = 'icon-arrow-up';
@@ -728,6 +729,11 @@
     @endif
 
     <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
         function validate(element) {
             var name = element.attr('name');
             if(element.attr('type')=='file'){
@@ -766,7 +772,6 @@
                                 element.next().text(res.responseJSON[name][0]);
                                 element.next().removeClass('text-normal');
                                 element.next().addClass('text-danger');
-                                element.css('border-color','red');
                             }
                         }
                     });
@@ -778,7 +783,6 @@
                     element.next().text('minimal 1 karakter');
                     element.next().removeClass('text-normal');
                     element.next().addClass('text-danger');
-                    element.css('border-color','red');
                 }
             }
         }
@@ -786,7 +790,7 @@
             var element = $(this);
             validate(element);
         });
-        $("input.needvalidate_file").change(function(){
+        $("input.needvalidate_file").on('change',function(){
             var element = $(this);
             validate(element);
         });

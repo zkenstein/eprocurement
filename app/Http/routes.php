@@ -108,6 +108,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'BarangController@getData',
 		'as'=>'barang_data'
 	]);
+	Route::post('/barang','BarangController@addData');
+	Route::delete('/barang/{id?}','BarangController@deleteData');
 
 	Route::get('/pengumuman',[
 		'uses'=>'GeneralController@pengumumanPage',

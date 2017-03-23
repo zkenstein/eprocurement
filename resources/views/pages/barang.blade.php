@@ -25,6 +25,7 @@
                         </div>
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}" id="add-token">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
@@ -36,7 +37,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Gambar</label>
-                                            <input id="add-gambar" type="file" name="gambar" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:1000|image" placeholder="Gambar Barang" accept="image/*">
+                                            <input id="add-gambar" type="file" name="gambar" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:1000" placeholder="Gambar Barang" accept="image/*">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -72,8 +73,8 @@
                                     <tr>
                                         <th>Kode</th>
                                         <th>Deskripsi</th>
-                                        <th>Gambar</th>
-                                        <th></th>
+                                        <th style="width: 70px;">Gambar</th>
+                                        <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,20 +91,6 @@
 
 @section('script')
 	<script type="text/javascript">
-        $("#button-file").click(function() {
-            $.FileDialog({
-                accept:"image/*",
-                cancelButton: "Batal",
-                dropheight: 100,
-                multiple: false,
-                title: ""
-            }).on('files.bs.filedialog', function(ev) {
-                var file = ev.files;
-                console.log(file);
-            });
-        });
-
-
 		var csrf = "{{csrf_token()}}";
         var table = $("#barang-data").DataTable({
             "autoWidth": false,
@@ -138,7 +125,7 @@
                     "orderable":false,
                     "targets": 2,
                     "render": function(data, type, row, meta){
-                        return "<img src='/img/barang/default.gif' style='width:100px;'>";
+                        return "<img src='/img/barang/"+row.gambar+"' style='width:70px;'/>";
                     }
                 },
                 {
@@ -152,5 +139,47 @@
             ],
             "aaSorting": [ [0,'asc'] ]
         });
+
+        $("#form-add").submit(function(e){
+            $("#add-submit").prop('disabled', true);
+            e.preventDefault();
+            $(this).ajaxSubmit({
+                type:"POST",
+                success:function(res,status,xhr,$form){
+                    $("#add-submit").prop('disabled', false);
+                    $("#form-add input").val('');
+                    $("#form-add textarea").val('');
+                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
+                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
+                    $("#form-add input.needvalidate").removeClass('form-control-danger');
+                    $("#form-add input.needvalidate").removeClass('form-control-success');
+                    $("#form-add input.needvalidate").next().removeClass('text-danger');
+                    $("#form-add input.needvalidate").next().text('');
+                    $('#form-add .selectpicker').selectpicker('deselectAll');
+                    $("#add-token").val(res.token);
+                    csrf = res.token;
+                    table.ajax.reload();
+                }
+            })
+        });
+
+        function hapusBarang(id) {
+            $("button.delete-button[data-id='"+id+"']").prop('disabled', true);
+            var _c = confirm("Anda yakin akan menghapus Barang ini ?\n Semua data yang berkaitan dengan barang ini akan terhapus");
+            if(_c===true){
+                $.ajax({
+                    url:"{{route('admin.barang')}}/"+id,
+                    method:"POST",
+                    data:{_method:"delete",_token:csrf},
+                    success:function (res) {
+                        $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
+                        table.ajax.reload();
+                        csrf = res.token;
+                    }
+                });
+            }else{
+                $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
+            }
+        }
 	</script>
 @stop
