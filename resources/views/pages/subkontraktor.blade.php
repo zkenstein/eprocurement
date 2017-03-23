@@ -363,7 +363,7 @@
                     $("form#edit-modal textarea").val('');
                     $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-success');
                     $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-danger');
-                    $("form#edit-modal inpu t.needvalidate").removeClass('form-control-danger');
+                    $("form#edit-modal input.needvalidate").removeClass('form-control-danger');
                     $("form#edit-modal input.needvalidate").removeClass('form-control-success');
                     $("form#edit-modal input.needvalidate").next().removeClass('text-danger');
                     $("form#edit-modal input.needvalidate").next().text('');
