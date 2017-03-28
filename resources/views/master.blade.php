@@ -112,6 +112,9 @@
         .file-input{
             height: 100%;
         }
+        .form-control:disabled, .form-control[readonly]{
+            background-color: white;
+        }
     </style>
 
     @yield('style')

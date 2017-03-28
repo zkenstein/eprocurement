@@ -21,4 +21,9 @@ class Pengumuman extends Model
     {
     	return $this->hasMany('App\PengumumanBarang');
     }
+
+    public function picInfo()
+    {
+        return $this->hasOne('App\User','id','pic');
+    }
 }

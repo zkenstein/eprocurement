@@ -6,60 +6,61 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Pengumuman;
 
 class PengumumanController extends Controller
 {
 	public function getData(Request $request)
     {	
-        /*
+        
     	$orderBy = '';
         switch($request->input('order.0.column')){
             case "0":
                 $orderBy = 'kode';
             break;
             case "1":
-                $orderBy = 'nama';
+                $orderBy = 'batas_awal_waktu_penawaran';
             break;
             case "2":
-                $orderBy = 'email';
+                $orderBy = 'max_register';
             break;
             case "3":
-                $orderBy = 'telp';
+                $orderBy = 'harga_netto';
             break;
             default:
                 $orderBy = 'kode';
             break;
         }
-
-        $subkontraktor = User::with(['listCluster.clusterInfo']);
+        $pengumuman = Pengumuman::with(['picInfo','listBarang.barangInfo','listCluster.clusterInfo']);
 
         if($request->input('search.value')!=''){
-            $subkontraktor = $subkontraktor
-                ->where('nama','like','%'.$request->input('search.value').'%')
-                ->orWhere('email','like','%'.$request->input('search.value').'%')
-                ->orWhere('telp','like','%'.$request->input('search.value').'%')
-                ->orWhere('kode','like','%'.$request->input('search.value').'%')
-                ->orWhere('bidang_usaha','like','%'.$request->input('search.value').'%')
-                ->orWhereHas('listCluster',function($q1) use($request){
-                    $q1->whereHas('clusterInfo',function($q2) use($request){
-                        $q2->where('kode','like','%'.$request->input('search.value').'%')
-                        ->orWhere('nama','like','%'.$request->input('search.value').'%');
-                    });
+            $pengumuman = $pengumuman
+                ->where('kode','like','%'.$request->input('search.value').'%')
+                ->orWhere('batas_awal_waktu_penawaran','like','%'.$request->input('search.value').'%')
+                ->orWhere('batas_akhir_waktu_penawaran','like','%'.$request->input('search.value').'%')
+                ->orWhere('validitas_harga','like','%'.$request->input('search.value').'%')
+                ->orWhere('waktu_pengiriman','like','%'.$request->input('search.value').'%')
+                ->orWhere('harga_netto','like','%'.$request->input('search.value').'%')
+                ->orWhere('mata_uang','like','%'.$request->input('search.value').'%')
+                ->orWhere('max_register','like','%'.$request->input('search.value').'%')
+                ->orWhereHas('picInfo',function($q) use($request){
+                    $q->where('kode','like','%'.$request->input('search.value').'%')
+                    ->orWhere('nama','like','%'.$request->input('search.value').'%')
+                    ->orWhere('email','like','%'.$request->input('search.value').'%')
+                    ->orWhere('telp','like','%'.$request->input('search.value').'%');
                 });
         }
 
-        $subkontraktor = $subkontraktor->where('role','subkontraktor');
+        $recordsFiltered = $pengumuman->count();
 
-        $recordsFiltered = $subkontraktor->count();
-
-        $subkontraktor = $subkontraktor->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
+        $pengumuman = $pengumuman->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
         return response()->json([
         	'draw'=>$request->input('draw'),
-            'recordsTotal'=>count($subkontraktor)/$request->input('length'),
+            'recordsTotal'=>count($pengumuman)/$request->input('length'),
             'recordsFiltered'=>$recordsFiltered,
-            'data'=>$subkontraktor,
+            'data'=>$pengumuman,
             'request'=>$request->all(),
         ],200);
-        */
+        
     }
 }
