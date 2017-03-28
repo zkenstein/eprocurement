@@ -23,6 +23,9 @@
         .img-bundle:hover > .remove-image-button{
             opacity: 1;
         }
+        .img-thumbnail{
+            cursor: pointer;
+        }
 	</style>
 @stop
 
@@ -98,7 +101,7 @@
                                     <tr>
                                         <th>Kode</th>
                                         <th>Deskripsi</th>
-                                        <th style="width: 70px;">Gambar</th>
+                                        <th style="width: 100px;">Gambar</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -168,6 +171,21 @@
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="modal-preview" tabindex="-1" role="dialog" aria-hidden="true" data-id="">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 padding-side">
+                            <img src="" id="preview-gambar-barang" width="100%">
+                            <iframe src="" style="width: 100%;height: 300px;" id="preview-pdf-barang"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('script')
@@ -206,9 +224,9 @@
                     "orderable":false,
                     "targets": 2,
                     "render": function(data, type, row, meta){
-                        var show = "<img src='/img/barang/"+row.gambar+"' style='width:70px;border:1px solid #b7b6b6;'/>";
+                        var show = "<img class='img-thumbnail' onclick='previewImage(\""+row.gambar+"\")' src='/img/barang/"+row.gambar+"' style='width:calc(100% - 9px);border:1px solid #b7b6b6;'/>";
                         if(row.pdf!=null){
-                            show += "<br>"+"<button style='width:calc(100% - 17px);' class='btn btn-sm btn-info'>PDF</button>";
+                            show += "<br>"+"<button onclick='previewPdf(\""+row.pdf+"\")' style='width:calc(100% - 17px);' class='btn btn-sm btn-info btn-pdf'>PDF</button>";
                         }
                         return show;
                     }
@@ -379,5 +397,19 @@
                 btn.prop('disabled', false);
             }
         });
+
+        function previewImage(src) {
+            $("#preview-gambar-barang").show();
+            $("#preview-gambar-barang").attr('src','/img/barang/'+src);
+            $("#preview-pdf-barang").hide();
+            $("#modal-preview").modal('show');
+        }
+
+        function previewPdf(src) {
+            $("#preview-gambar-barang").hide();
+            $("#preview-pdf-barang").show();
+            $("#preview-pdf-barang").attr('src','/img/barang/'+src);
+            $("#modal-preview").modal('show');
+        }
 	</script>
 @stop
