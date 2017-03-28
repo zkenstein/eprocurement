@@ -160,6 +160,7 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
 	<script type="text/javascript">
+        moment.locale("id");
         $("input.daterange").daterangepicker({
             timePicker: true,
             timePickerIncrement: 15,
@@ -211,7 +212,7 @@
                 {
                     "targets": 1,
                     "render": function(data, type, row, meta){
-                        return 'a';
+                        return "<strong>Batas waktu penawaran</strong> :<br>"+moment(row.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLL')+" - "+moment(row.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLL');
                     }
                 },
                 {
