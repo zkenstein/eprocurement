@@ -48,21 +48,30 @@
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}" id="add-token">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-4 padding-side">
+                                    <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
                                             <input id="add-kode" style="height: 42px;" type="text" required name="kode" class="form-control will-clear needvalidate" data-rule="required|unique:barang,kode|alpha_num" placeholder="Kode Barang">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-4 padding-side">
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Satuan</label>
+                                            <input id="add-satuan" style="height: 42px;" type="text" required name="satuan" class="form-control will-clear needvalidate" data-rule="required|alpha_num" placeholder="Satuan Barang">
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Gambar</label>
                                             <input id="add-gambar" type="file" name="gambar" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:2000" placeholder="Gambar Barang" accept="image/*">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-4 padding-side">
+                                    <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">PDF</label>
                                             <input id="add-pdf" type="file" name="pdf" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:2000" placeholder="Pdf Barang" accept="application/pdf">
@@ -100,6 +109,7 @@
                                 <thead>
                                     <tr>
                                         <th>Kode</th>
+                                        <th>Satuan</th>
                                         <th>Deskripsi</th>
                                         <th style="width: 100px;">Gambar</th>
                                         <th style="width:5%;"></th>
@@ -146,10 +156,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 padding-side">
+                        <div class="col-sm-6 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Kode</label>
-                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Kode Cluster">
+                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Kode Barang">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Satuan</label>
+                                <input id="edit-satuan" type="text" required name="satuan" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Satuan">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -179,7 +196,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 padding-side">
                             <img src="" id="preview-gambar-barang" width="100%">
-                            <iframe src="" style="width: 100%;height: 300px;" id="preview-pdf-barang"></iframe>
+                            <iframe src="" style="width: 100%;height: 500px;" id="preview-pdf-barang"></iframe>
                         </div>
                     </div>
                 </div>
@@ -216,13 +233,20 @@
                 {
                     "targets": 1,
                     "render": function(data, type, row, meta){
-                        var nama = row.deskripsi;
-                        return nama;
+                        var satuan = row.satuan;
+                        return satuan;
+                    }
+                },
+                {
+                    "targets": 2,
+                    "render": function(data, type, row, meta){
+                        var deskripsi = row.deskripsi;
+                        return deskripsi;
                     }
                 },
                 {
                     "orderable":false,
-                    "targets": 2,
+                    "targets": 3,
                     "render": function(data, type, row, meta){
                         var show = "<img class='img-thumbnail' onclick='previewImage(\""+row.gambar+"\")' src='/img/barang/"+row.gambar+"' style='width:calc(100% - 9px);border:1px solid #b7b6b6;'/>";
                         if(row.pdf!=null){
@@ -234,7 +258,7 @@
                 {
                     "className":"no-print",
                     "orderable":false,
-                    "targets": 3,
+                    "targets": 4,
                     "render": function(data, type, row, meta){
                         return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getBarang('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusBarang('+row.id+')"><i class="icon-trash"></i></button></div>';
                     }
@@ -310,6 +334,8 @@
                         });
                         $("#edit-kode").val(data.kode);
                         $("#edit-kode").data('rule','required|unique:barang,kode,'+data.id+',id|alpha_num');
+                        $("#edit-satuan").val(data.satuan);
+                        $("#edit-satuan").data('rule','required|alpha_num');
                         $("#edit-deskripsi").val(data.deskripsi);
                         $("#edit-deskripsi").data('rule','required|unique:barang,deskripsi,'+data.id+',id');
                         if(data.gambar!='default.gif'){

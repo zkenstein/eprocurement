@@ -11,6 +11,7 @@ class PengumumanController extends Controller
 {
 	public function getData(Request $request)
     {	
+        /*
     	$orderBy = '';
         switch($request->input('order.0.column')){
             case "0":
@@ -59,5 +60,6 @@ class PengumumanController extends Controller
             'data'=>$subkontraktor,
             'request'=>$request->all(),
         ],200);
+        */
     }
 }

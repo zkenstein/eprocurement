@@ -110,6 +110,7 @@ class BarangController extends Controller
         $barang = Barang::find($id);
         $barang->kode = $request->input('kode');
         $barang->deskripsi = $request->input('deskripsi');
+        $barang->satuan = $request->input('satuan');
         $gambar = 'default.gif';
         $pdf = null;
         $date = date_format(date_create(),'U');

@@ -85,7 +85,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Data Pengu	muman
+                            <i class="fa fa-align-justify"></i> Data Pengumuman
                         </div>
                         <div class="card-block">
                             <table id="pengumuman-data" class="table table-bordered table-striped">
@@ -125,92 +125,6 @@
                                 			<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button"><i class="icon-trash"></i></button></div>
                                 		</td>
                                 	</tr>
-                                	<tr>
-                                		<td>DEF</td>
-                                		<td>28 Maret 2017 Pukul 11.00</td>
-                                		<td>28 Maret 2017 Pukul 12.00</td>
-                                		<td>5 Pendaftar</td>
-                                		<td>
-                                			PIPING, VALVE AND PROPULSI<br>
-								            BOTTOM CLEANING DAN REPLATING<br>
-								            ELECTRIKAL DAN MECANICAL<br>
-								            DT AND NDT<br>
-								            GENERAL SERVICE
-                                		</td>
-                                		<td>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS1</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS3</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS10</label><br><br>
-                                		</td>
-                                		<td>
-                                			<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button"><i class="icon-trash"></i></button></div>
-                                		</td>
-                                	</tr>
-                                	<tr>
-                                		<td>GHI</td>
-                                		<td>28 Maret 2017 Pukul 11.00</td>
-                                		<td>28 Maret 2017 Pukul 12.00</td>
-                                		<td>5 Pendaftar</td>
-                                		<td>
-                                			PIPING, VALVE AND PROPULSI<br>
-								            BOTTOM CLEANING DAN REPLATING<br>
-								            ELECTRIKAL DAN MECANICAL<br>
-								            DT AND NDT<br>
-								            GENERAL SERVICE
-                                		</td>
-                                		<td>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS1</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS3</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS10</label><br><br>
-                                		</td>
-                                		<td>
-                                			<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button"><i class="icon-trash"></i></button></div>
-                                		</td>
-                                	</tr>
-                                	<tr>
-                                		<td>JKL</td>
-                                		<td>30 Maret 2017 Pukul 10.00</td>
-                                		<td>30 Maret 2017 Pukul 11.00</td>
-                                		<td>5 Pendaftar</td>
-                                		<td>
-								            DT AND NDT<br>
-								            GENERAL SERVICE
-                                		</td>
-                                		<td>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS10</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS5</label><br><br>
-                                		</td>
-                                		<td>
-                                			<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button"><i class="icon-trash"></i></button></div>
-                                		</td>
-                                	</tr>
-                                	<tr>
-                                		<td>MNO</td>
-                                		<td>1 April 2017 Pukul 09.00</td>
-                                		<td>1 Maret 2017 Pukul 10.00</td>
-                                		<td>7 Pendaftar</td>
-                                		<td>
-                                			PIPING, VALVE AND PROPULSI<br>
-								            GENERAL SERVICE
-                                		</td>
-                                		<td>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS10</label><br><br>
-                                			<img style="width:70px;border:1px solid #b7b6b6;" src="/img/barang/default.gif"><br>
-                                			<label>LGS3</label><br><br>
-                                		</td>
-                                		<td>
-                                			<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button"><i class="icon-trash"></i></button></div>
-                                		</td>
-                                	</tr>
                                 </tbody>
                             </table>
                         </div>
@@ -226,7 +140,18 @@
 		var csrf = "{{csrf_token()}}";
         var table = $("#pengumuman-data").DataTable({
         	"autoWidth": false,
-        	info:false
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{route('admin.pengumuman_data')}}",
+            info:false,
+            "language": {
+                "lengthMenu": "_MENU_",
+                "zeroRecords": "Maaf data tidak ditemukan",
+                "info": "_PAGE_ dari _PAGES_",
+                "infoEmpty": "Data Tidak Ditemukan",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Cari "
+            }
         });
     </script>
 @stop
