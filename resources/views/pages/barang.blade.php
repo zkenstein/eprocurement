@@ -137,6 +137,7 @@
                             <div class="form-group">
                                 <label class="form-form-control-label">PDF</label>
                                 <iframe src="" style="width: 100%;height: 300px;" id="view-pdf-edit"></iframe>
+                                <button id="button-hapus-pdf" data-visibleable="" data-id="" type="button" class="btn btn-sm btn-danger remove-pdf-button">Hapus PDF</button>
                                 <input id="edit-pdf" type="file" name="pdf" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:2000" placeholder="Pdf Barang" accept="application/pdf">
                             </div>
                         </div>
@@ -299,8 +300,11 @@
                         if(data.pdf!=null){
                             $("#view-pdf-edit").show();
                             $("#view-pdf-edit").attr('src','/img/barang/'+data.pdf);
+                            $("#button-hapus-pdf").data('id',data.id);
+                            $("#button-hapus-pdf").prop('disabled', false);
                         }else{
-                            
+                            $("#button-hapus-pdf").data('id',data.id);
+                            $("#button-hapus-pdf").prop('disabled', true);
                         }
                         $("#edit-gambar-view").attr('src','/img/barang/'+data.gambar);
                         $("#remove-image-button").data('id',data.id);
@@ -342,6 +346,29 @@
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
                         $("#edit-gambar-view").attr('src','/img/barang/default.gif');
+                        btn.data('visibleable','false');
+                        btn.prop('disabled', false);
+                        table.ajax.reload();
+                        csrf = res.token;
+                    }
+                });
+            }else{
+                btn.prop('disabled', false);
+            }
+        });
+
+        $(".remove-pdf-button").click(function(){
+            var btn = $(this);
+            var id = btn.data('id');
+            btn.prop('disabled', true);
+            var _c = confirm("Anda yakin akan menghapus PDF Barang ini ?");
+            if(_c===true){
+                $.ajax({
+                    url:"{{route('admin.remove_pdf_barang')}}/"+id,
+                    method:"POST",
+                    data:{_method:"delete",_token:csrf},
+                    success:function (res) {
+                        $("#view-pdf-edit").attr('src','');
                         btn.data('visibleable','false');
                         btn.prop('disabled', false);
                         table.ajax.reload();

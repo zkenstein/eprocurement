@@ -136,6 +136,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'as'=>'remove_gambar_barang',
 		'uses'=>'BarangController@removeGambar'
 	]);
+	Route::delete('/pdf_barang/{id?}',[
+		'as'=>'remove_pdf_barang',
+		'uses'=>'BarangController@removePdf'
+	]);
 
 
 	// PENGUMUMAN

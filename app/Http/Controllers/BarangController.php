@@ -94,6 +94,17 @@ class BarangController extends Controller
         return response()->json(['result'=>true]);
     }
 
+    public function removePdf(Request $request, $id)
+    {
+        $barang = Barang::find($id);
+        if($barang->pdf!=null){
+            \File::delete(public_path('/img/barang/'.$barang->pdf));
+        }
+        $barang->pdf = null;
+        $barang->save();
+        return response()->json(['result'=>true]);
+    }
+
     public function editData(Request $request, $id)
     {
         $barang = Barang::find($id);
