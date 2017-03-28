@@ -193,6 +193,9 @@
                     <li class="nav-item <?=$TAG=='subkontraktor'?'active':''?>">
                         <a class="nav-link" href="{{route('admin.subkontraktor')}}"><i class="icon-user-follow"></i> Sub Kontraktor</a>
                     </li>
+                    <li class="nav-item <?=$TAG=='pic'?'active':''?>">
+                        <a class="nav-link" href="{{route('admin.pic')}}"><i class="icon-user-follow"></i> PIC</a>
+                    </li>
                     <li class="nav-item <?=$TAG=='cluster'?'active':''?>">
                         <a class="nav-link" href="{{route('admin.cluster')}}"><i class="icon-layers"></i> Cluster</a>
                     </li>
@@ -786,7 +789,7 @@
                 }
             }
         }
-        $("input.needvalidate").keyup(function(){
+        $("input.needvalidate").change(function(){
             var element = $(this);
             validate(element);
         });

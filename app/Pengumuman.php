@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pengumuman extends Model
 {
     protected $table = 'pengumuman';
-    protected $fillable = ['kode','mulai_pengumuman','max_user'];
+    protected $fillable = ['kode','mulai_auction','selesai_auction','max_user','pic','pemenang'];
 
     public function listCluster(){
     	return $this->hasMany('App\PengumumanCluster');

@@ -15,8 +15,15 @@ class CreatePengumumanTable extends Migration
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kode')->unique();
-            $table->dateTime('mulai_pengumuman');
-            $table->tinyInteger('max_user');
+            $table->dateTime('batas_awal_waktu_penawaran');
+            $table->dateTime('batas_akhir_waktu_penawaran');
+            $table->dateTime('validitas_harga');
+            $table->dateTime('waktu_pengiriman');
+            $table->double('harga_netto');
+            $table->string('mata_uang');
+            $table->tinyInteger('max_register');
+            $table->integer('pic')->unsigned();
+            $table->foreign('pic')->references('id')->on('user')->onDelete('cascade');
             $table->timestamps();
         });
     }

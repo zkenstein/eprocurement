@@ -15,9 +15,10 @@ class CreatePengumumanBarangTable extends Migration
         Schema::create('pengumuman_barang', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pengumuman_id')->unsigned();
-            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');;
+            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');
             $table->integer('barang_id')->unsigned();
-            $table->foreign('barang_id')->references('id')->on('barang')->onDelete('cascade');;
+            $table->foreign('barang_id')->references('id')->on('barang')->onDelete('cascade');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }

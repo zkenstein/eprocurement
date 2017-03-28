@@ -45,6 +45,12 @@ class GeneralController extends Controller
     	return view('pages.subkontraktor',$data);
     }
 
+    public function picPage(Request $request)
+    {
+        $data['TAG'] = 'pic';
+        return view('pages.pic',$data);
+    }
+
     public function clusterPage(Request $request)
     {
     	$data['TAG'] = 'cluster';
@@ -60,6 +66,8 @@ class GeneralController extends Controller
     public function pengumumanPage(Request $request)
     {
     	$data['TAG'] = 'pengumuman';
+        $data['list_cluster'] = Cluster::all();
+        $data['list_barang'] = Barang::all();
     	return view('pages.pengumuman',$data);
     }
 

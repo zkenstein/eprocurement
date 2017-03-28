@@ -215,7 +215,7 @@
                     var data = res.data;
                     if(res.result===true){
                         $("#edit-modal").modal('show').on('hidden.bs.modal', function () {
-                            $("#edit-modal input").val('');
+                            $("#edit-modal input:not([name='_token'], [name='_method'])").val('');
                             $("#edit-modal textarea").val('');
                             $('#edit-modal .selectpicker').selectpicker('deselectAll');
                             listCluster = [];
@@ -243,7 +243,7 @@
                 data:{kode:kode,nama:nama,_token:csrf,_method:"patch"},
                 success:function(res){
                     $("#save-edit-button").prop('disabled', false);
-                    $("form#edit-modal input").val('');
+                    $("form#edit-modal input:not([name='_token'], [name='_method'])").val('');
                     $("form#edit-modal textarea").val('');
                     $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-success');
                     $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-danger');

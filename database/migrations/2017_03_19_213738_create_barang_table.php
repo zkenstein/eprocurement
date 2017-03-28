@@ -15,8 +15,10 @@ class CreateBarangTable extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kode')->unique();
+            $table->string('satuan');
             $table->text('deskripsi');
             $table->string('gambar')->nullable()->default('default.gif');
+            $table->string('pdf')->nullable();
             $table->timestamps();
         });
     }

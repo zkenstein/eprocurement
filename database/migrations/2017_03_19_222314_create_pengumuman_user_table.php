@@ -15,7 +15,7 @@ class CreatePengumumanUserTable extends Migration
         Schema::create('pengumuman_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pengumuman_id')->unsigned();
-            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');;
+            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');;
             $table->timestamps();

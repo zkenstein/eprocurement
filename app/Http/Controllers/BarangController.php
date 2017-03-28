@@ -44,15 +44,28 @@ class BarangController extends Controller
         ],200);
     }
 
+    public function getSingleData(Request $request, $id)
+    {
+        $data = Barang::find($id);
+        return response()->json(['result'=>true,'data'=>$data]);
+    }
+
     public function addData(Request $request)
     {
         $gambar = 'default.gif';
+        $pdf = null;
+        $date = date_format(date_create(),'U');
         if($request->hasFile('gambar')){
-            $gambar = $request->input('kode').'_'.date_format(date_create(),'U').'.'.$request->file('gambar')->getClientOriginalExtension();
+            $gambar = $request->input('kode').'_'.$date.'.'.$request->file('gambar')->getClientOriginalExtension();
             \Storage::disk('public')->put('img/barang/'.$gambar, \File::get($request->file('gambar')));
         }
-        $barang = new Barang($request->except(['gambar','_token','_method']));
+        if($request->hasFile('pdf')){
+            $pdf = $request->input('kode').'_'.$date.'.'.$request->file('pdf')->getClientOriginalExtension();
+            \Storage::disk('public')->put('img/barang/'.$pdf, \File::get($request->file('pdf')));
+        }
+        $barang = new Barang($request->except(['gambar','pdf','_token','_method']));
         $barang->gambar = $gambar;
+        $barang->pdf = $pdf;
         $barang->save();
         return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
     }
@@ -63,7 +76,55 @@ class BarangController extends Controller
         if($barang->gambar!="default.gif"){
             \File::delete(public_path('img/barang/'.$barang->gambar));
         }
+        if($barang->pdf!=null){
+            \File::delete(public_path('img/barang/'.$barang->pdf));
+        }
         $barang->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
+
+    public function removeGambar(Request $request, $id)
+    {
+        $barang = Barang::find($id);
+        if($barang->gambar!='default.gif'){
+            \File::delete(public_path('/img/barang/'.$barang->gambar));
+        }
+        $barang->gambar = 'default.gif';
+        $barang->save();
+        return response()->json(['result'=>true]);
+    }
+
+    public function editData(Request $request, $id)
+    {
+        $barang = Barang::find($id);
+        $barang->kode = $request->input('kode');
+        $barang->deskripsi = $request->input('deskripsi');
+        $gambar = 'default.gif';
+        $pdf = null;
+        $date = date_format(date_create(),'U');
+        if($request->hasFile('gambar')){
+            if($barang->gambar!='default.gif'){
+                \File::delete(public_path('/img/barang/'.$barang->gambar));
+                $gambar = $request->input('kode').'_'.$date.'.'.$request->file('gambar')->getClientOriginalExtension();
+                \Storage::disk('public')->put('img/barang/'.$gambar, \File::get($request->file('gambar')));
+            }else{
+                $gambar = $request->input('kode').'_'.$date.'.'.$request->file('gambar')->getClientOriginalExtension();
+                \Storage::disk('public')->put('img/barang/'.$gambar, \File::get($request->file('gambar')));
+            }
+            $barang->gambar = $gambar;
+        }
+        if($request->hasFile('pdf')){
+            if($barang->pdf!=null){
+                \File::delete(public_path('/img/barang/'.$barang->pdf));
+                $pdf = $request->input('kode').'_'.$date.'.'.$request->file('pdf')->getClientOriginalExtension();
+                \Storage::disk('public')->put('img/barang/'.$pdf, \File::get($request->file('pdf')));
+            }else{
+                $pdf = $request->input('kode').'_'.$date.'.'.$request->file('pdf')->getClientOriginalExtension();
+                \Storage::disk('public')->put('img/barang/'.$pdf, \File::get($request->file('pdf')));
+            }
+            $barang->pdf = $pdf;
+        }
+        $barang->save();
+        return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
     }
 }

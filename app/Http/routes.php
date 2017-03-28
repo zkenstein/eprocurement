@@ -79,6 +79,23 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 	Route::delete('/subkontraktor/{id?}','SubkontraktorController@deleteData');
 
 
+	// PIC
+	Route::get('/pic',[
+		'uses'=>'GeneralController@picPage',
+		'as'=>'pic'
+	]);
+	Route::get('/pic_data',[
+		'uses'=>'PicController@getData',
+		'as'=>'pic_data'
+	]);
+	Route::get('/pic_data/{id?}',[
+		'uses'=>'PicController@getSingleData',
+		'as'=>'pic_single_data'
+	]);
+	Route::post('/pic','PicController@addData');
+	Route::patch('/pic/{id?}','PicController@editData');
+	Route::delete('/pic/{id?}','PicController@deleteData');	
+
 
 	// CLUSTER
 	Route::get('/cluster',[
@@ -99,7 +116,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 
 
 
-
+	// BARANG
 	Route::get('/barang',[
 		'uses'=>'GeneralController@barangPage',
 		'as'=>'barang'
@@ -108,11 +125,26 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'BarangController@getData',
 		'as'=>'barang_data'
 	]);
+	Route::get('/barang_data/{id?}',[
+		'uses'=>'BarangController@getSingleData',
+		'as'=>'barang_single_data'
+	]);
 	Route::post('/barang','BarangController@addData');
+	Route::patch('/barang/{id?}','BarangController@editData');
 	Route::delete('/barang/{id?}','BarangController@deleteData');
+	Route::delete('/gambar_barang/{id?}',[
+		'as'=>'remove_gambar_barang',
+		'uses'=>'BarangController@removeGambar'
+	]);
 
+
+	// PENGUMUMAN
 	Route::get('/pengumuman',[
 		'uses'=>'GeneralController@pengumumanPage',
 		'as'=>'pengumuman'
+	]);
+	Route::get('pengumuman_data',[
+		'uses'=>'PengumumanController@getData',
+		'as'=>'pengumuman_data'
 	]);
 });

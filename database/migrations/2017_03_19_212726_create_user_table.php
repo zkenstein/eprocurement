@@ -21,7 +21,7 @@ class CreateUserTable extends Migration
             $table->string('telp')->unique();
             $table->text('bidang_usaha');
             $table->string('session_id')->nullable();
-            $table->enum('role',['admin','subkontraktor']);
+            $table->enum('role',['admin','subkontraktor','pic']);
             $table->dateTime('aktif')->nullable();
             $table->dateTime('kadaluarsa')->nullable();
             $table->timestamps();
