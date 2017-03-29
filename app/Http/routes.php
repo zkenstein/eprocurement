@@ -11,7 +11,11 @@
 |
 */
 
-// Route::get('tes_email','GeneralController@htmlmail');
+Route::post('tes_email','GeneralController@invite');
+Route::post('/invite',[
+	'uses'=>'PengumumanController@invite',
+	'as'=>'invite'
+]);
 
 Route::get('/',[
 	'uses'=>'PublickController@homePage',
@@ -151,4 +155,6 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin_only']],fun
 		'uses'=>'PengumumanController@getData',
 		'as'=>'pengumuman_data'
 	]);
+	Route::post('/pengumuman','PengumumanController@addData');
+	Route::delete('/pengumuman/{id?}','PengumumanController@deleteData');
 });

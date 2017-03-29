@@ -1,0 +1,38 @@
+Kebutuhan -> pengumuman lelang(multi cluster)->pendaftaran lelang->real time auction
+
+vendor email ada di master
+
+barang (foto + pdf) +satuan
+deskripsi sesuai dengan data master ifs
+
+kode lelang menggunakan nomer spph
+
+pilih barang saat pengumuman bisa dari master database dan import data . ex: excel
+
+jumlah peserta + list peserta yang daftar bisa dilihat administrator
+
+email 1: 
+info kalau ada lelang, silahkan buka alamat url
+- barang & qty & PIC
+- batas waktu penawaran ... s/d ...
+- validity harga (waktu)
+- delivery time (waktu)
+- harga neto & mata uang
+- kode(no spph)
+- batas peserta[bisa diisi bisa tidak]
+- pemasok memberikan konfirmasi daftar(melakukan pendaftaran) dengan kode login yg diemailkan(kodelogin otomatis)
+
+email 2:
+- waktu auction ke peserta yang sudah mendaftar
+- durasi auction
+
+
+
+ada extends waktu
+
+
+
+ACTION Report waktu 
+
+multi auction
+bahasa indonesia

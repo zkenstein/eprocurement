@@ -7,9 +7,39 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Pengumuman;
+use App\PengumumanBarang;
+use App\PengumumanCluster;
+use App\User;
+use App\UserCluster;
+use Mail;
 
 class PengumumanController extends Controller
 {
+    private function execInBackground($cmd) { 
+        if (substr(php_uname(), 0, 7) == "Windows"){ 
+            pclose(popen("start /B ". $cmd, "r"));  
+        } 
+        else { 
+            exec($cmd . " > /dev/null &");   
+        } 
+    }
+
+    public function invite(Request $request)
+    {
+        $template_path = 'mail_undangan';
+
+        // $receiver = $request->input("receiver");
+        // $receiverName = $request->input("receiver_name");
+        // $subject = $request->input("subject");
+        $data = array("kode"=>'123');
+
+        Mail::send($template_path, $data, function($message) {
+            $message->to("upload.kurniawan@gmail.com", "Agung")->subject("PAL");
+            $message->from(env('MAIL_USERNAME'),"PAL");
+        });
+        return true;
+    }
+
 	public function getData(Request $request)
     {	
         
@@ -60,7 +90,46 @@ class PengumumanController extends Controller
             'recordsFiltered'=>$recordsFiltered,
             'data'=>$pengumuman,
             'request'=>$request->all(),
-        ],200);
-        
+        ],200);        
+    }
+
+    public function addData(Request $request)
+    {
+        // return response()->json([$request->all()],500);
+        // dd($request->all());
+        $date = date_format(date_create(),'U');
+        if($request->hasFile('barang_csv')){
+
+        }
+        $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
+        $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
+        $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
+        $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
+        foreach($request->input('barang') as $barang){
+            PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
+        }
+        foreach($request->input('cluster') as $cluster){
+            $listUser = UserCluster::with('userInfo')->where('cluster_id',$cluster)->get();
+            foreach ($listUser as $key => $userCluster) {
+                exec('php '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' > /dev/null &');
+            }
+            PengumumanCluster::create(['pengumuman_id'=>$pengumuman->id,'cluster_id'=>$cluster]);
+        }
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, 'http://localhost:8000/tes_email');
+        // curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // // curl_setopt($ch, CURLOPT_POSTFIELDS,"receiver=kontraktor9@herobimbel.id&receiver_name=Kontraktor9&subject=Notivication");
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+        // curl_exec($ch);
+        // curl_close($ch);
+        return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
+    }
+
+    public function deleteData(Request $request, $id)
+    {
+        Pengumuman::where('id',$id)->delete();
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
 }

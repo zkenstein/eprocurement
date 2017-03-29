@@ -16,6 +16,6 @@ class PengumumanCluster extends Model
 
     public function clusterInfo()
     {
-    	return $this->belongsTo('App\Cluster');
+    	return $this->belongsTo('App\Cluster','cluster_id');
     }
 }

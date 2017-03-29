@@ -15,14 +15,14 @@ use App\Pengumuman;
 class GeneralController extends Controller
 {
 
-    public function invite($to,$name,$subject)
+    public function invite()
     {
         $data = array('name'=>"Our Code World");
         $template_path = 'mail_undangan';
 
         Mail::send($template_path, $data, function($message) {
-            $message->to($to, $name)->subject($subject);
-            $message->from(env('MAIL_USERNAME'),$subject);
+            $message->to("upload.kurniawan@gmail.com", "Agung")->subject("tes");
+            $message->from(env('MAIL_USERNAME'),"tes");
         });
 
         return "Basic email sent, check your inbox.";
@@ -30,6 +30,7 @@ class GeneralController extends Controller
 
     public function berandaPage(Request $request)
     {
+        // dd(PHP_OS);
     	$data['TAG'] = 'beranda';
         $data['count_subkontraktor'] = User::where('role','subkontraktor')->count();
         $data['count_cluster'] = Cluster::count();
