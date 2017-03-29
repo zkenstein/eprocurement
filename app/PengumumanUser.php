@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PengumumanUser extends Model
 {
     protected $table = 'pengumuman_user';
-    protected $fillable = ['pengumuman_id','user_id'];
+    protected $fillable = ['pengumuman_id','user_id','kode_masuk'];
 
     public function pengumumanInfo()
     {

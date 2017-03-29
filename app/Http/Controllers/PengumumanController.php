@@ -94,8 +94,11 @@ class PengumumanController extends Controller
     public function addData(Request $request)
     {
         $date = date_format(date_create(),'U');
+        $excel = null;
         if($request->hasFile('barang_csv')){
-
+            $excel = $request->input('kode').'_'.$date.'.'.$request->file('barang_csv')->getClientOriginalExtension();
+            \Storage::disk('local')->put($excel, \File::get($request->file('barang_csv')));
+            $request->merge(array('file_excel' => $excel));
         }
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
@@ -108,14 +111,16 @@ class PengumumanController extends Controller
         foreach($request->input('cluster') as $cluster){
             $listUser = UserCluster::with('userInfo')->where('cluster_id',$cluster)->get();
             foreach ($listUser as $key => $userCluster) {
-                exec('php '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' > /dev/null &');
+                // exec('php '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' \'Pembukaan Tender\' > /dev/null &');
             }
             PengumumanCluster::create(['pengumuman_id'=>$pengumuman->id,'cluster_id'=>$cluster]);
         }
+        // exec('curl --form "fileupload=@my-file.txt;filename=desired-filename.txt" --form param1=value1 --form param2=value2 https://example.com/resource.cgi')
+        // exec('curl -k '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' \'Pembukaan Tender\' > /dev/null &');
         // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, 'http://localhost:8000/tes_email');
+        // curl_setopt($ch, CURLOPT_URL, route('invite'));
         // curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-        // curl_setopt($ch, CURLOPT_POST, 1);
+        // // curl_setopt($ch, CURLOPT_POST, 1);
         // // curl_setopt($ch, CURLOPT_POSTFIELDS,"receiver=kontraktor9@herobimbel.id&receiver_name=Kontraktor9&subject=Notivication");
         // curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
         // curl_setopt($ch, CURLOPT_TIMEOUT, 1);

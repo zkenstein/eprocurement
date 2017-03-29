@@ -38,28 +38,63 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2017_03_19_222314_create_pengumuman_user_table',	1),
 ('2017_03_20_071652_create_pengumuman_barang_table',	1),
 ('2017_03_22_092414_create_user_cluster_table',	1),
+('2017_03_28_162357_create_barang_eksternal_table',	1),
+('2017_03_19_212725_create_cluster_table',	1),
+('2017_03_19_212726_create_user_table',	1),
+('2017_03_19_213738_create_barang_table',	1),
+('2017_03_19_213915_create_pengumuman_table',	1),
+('2017_03_19_221808_create_pengumuman_cluster_table',	1),
+('2017_03_19_222314_create_pengumuman_user_table',	1),
+('2017_03_20_071652_create_pengumuman_barang_table',	1),
+('2017_03_22_092414_create_user_cluster_table',	1),
 ('2017_03_28_162357_create_barang_eksternal_table',	2);
 
 INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `pic`, `created_at`, `updated_at`) VALUES
-(1,	'qwdc',	'2017-03-28 13:18:14',	'2017-03-28 13:18:14',	'2017-03-28 13:18:14',	'2017-03-28 13:18:14',	1234567,	'asdas',	2,	22,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
+(11,	'ABC',	'2017-03-29 00:00:00',	'2017-04-01 23:00:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	0,	21,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(12,	'ABCD',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	4,	22,	'2017-03-29 04:14:07',	'2017-03-29 04:14:07'),
+(13,	'DFG',	'2017-03-29 00:00:00',	'2017-04-22 23:00:00',	'2017-03-29 00:00:00',	'2017-03-31 00:00:00',	24000000,	'SGD',	3,	22,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
+(14,	'ZXC',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'SGD',	6,	21,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
+(15,	'DCV',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	9000000,	'IDR',	0,	22,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
 
+INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(16,	11,	6,	1,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(17,	11,	11,	6,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(18,	11,	12,	7,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(19,	12,	9,	4,	'2017-03-29 04:14:07',	'2017-03-29 04:14:07'),
+(20,	12,	10,	5,	'2017-03-29 04:14:07',	'2017-03-29 04:14:07'),
+(21,	13,	6,	1,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
+(22,	13,	7,	2,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
+(23,	14,	8,	3,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
+(24,	14,	9,	4,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
+(25,	14,	10,	5,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
+(26,	15,	9,	4,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
+(27,	15,	15,	10,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
+(28,	15,	16,	11,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
 
+INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
+(8,	11,	5,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(9,	12,	1,	'2017-03-29 04:14:08',	'2017-03-29 04:14:08'),
+(10,	13,	1,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
+(11,	13,	2,	'2017-03-29 05:23:22',	'2017-03-29 05:23:22'),
+(12,	14,	4,	'2017-03-29 05:38:40',	'2017-03-29 05:38:40'),
+(13,	14,	5,	'2017-03-29 05:38:40',	'2017-03-29 05:38:40'),
+(14,	15,	4,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
 
 
 INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `created_at`, `updated_at`) VALUES
-(1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	NULL,	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	NULL,	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-23 01:37:18'),
-(2,	'AKA02AS',	'AKASIA TEKNOLOGI PT.',	'kontraktor2@herobimbel.id',	NULL,	'3211234562',	'KONSTRUKSI DAN PERMESINAN',	NULL,	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:38:37',	'2017-03-23 01:37:06'),
-(3,	'ALR01AS',	'ALREDHO TEKNIK PT.',	'kontraktor3@herobimbel.id',	NULL,	'03211234563',	'PENGELASAN,TANK CLEANING,AKOMODASI ,PENGGERAK UTAMA,POMPA,MACHINING,BALANCING,AC,MOTOR GENERATOR',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:57'),
-(4,	'AME14AS',	'AMERTA TIRTA BUWANA PT.',	'kontraktor4@herobimbel.id',	NULL,	'03211234564',	'ASIS TUG BOAT',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:47'),
-(5,	'ARV01AS',	'ARVET UNGGUL JAYA PT.',	'kontraktor5@herobimbel.id',	NULL,	'03211234565',	'GENERAL SERVICE,MEKANIKAL DAN ELEKTRIKAL,PIPING VALVE DAN PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:34'),
-(6,	'AUL03AS',	'AULIA KARYA PERDANA PT.',	'kontraktor6@herobimbel.id',	NULL,	'03211234566',	'KONSTRUKSI KAPAL, PIPING, ELECTRICAL SYSTEM',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:24'),
-(7,	'BAN13AS',	'BANGUN PERKASA JAYA ENGINEERING PT.',	'kontraktor7@herobimbel.id',	NULL,	'03211234567',	'MEKANIKAL & ELEKTRIKAL, PIPING, VALVE & SYSTEM PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:11'),
-(8,	'BDP01AS',	'BDP INDONESIA PT.',	'kontraktor8@herobimbel.id',	NULL,	'03211234568',	'PENGURUSAN TRANSPORTASI MATERIAL HANDLING LAUT & UDARA,CUTOM CLEARANCE',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:35:57'),
-(9,	'DAL05AS',	'DALUT NUSANTARA BARU PT.',	'kontraktor9@herobimbel.id',	NULL,	'03211234569',	'NDT ( NON DESTRUCTIVE TEST) NON RADIASI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:35:28'),
-(10,	'DUA01AS',	'DUA-DUA KUTAI UTAMA PT.',	'kontraktor10@herobimbel.id',	NULL,	'032112345610',	'BOTTOM CLEANING & REPLATING ,PIPING,VALVE, PROPULSI',	NULL,	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:34:48'),
-(11,	'KODE-0',	'Administrator',	'kurniawan@herobimbel.id',	'12345',	'03210987651',	'',	NULL,	'admin',	NULL,	NULL,	'2017-03-22 18:48:28',	'2017-03-22 18:48:28'),
-(21,	'DEF',	'Budi Prakoso',	'budi@pal.co',	'12345',	'0812373243',	'',	NULL,	'pic',	NULL,	NULL,	'2017-03-27 21:27:24',	'2017-03-28 03:54:09'),
-(22,	'ABC',	'Hari Kurniawan',	'hari@pal.co',	'12345',	'08712463264728',	'',	NULL,	'pic',	NULL,	NULL,	'2017-03-27 21:32:15',	'2017-03-28 03:53:56');
+(1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	'12345',	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	'',	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-23 01:37:18'),
+(2,	'AKA02AS',	'AKASIA TEKNOLOGI PT.',	'kontraktor2@herobimbel.id',	'12345',	'3211234562',	'KONSTRUKSI DAN PERMESINAN',	'',	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:38:37',	'2017-03-23 01:37:06'),
+(3,	'ALR01AS',	'ALREDHO TEKNIK PT.',	'kontraktor3@herobimbel.id',	'12345',	'03211234563',	'PENGELASAN,TANK CLEANING,AKOMODASI ,PENGGERAK UTAMA,POMPA,MACHINING,BALANCING,AC,MOTOR GENERATOR',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:57'),
+(4,	'AME14AS',	'AMERTA TIRTA BUWANA PT.',	'kontraktor4@herobimbel.id',	'12345',	'03211234564',	'ASIS TUG BOAT',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:47'),
+(5,	'ARV01AS',	'ARVET UNGGUL JAYA PT.',	'kontraktor5@herobimbel.id',	'12345',	'03211234565',	'GENERAL SERVICE,MEKANIKAL DAN ELEKTRIKAL,PIPING VALVE DAN PROPULSI',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:34'),
+(6,	'AUL03AS',	'AULIA KARYA PERDANA PT.',	'kontraktor6@herobimbel.id',	'12345',	'03211234566',	'KONSTRUKSI KAPAL, PIPING, ELECTRICAL SYSTEM',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:24'),
+(7,	'BAN13AS',	'BANGUN PERKASA JAYA ENGINEERING PT.',	'kontraktor7@herobimbel.id',	'12345',	'03211234567',	'MEKANIKAL & ELEKTRIKAL, PIPING, VALVE & SYSTEM PROPULSI',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:36:11'),
+(8,	'BDP01AS',	'BDP INDONESIA PT.',	'kontraktor8@herobimbel.id',	'12345',	'03211234568',	'PENGURUSAN TRANSPORTASI MATERIAL HANDLING LAUT & UDARA,CUTOM CLEARANCE',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:35:57'),
+(9,	'DAL05AS',	'DALUT NUSANTARA BARU PT.',	'kontraktor9@herobimbel.id',	'12345',	'03211234569',	'NDT ( NON DESTRUCTIVE TEST) NON RADIASI',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:35:28'),
+(10,	'DUA01AS',	'DUA-DUA KUTAI UTAMA PT.',	'kontraktor10@herobimbel.id',	'12345',	'032112345610',	'BOTTOM CLEANING & REPLATING ,PIPING,VALVE, PROPULSI',	'',	'subkontraktor',	NULL,	NULL,	'0000-00-00 00:00:00',	'2017-03-23 01:34:48'),
+(11,	'KODE-0',	'Administrator',	'kurniawan@herobimbel.id',	'12345',	'03210987651',	'',	'',	'admin',	NULL,	NULL,	'2017-03-22 18:48:28',	'2017-03-22 18:48:28'),
+(21,	'DEF',	'Budi Prakoso',	'budi@pal.co',	'12345',	'0812373243',	'',	'',	'pic',	NULL,	NULL,	'2017-03-27 21:27:24',	'2017-03-28 03:54:09'),
+(22,	'ABC',	'Hari Kurniawan',	'hari@pal.co',	'12345',	'08712463264728',	'',	'',	'pic',	NULL,	NULL,	'2017-03-27 21:32:15',	'2017-03-28 03:53:56');
 
 INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
 (26,	10,	4,	'2017-03-23 01:34:48',	'2017-03-23 01:34:48'),
@@ -88,4 +123,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18'),
 (51,	1,	4,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18');
 
--- 2017-03-28 12:34:12
+-- 2017-03-29 05:54:31

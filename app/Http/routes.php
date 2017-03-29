@@ -11,8 +11,13 @@
 |
 */
 
-Route::post('tes_email','GeneralController@invite');
-Route::post('/invite',[
+// Route::post('tes_email','GeneralController@invite');
+// Route::post('/invite',[
+// 	'uses'=>'PengumumanController@invite',
+// 	'as'=>'invite'
+// ]);
+
+Route::get('HKYuHZf6nyh2YvVC1Jzw',[
 	'uses'=>'PengumumanController@invite',
 	'as'=>'invite'
 ]);

@@ -24,6 +24,7 @@ class CreatePengumumanTable extends Migration
             $table->tinyInteger('max_register');
             $table->integer('pic')->unsigned();
             $table->foreign('pic')->references('id')->on('user')->onDelete('cascade');
+            $table->string('file_excel')->nullable();
             $table->timestamps();
         });
     }

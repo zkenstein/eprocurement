@@ -111,7 +111,7 @@
                                             </div>
                                             <div class="form-group col-sm-6 padding-side">
                                                 <label class="form-form-control-label">Import CSV</label>
-                                                <input type="file" name="barang_csv" class="form-control input-sm">
+                                                <input type="file" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                             </div>
                                         </div>
                                         	

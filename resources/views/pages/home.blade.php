@@ -35,7 +35,7 @@
                             <table class="table table-hover table-outline mb-0 hidden-sm-down">
                                 <thead class="thead-default">
                                     <tr>
-                                        <th colspan="5">
+                                        <th colspan="6">
                                         	<i class="icon-notebook"></i> Pengumuman Terakhir
                                         </th>
                                     </tr>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @if( count($list_pengumuman) < 1 )
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="6">
                                                 Tidak ada pengumuman
                                             </td>
                                         </tr>
@@ -59,7 +59,7 @@
                                                     <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y')}}
                                                 </div>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 @if($pengumuman->max_register!=0)
                                                     Maksimal {{$pengumuman->max_register}} Pendaftar
                                                 @else
@@ -80,6 +80,9 @@
                                                 @foreach($pengumuman->listBarang as $barangData)
                                                     {{$barangData->barangInfo->kode}} : {{$barangData->quantity}} {{$barangData->barangInfo->satuan}} <br>
                                                 @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn" <?=session('role')!='subkontraktor'?'disabled title="Anda harus login sebelum melakukan pendaftaran"':''?>>Daftar</button>
                                             </td>
                                         </tr>
                                         @endforeach

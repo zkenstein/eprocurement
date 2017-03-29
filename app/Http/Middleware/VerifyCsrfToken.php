@@ -13,6 +13,6 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         "intern/*",
-        "/invite"
+        "HKYuHZf6nyh2YvVC1Jzw"
     ];
 }

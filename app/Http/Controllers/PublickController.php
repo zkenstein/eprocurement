@@ -40,7 +40,7 @@ class PublickController extends Controller
     public function homePage(Request $request)
     {
     	$data['TAG'] = 'home';
-        $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->skip(0)->take(4)->orderBy('created_at','desc')->get();
+        $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->where('batas_akhir_waktu_penawaran','>=',\Carbon\Carbon::now())->orderBy('created_at','desc')->get();
     	return view('pages.home',$data);
     }
 
