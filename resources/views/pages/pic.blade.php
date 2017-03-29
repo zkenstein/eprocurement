@@ -14,7 +14,7 @@
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
+        <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
         <li class="breadcrumb-item active">PIC</li>
     </ol>
@@ -173,7 +173,7 @@
             "autoWidth": false,
 			"processing": true,
 	        "serverSide": true,
-	        "ajax": "{{route('admin.pic_data')}}",
+	        "ajax": "{{route('intern.pic_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -257,7 +257,7 @@
             var _c = confirm("Anda yakin akan menghapus PIC ini ?");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.pic')}}/"+id,
+                    url:"{{route('intern.pic')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -274,7 +274,7 @@
         function getPic(id) {
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             $.ajax({
-                url:"{{route('admin.pic_single_data')}}/"+id,
+                url:"{{route('intern.pic_single_data')}}/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -309,7 +309,7 @@
             var password = $("#edit-password").val().trim();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('admin.pic')}}/"+id,
+                url:"{{route('intern.pic')}}/"+id,
                 method:"POST",
                 data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,_token:csrf,_method:"patch"},
                 success:function(res){

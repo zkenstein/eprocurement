@@ -19,15 +19,20 @@ class PublickController extends Controller
 		$password = $request->input('password');
 		$user = User::where(['email'=>$email,'password'=>$password])->first();
 		if($user!=null){
-			if($user->role!='admin'){
+			if($user->role=='subkontraktor'){
 				if($user->aktif<=\Carbon\Carbon::now() && $user->kadaluarsa>\Carbon\Carbon::now()){
 					session()->put('role',$user->role);
+                    session()->put('id',$user->id);
+                    session()->put('nama',$user->nama);
 					return response()->json(['result'=>true,'data'=>$user]);
 				}
 				return response()->json(['result'=>false,'message'=>'expired']);
-			}
-			session()->put('role',$user->role);
-			return response()->json(['data'=>$user,'result'=>true]);
+			}else{
+                session()->put('role',$user->role);
+                session()->put('id',$user->id);
+                session()->put('nama',$user->nama);
+                return response()->json(['data'=>$user,'result'=>true]);
+            }
 		}
 		return response()->json(['result'=>false,'message'=>'not match']);
 	}
@@ -35,7 +40,7 @@ class PublickController extends Controller
     public function homePage(Request $request)
     {
     	$data['TAG'] = 'home';
-        $data['list_pengumuman'] = Pengumuman::skip(0)->take(4)->orderBy('created_at','desc')->get();
+        $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->skip(0)->take(4)->orderBy('created_at','desc')->get();
     	return view('pages.home',$data);
     }
 

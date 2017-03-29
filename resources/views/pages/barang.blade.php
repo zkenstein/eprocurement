@@ -31,7 +31,7 @@
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
+        <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
         <li class="breadcrumb-item active">Barang</li>
     </ol>
@@ -212,7 +212,7 @@
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('admin.barang_data')}}",
+            "ajax": "{{route('intern.barang_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -318,7 +318,7 @@
         function getBarang(id) {
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             $.ajax({
-                url:"{{route('admin.barang_single_data')}}/"+id,
+                url:"{{route('intern.barang_single_data')}}/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -353,7 +353,7 @@
                         $("#edit-gambar-view").attr('src','/img/barang/'+data.gambar);
                         $("#remove-image-button").data('id',data.id);
                         $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
-                        $("form#edit-modal").attr('action',"{{route('admin.barang')}}/"+id);
+                        $("form#edit-modal").attr('action',"{{route('intern.barang')}}/"+id);
                     }
                 }
             })
@@ -364,7 +364,7 @@
             var _c = confirm("Anda yakin akan menghapus Barang ini ?\n Semua data yang berkaitan dengan barang ini akan terhapus");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.barang')}}/"+id,
+                    url:"{{route('intern.barang')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -385,7 +385,7 @@
             var _c = confirm("Anda yakin akan menghapus Gambar Barang ini ?\n Gambar akan diganti ke gambar default");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.remove_gambar_barang')}}/"+id,
+                    url:"{{route('intern.remove_gambar_barang')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -408,7 +408,7 @@
             var _c = confirm("Anda yakin akan menghapus PDF Barang ini ?");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.remove_pdf_barang')}}/"+id,
+                    url:"{{route('intern.remove_pdf_barang')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {

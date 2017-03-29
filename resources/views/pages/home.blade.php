@@ -35,7 +35,7 @@
                             <table class="table table-hover table-outline mb-0 hidden-sm-down">
                                 <thead class="thead-default">
                                     <tr>
-                                        <th colspan="4">
+                                        <th colspan="5">
                                         	<i class="icon-notebook"></i> Pengumuman Terakhir
                                         </th>
                                     </tr>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @if( count($list_pengumuman) < 1 )
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 Tidak ada pengumuman
                                             </td>
                                         </tr>
@@ -52,18 +52,34 @@
                                         <tr>
                                             <td>
                                                 <div><strong>Kode </strong>: <a>{{$pengumuman->kode}}</a></div>
-                                                <div class="small text-muted">
-                                                    <strong>Mulai : </strong> {{$pengumuman->mulai_pengumuman}}
+                                                <div class="small">
+                                                    <strong>Mulai : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_awal_waktu_penawaran)->formatLocalized('%A %d %B %Y')}}
+                                                </div>
+                                                <div class="small">
+                                                    <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y')}}
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                5 Pendaftar Maksimal
+                                                @if($pengumuman->max_register!=0)
+                                                    Maksimal {{$pengumuman->max_register}} Pendaftar
+                                                @else
+                                                    Tidak ada batasan pendaftar
+                                                @endif
                                             </td>
                                             <td>
-                                                Cluster 1, Cluster 2, Cluster 3
+                                               <strong>Validitas Harga</strong> : {{\Carbon\Carbon::parse($pengumuman->validitas_harga)->formatLocalized('%A %d %B %Y')}}<br>
+                                               <strong>Waktu Pengiriman</strong> : {{\Carbon\Carbon::parse($pengumuman->waktu_pengiriman)->formatLocalized('%A %d %B %Y')}}
                                             </td>
                                             <td>
-                                                Barang 1, Barang 2, Barang 3, Barang 4
+                                                <strong>Cluster</strong> : <br>
+                                                @foreach($pengumuman->listCluster as $clusterData)
+                                                    {{$clusterData->clusterInfo->kode}}<br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($pengumuman->listBarang as $barangData)
+                                                    {{$barangData->barangInfo->kode}} : {{$barangData->quantity}} {{$barangData->barangInfo->satuan}} <br>
+                                                @endforeach
                                             </td>
                                         </tr>
                                         @endforeach

@@ -14,7 +14,7 @@
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
+        <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
         <li class="breadcrumb-item active">Sub Kontraktor</li>
     </ol>
@@ -195,7 +195,7 @@
             "autoWidth": false,
 			"processing": true,
 	        "serverSide": true,
-	        "ajax": "{{route('admin.subkontraktor_data')}}",
+	        "ajax": "{{route('intern.subkontraktor_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -293,7 +293,7 @@
             var _c = confirm("Anda yakin akan menghapus Subkontraktor ini ?");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.subkontraktor')}}/"+id,
+                    url:"{{route('intern.subkontraktor')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -311,7 +311,7 @@
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             var listCluster = [];
             $.ajax({
-                url:"{{route('admin.subkontraktor_single_data')}}/"+id,
+                url:"{{route('intern.subkontraktor_single_data')}}/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -353,7 +353,7 @@
             var bidang_usaha = $("#edit-bidang-usaha").val().trim();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('admin.subkontraktor')}}/"+id,
+                url:"{{route('intern.subkontraktor')}}/"+id,
                 method:"POST",
                 data:{kode:kode,nama:nama,email:email,telp:telp,bidang_usaha:bidang_usaha,role:2,cluster:cluster,_token:csrf,_method:"patch"},
                 success:function(res){

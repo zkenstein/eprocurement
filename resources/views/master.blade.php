@@ -31,7 +31,7 @@
             background-color: #20a8d1 !important;
             color: white !important;
         }
-        @if(session('role')!='admin')
+        @if(session('role')!='admin' && session('role')!='pic')
         .sidebar-fixed .main, .sidebar-fixed .app-footer {
             margin-left: 0px !important;
         }
@@ -123,12 +123,12 @@
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
     <header class="app-header navbar">
-        @if(session('role')=='admin')
+        @if(session('role')=='admin' || session('role')=='pic')
         <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
         @endif
         <a class="navbar-brand" href="#"></a>
         <ul class="nav navbar-nav hidden-md-down">
-            @if(session('role')=='admin')
+            @if(session('role')=='admin' || session('role')=='pic')
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
             </li>
@@ -142,7 +142,7 @@
             <li class="nav-item px-1">
                 <a class="nav-link <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
             </li>
-            @if(session('role')!='admin' && session('role')!='subkontraktor')
+            @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
             <li class="nav-item px-1">
                 <a class="nav-link login" href="#" data-toggle="modal" data-target="#login-modal"><i class="icon-login"></i> Masuk</a>
             </li>
@@ -167,7 +167,7 @@
                     <a class="dropdown-item <?=$TAG=='home'?'active':''?>" href="{{route('home')}}">Home</a>
                     <a class="dropdown-item <?=$TAG=='tentang'?'active':''?>" href="{{route('tentang')}}">Tentang</a>
                     <a class="dropdown-item <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
-                    @if(session('role')!='admin' && session('role')!='subkontraktor')
+                    @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
                         <a class="dropdown-item login" data-toggle="modal" data-target="#login-modal" href="#"><i class="icon-login"></i> Masuk</a>
 
                     @else
@@ -183,34 +183,36 @@
     </header>
 
     <div class="app-body">
-        @if(session('role')=='admin')
+        @if(session('role')=='admin' || session('role')=='pic')
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-item <?=$TAG=='beranda'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.beranda')}}"><i class="icon-speedometer"></i> Beranda</a>
+                        <a class="nav-link" href="{{route('intern.beranda')}}"><i class="icon-speedometer"></i> Beranda</a>
                     </li>
+                    @if(session('role')=='admin')
                     <li class="nav-title">
                         Data Master
                     </li>
                     <li class="nav-item <?=$TAG=='subkontraktor'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.subkontraktor')}}"><i class="icon-user-follow"></i> Sub Kontraktor</a>
+                        <a class="nav-link" href="{{route('intern.subkontraktor')}}"><i class="icon-user-follow"></i> Sub Kontraktor</a>
                     </li>
                     <li class="nav-item <?=$TAG=='pic'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.pic')}}"><i class="icon-user-follow"></i> PIC</a>
+                        <a class="nav-link" href="{{route('intern.pic')}}"><i class="icon-user-follow"></i> PIC</a>
                     </li>
                     <li class="nav-item <?=$TAG=='cluster'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.cluster')}}"><i class="icon-layers"></i> Cluster</a>
+                        <a class="nav-link" href="{{route('intern.cluster')}}"><i class="icon-layers"></i> Cluster</a>
                     </li>
                     <li class="nav-item <?=$TAG=='barang'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.barang')}}"><i class="icon-grid"></i> Barang</a>
+                        <a class="nav-link" href="{{route('intern.barang')}}"><i class="icon-grid"></i> Barang</a>
                     </li>
+                    @endif
                     <li class="divider"></li>
                     <li class="nav-title">
                         Transaksional
                     </li>
                     <li class="nav-item <?=$TAG=='pengumuman'?'active':''?>">
-                        <a class="nav-link" href="{{route('admin.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
+                        <a class="nav-link" href="{{route('intern.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
                     </li>
                 </ul>
             </nav>
@@ -511,7 +513,7 @@
         @endif
     </div>
 
-    @if(session('role')!='admin' && session('role')!='subkontraktor')
+    @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
     <form class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
@@ -699,7 +701,7 @@
         });
     </script>
 
-    @if(session('role')!='admin' && session('role')!='subkontraktor')
+    @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
     <script type="text/javascript">
         $("#login-modal").submit(function(e){
             e.preventDefault();
@@ -713,7 +715,7 @@
                     console.log(res);
                     if(res.result==true){
                         if(res.data.role=='admin'){
-                            window.location.href = "{{route('admin.beranda')}}";
+                            window.location.href = "{{route('intern.beranda')}}";
                         }else{
                             location.reload();
                         }
@@ -748,7 +750,7 @@
                 var form = new FormData();
                 form.append('gambar',element);
                 $.ajax({
-                    url: "{{route('admin.validate')}}/"+name+"?_rule="+element.data('rule'),
+                    url: "{{route('intern.validate')}}/"+name+"?_rule="+element.data('rule'),
                     type: "POST",
                     data: form,
                     contentType: false,
@@ -761,7 +763,7 @@
             }else{
                 if(element.val().length>=1){
                     $.ajax({
-                        url:"{{route('admin.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
+                        url:"{{route('intern.validate')}}/"+name+"?"+name+"="+element.val()+"&_rule="+element.data('rule'),
                         method:"GET",
                         success:function(res){
                             element.parent(".form-group").removeClass('has-danger');

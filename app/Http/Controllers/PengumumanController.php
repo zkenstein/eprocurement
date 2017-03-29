@@ -27,10 +27,6 @@ class PengumumanController extends Controller
     public function invite(Request $request)
     {
         $template_path = 'mail_undangan';
-
-        // $receiver = $request->input("receiver");
-        // $receiverName = $request->input("receiver_name");
-        // $subject = $request->input("subject");
         $data = array("kode"=>'123');
 
         Mail::send($template_path, $data, function($message) {
@@ -81,6 +77,8 @@ class PengumumanController extends Controller
                 });
         }
 
+        if(session('role')=='pic') $pengumuman = $pengumuman->where('pic',session('id'));
+
         $recordsFiltered = $pengumuman->count();
 
         $pengumuman = $pengumuman->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
@@ -95,8 +93,6 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
-        // return response()->json([$request->all()],500);
-        // dd($request->all());
         $date = date_format(date_create(),'U');
         if($request->hasFile('barang_csv')){
 
@@ -104,6 +100,7 @@ class PengumumanController extends Controller
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
+        if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
         foreach($request->input('barang') as $barang){
             PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);

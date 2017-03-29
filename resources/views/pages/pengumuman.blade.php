@@ -11,7 +11,7 @@
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
+        <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">{{studly_case(session('role'))}}</a>
         </li>
         <li class="breadcrumb-item active">Pengumuman</li>
     </ol>
@@ -37,12 +37,16 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">PIC</label>
+                                            @if(session('role')=='pic')
+                                            <input type="text" name="pic" value="Anda" class="form-control" readonly placeholder="Anda">
+                                            @else
                                             <select class="form-control input-sm" name="pic">
                                                 @foreach($list_pic as $pic)
                                                 <option value="{{$pic->id}}">{{$pic->nama}}</option>
                                                 @endforeach
                                             </select>
                                             <span class="help-block"></span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +229,7 @@
         	"autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('admin.pengumuman_data')}}",
+            "ajax": "{{route('intern.pengumuman_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -369,7 +373,7 @@
             var _c = confirm("Anda yakin akan menghapus Pengumuman ini ?\n Semua data yang berkaitan dengan barang ini akan terhapus");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.pengumuman')}}/"+id,
+                    url:"{{route('intern.pengumuman')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {

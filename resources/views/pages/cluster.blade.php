@@ -14,7 +14,7 @@
 
 @section('content')
 	<ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{route('admin.beranda')}}">Admin</a>
+        <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
         <li class="breadcrumb-item active">Cluster</li>
     </ol>
@@ -123,7 +123,7 @@
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('admin.cluster_data')}}",
+            "ajax": "{{route('intern.cluster_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -192,7 +192,7 @@
             var _c = confirm("Anda yakin akan menghapus Cluster ini ?\n Semua data yang berkaitan dengan cluster ini akan terhapus");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('admin.cluster')}}/"+id,
+                    url:"{{route('intern.cluster')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -209,7 +209,7 @@
         function getCluster(id) {
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             $.ajax({
-                url:"{{route('admin.cluster_single_data')}}/"+id,
+                url:"{{route('intern.cluster_single_data')}}/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -238,7 +238,7 @@
             var nama = $("#edit-nama").val();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('admin.cluster')}}/"+id,
+                url:"{{route('intern.cluster')}}/"+id,
                 method:"POST",
                 data:{kode:kode,nama:nama,_token:csrf,_method:"patch"},
                 success:function(res){
