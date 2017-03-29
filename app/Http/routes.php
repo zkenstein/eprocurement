@@ -17,11 +17,6 @@
 // 	'as'=>'invite'
 // ]);
 
-Route::get('HKYuHZf6nyh2YvVC1Jzw',[
-	'uses'=>'PengumumanController@invite',
-	'as'=>'invite'
-]);
-
 Route::get('/',[
 	'uses'=>'PublickController@homePage',
 	'as'=>'home'

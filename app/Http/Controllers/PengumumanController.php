@@ -12,29 +12,12 @@ use App\PengumumanCluster;
 use App\User;
 use App\UserCluster;
 use Mail;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Jobs\KirimEmailPemberitahuan;
 
 class PengumumanController extends Controller
 {
-    private function execInBackground($cmd) { 
-        if (substr(php_uname(), 0, 7) == "Windows"){ 
-            pclose(popen("start /B ". $cmd, "r"));  
-        } 
-        else { 
-            exec($cmd . " > /dev/null &");   
-        } 
-    }
-
-    public function invite(Request $request)
-    {
-        $template_path = 'mail_undangan';
-        $data = array("kode"=>'123');
-
-        Mail::send($template_path, $data, function($message) {
-            $message->to("upload.kurniawan@gmail.com", "Agung")->subject("PAL");
-            $message->from(env('MAIL_USERNAME'),"PAL");
-        });
-        return true;
-    }
+    use DispatchesJobs;
 
 	public function getData(Request $request)
     {	
@@ -111,21 +94,11 @@ class PengumumanController extends Controller
         foreach($request->input('cluster') as $cluster){
             $listUser = UserCluster::with('userInfo')->where('cluster_id',$cluster)->get();
             foreach ($listUser as $key => $userCluster) {
-                // exec('php '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' \'Pembukaan Tender\' > /dev/null &');
+                $job = (new KirimEmailPemberitahuan($userCluster->userInfo));
+                $this->dispatch($job);
             }
             PengumumanCluster::create(['pengumuman_id'=>$pengumuman->id,'cluster_id'=>$cluster]);
         }
-        // exec('curl --form "fileupload=@my-file.txt;filename=desired-filename.txt" --form param1=value1 --form param2=value2 https://example.com/resource.cgi')
-        // exec('curl -k '.base_path('mail_notification.php').' '.$userCluster->userInfo->email.' '.$userCluster->userInfo->nama.' \'Pembukaan Tender\' > /dev/null &');
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, route('invite'));
-        // curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-        // // curl_setopt($ch, CURLOPT_POST, 1);
-        // // curl_setopt($ch, CURLOPT_POSTFIELDS,"receiver=kontraktor9@herobimbel.id&receiver_name=Kontraktor9&subject=Notivication");
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-        // curl_setopt($ch, CURLOPT_TIMEOUT, 1);
-        // curl_exec($ch);
-        // curl_close($ch);
         return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
     }
 

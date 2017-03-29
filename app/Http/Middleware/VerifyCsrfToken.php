@@ -13,6 +13,6 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         "intern/*",
-        "HKYuHZf6nyh2YvVC1Jzw"
+        "f52bc44a34340cbf4c1aae1eb32e351160858b0d"
     ];
 }
