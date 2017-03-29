@@ -143,13 +143,12 @@
                             <table id="pengumuman-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:155px;">Kode / PIC</th>
-                                        <th style="min-width:155px;">Waktu</th>
+                                        <th style="min-width:165px;">Kode / PIC</th>
+                                        <th style="min-width:165px;">Waktu</th>
                                         <th>Max Pendaftar</th>
                                         <th>Harga Netto</th>
                                         <th>Cluster</th>
                                         <th>Barang</th>
-                                        <th style="width:3%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -295,23 +294,25 @@
                         });
                         return show;
                     }
-                },
-                {
-                    "className":"no-print",
-                    "orderable":false,
-                    "targets": 6,
-                    "render": function(data, type, row, meta){
-                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getPengumuman('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusPengumuman('+row.id+')"><i class="icon-trash"></i></button></div>';
-                    }
                 }
+                // ,
+                // {
+                //     "className":"no-print",
+                //     "orderable":false,
+                //     "targets": 6,
+                //     "render": function(data, type, row, meta){
+                //         return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getPengumuman('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusPengumuman('+row.id+')"><i class="icon-trash"></i></button></div>';
+                //     }
+                // }
             ],
         });
 
         $("#form-add").submit(function(e){
-            $("#add-submit").prop('disabled', true);
-            var myForm = $(this);
-            if(true){
-                e.preventDefault();
+            e.preventDefault();
+            var _c = confirm("Anda yakin data yang telah diisikan benar ?\n Sistem akan mengirimkan email ke Subkontraktor dan Pengumuman tidak akan dapat dihapus setelah email terkirim");
+            if(_c===true){
+                $("#add-submit").prop('disabled', true);
+                var myForm = $(this);
                 if($("#add-barang").val().length>0){
                     $("#modal-quantity").modal({
                         backdrop: 'static',
