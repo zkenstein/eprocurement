@@ -115,6 +115,9 @@
         .form-control:disabled, .form-control[readonly]{
             background-color: white;
         }
+        .btn{
+            cursor: pointer;
+        }
     </style>
 
     @yield('style')
@@ -548,7 +551,6 @@
         </div>
         <!-- /.modal-dialog -->
     </form>
-    <!-- /.modal -->
     @endif
 
     <footer class="app-footer">
@@ -712,7 +714,6 @@
                 method:"POST",
                 data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}"},
                 success:function(res){
-                    console.log(res);
                     if(res.result==true){
                         if(res.data.role=='admin'){
                             window.location.href = "{{route('intern.beranda')}}";
@@ -804,12 +805,7 @@
             var element = $(this);
             validate(element);
         });
-    </script>
-
-    <!-- Plugins and scripts required by this views -->
-
-    <!-- Custom scripts required by this view -->
-    <!-- <script src="/js/views/main.js"></script> -->
+    </script> 
     @yield('script')
 </body>
 

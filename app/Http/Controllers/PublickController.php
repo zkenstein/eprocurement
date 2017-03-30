@@ -10,32 +10,45 @@ use App\User;
 use App\Cluster;
 use App\UserCluster;
 use App\Pengumuman;
+use App\PengumumanUser;
 
 class PublickController extends Controller
 {
+    // Cek login umum
 	public function loginCheck(Request $request)
 	{
 		$email = $request->input('email');
 		$password = $request->input('password');
 		$user = User::where(['email'=>$email,'password'=>$password])->first();
 		if($user!=null){
-			if($user->role=='subkontraktor'){
-				if($user->aktif<=\Carbon\Carbon::now() && $user->kadaluarsa>\Carbon\Carbon::now()){
-					session()->put('role',$user->role);
-                    session()->put('id',$user->id);
-                    session()->put('nama',$user->nama);
-					return response()->json(['result'=>true,'data'=>$user]);
-				}
-				return response()->json(['result'=>false,'message'=>'expired']);
-			}else{
-                session()->put('role',$user->role);
-                session()->put('id',$user->id);
-                session()->put('nama',$user->nama);
-                return response()->json(['data'=>$user,'result'=>true]);
-            }
+            session()->put('role',$user->role);
+            session()->put('id',$user->id);
+            session()->put('nama',$user->nama);
+			return response()->json(['data'=>$user,'result'=>true]);
 		}
 		return response()->json(['result'=>false,'message'=>'not match']);
 	}
+
+    // Cek subkontraktor yg terdaftar
+    public function registerCheck(Request $request)
+    {
+        $email = $request->input('email');
+        $kodeMasuk = $request->input('kode_masuk');
+        $pengumuman = $request->input('pengumuman');
+        $user = User::where('email',$email)->first();
+        if($user!=null){
+            $user = PengumumanUser::whereHas('pengumumanInfo',function($q) use($pengumuman){
+                $q->where('batas_akhir_waktu_penawaran','>',\Carbon\Carbon::now());
+            })->where('user_id',$user->id)->where('kode_masuk',$kodeMasuk)->where('pengumuman_id',$pengumuman)->first();
+            if($user!=null){
+
+            }else{
+
+            }
+        }else{
+
+        }
+    }
 
     public function homePage(Request $request)
     {
@@ -62,6 +75,7 @@ class PublickController extends Controller
     	return redirect()->route('home');
     }
 
+    /*
     public function generateCluster(Request $request)
     {
         $cluster = [
@@ -78,21 +92,21 @@ class PublickController extends Controller
             ]);
         }
     }
-
-
+    */
+    
     public function generateUser(Request $request)
     {
-    	$user = new User();
-    	$user->kode = 'KODE-0';
-    	$user->nama = 'Administrator';
-    	$user->email = 'kurniawan@herobimbel.id';
-    	$user->password = '12345';
-    	$user->telp = '03210987651';
-    	$user->session_id = null;
-    	$user->role = 'admin';
-    	$user->aktif = null;
-    	$user->kadaluarsa = null;
-    	$user->save();
+    	// $user = new User();
+    	// $user->kode = 'KODE-0';
+    	// $user->nama = 'Administrator';
+    	// $user->email = 'kurniawan@herobimbel.id';
+    	// $user->password = '12345';
+    	// $user->telp = '03210987651';
+    	// $user->session_id = null;
+    	// $user->role = 'admin';
+    	// $user->aktif = null;
+    	// $user->kadaluarsa = null;
+    	// $user->save();
     /*
         $subkontraktor = [
             

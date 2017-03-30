@@ -42,13 +42,17 @@ Route::get('logout',[
 	'as'=>'logout'
 ]);
 
+Route::post('register_check',[
+	'uses'=>'PublickController@registerCheck',
+	'as'=>'register_check'
+]);
 // Route::get('gc','PublickController@generateCluster');
 // Route::get('gu','PublickController@generateUser');
 
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC
 Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only']],function(){
-	
+
 	// VALIDASI UMUM
 	Route::get('/validate_input/{name?}',[
 		'uses'=>'GeneralController@validateInput',
@@ -157,6 +161,11 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'PengumumanController@getData',
 		'as'=>'pengumuman_data'
 	]);
+	// DOWNLOAD FILE EXCEL PENGUMUMAN
+	Route::get('get_file_excel/{file_excel?}',[
+		'uses'=>'PengumumanController@getFileExcel',
+		'as'=>'get_file_excel'
+	]);
 	Route::post('/pengumuman','PengumumanController@addData');
-	Route::delete('/pengumuman/{id?}','PengumumanController@deleteData');
+	// Route::delete('/pengumuman/{id?}','PengumumanController@deleteData');
 });

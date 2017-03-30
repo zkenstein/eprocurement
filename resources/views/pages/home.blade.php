@@ -53,10 +53,10 @@
                                             <td>
                                                 <div><strong>Kode </strong>: <a>{{$pengumuman->kode}}</a></div>
                                                 <div class="small">
-                                                    <strong>Mulai : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_awal_waktu_penawaran)->formatLocalized('%A %d %B %Y')}}
+                                                    <strong>Mulai : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_awal_waktu_penawaran)->formatLocalized('%A %d %B %Y %H:%m')}}
                                                 </div>
                                                 <div class="small">
-                                                    <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y')}}
+                                                    <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y  %H:%m')}}
                                                 </div>
                                             </td>
                                             <td>
@@ -82,7 +82,9 @@
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
-                                                <button class="btn" <?=session('role')!='subkontraktor'?'disabled title="Anda harus login sebelum melakukan pendaftaran"':''?>>Daftar</button>
+                                                @if($pengumuman->batas_akhir_waktu_penawaran > \Carbon\Carbon::now())
+                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Daftar / Login Subkontraktor</button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -92,8 +94,120 @@
                         </div>
                     </div>
                 </div>
-                <!--/.col-->
             </div>
         </div>
     </div>
+
+    @if(!session()->has('logged_in'))
+    <form class="modal fade" id="login-subkon-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Masuk Subkontraktor</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="hidden" name="pengumuman_id" id="register-pengumuman-id">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i>
+                            </span>
+                            <input autocomplete="false" type="email" id="email-login-register" name="email" class="form-control" placeholder="Email" autofocus="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i>
+                            </span>
+                            <input autocomplete="false" type="password" id="kode-masuk" name="kode_masuk" class="form-control" placeholder="Kode Masuk">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="button-login-register">Masuk</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    @endif
 @stop
+
+@section('script')
+    <script type="text/javascript">
+        $("#login-modal").submit(function(e){
+            e.preventDefault();
+            $("#button-login").addClass('disabled');
+            $("#button-login").text('Mengirim');
+            $.ajax({
+                url:"{{route('login')}}",
+                method:"POST",
+                data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}"},
+                success:function(res){
+                    if(res.result==true){
+                        if(res.data.role=='admin'){
+                            window.location.href = "{{route('intern.beranda')}}";
+                        }else{
+                            location.reload();
+                        }
+                    }else if(res.message=='not match'){
+                        alert("email maupun password tidak pas");
+                    }else if(res.message=='expired'){
+                        alert("Pengajuan tidak dapat dilakukan");
+                    }
+                    $("#button-login").removeClass('disabled');
+                    $("#button-login").text('Masuk');
+                },
+                statusCode: {
+                    500: function() {
+                        alert("Token login kadaluarsa, silahkan ulangi login anda");
+                        location.reload();
+                    }
+                }
+            })
+        });
+
+        $(".btn-register").click(function(){
+            $("#register-pengumuman-id").val($(this).data('id'));
+        });
+
+        $("#login-subkon-modal").submit(function(e){
+            e.preventDefault();
+            $("#button-login-register").addClass('disabled');
+            $("#button-login-register").text('Mengirim');
+            $.ajax({
+                url:"{{route('register_check')}}",
+                method:"POST",
+                data:{email:$("#email-login-register").val().trim(),kode_masuk:$("#kode-masuk").val().trim(),pengumuman:$("#register-pengumuman-id").val(),_token:"{{csrf_token()}}"},
+                success:function(res){
+                    if(res.result==true){
+                        $("#button-login-register").text('Berhasil');
+                        location.reload();
+                    }else if(res.result==false){
+                        $("#button-login-register").removeClass('disabled');
+                        $("#button-login-register").text('Masuk');
+                        alert("Kode Masuk atau email salah");
+                    }else if(res.result=="full"){
+                        $("#button-login-register").removeClass('disabled');
+                        $("#button-login-register").text('Masuk');
+                        alert("Maaf lelang ini sudah terisi penuh\n Anda tidak dapat mendaftar");
+                    }else{
+                        $("#button-login-register").removeClass('disabled');
+                        $("#button-login-register").text('Masuk');
+                        alert("Terjadi kesalahan, silahkan login kembali");
+                        location.reload();
+                    }
+                },
+                statusCode: {
+                    500: function() {
+                        alert("Token login kadaluarsa, silahkan ulangi login anda");
+                        location.reload();
+                    }
+                }
+            });
+        });
+    </script>
+@stop
+

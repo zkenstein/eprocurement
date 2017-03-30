@@ -119,4 +119,10 @@ class PengumumanController extends Controller
         Pengumuman::where('id',$id)->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
+
+    public function getFileExcel($file_excel)
+    {
+        $file = \Storage::disk('local')->get($file_excel);
+        return response($file, 200);
+    }
 }
