@@ -35,7 +35,7 @@
                             <table class="table table-hover table-outline mb-0 hidden-sm-down">
                                 <thead class="thead-default">
                                     <tr>
-                                        <th colspan="6">
+                                        <th colspan="<?php if(session('role')!='admin') echo '6'; else echo '5'; ?>">
                                         	<i class="icon-notebook"></i> Pengumuman Terakhir
                                         </th>
                                     </tr>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @if( count($list_pengumuman) < 1 )
                                         <tr>
-                                            <td colspan="6">
+                                            <td colspan="<?session('role')!='admin'?'6':'5'?>">
                                                 Tidak ada pengumuman
                                             </td>
                                         </tr>
@@ -81,11 +81,15 @@
                                                     {{$barangData->barangInfo->kode}} : {{$barangData->quantity}} {{$barangData->barangInfo->satuan}} <br>
                                                 @endforeach
                                             </td>
+                                            @if(session('role')!='admin')
                                             <td class="text-center">
                                                 @if($pengumuman->batas_akhir_waktu_penawaran > \Carbon\Carbon::now())
                                                     <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Daftar / Login Subkontraktor</button>
+                                                @else
+                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Lihat Pemenang</button>
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     @endif
@@ -137,38 +141,6 @@
 
 @section('script')
     <script type="text/javascript">
-        $("#login-modal").submit(function(e){
-            e.preventDefault();
-            $("#button-login").addClass('disabled');
-            $("#button-login").text('Mengirim');
-            $.ajax({
-                url:"{{route('login')}}",
-                method:"POST",
-                data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}"},
-                success:function(res){
-                    if(res.result==true){
-                        if(res.data.role=='admin'){
-                            window.location.href = "{{route('intern.beranda')}}";
-                        }else{
-                            location.reload();
-                        }
-                    }else if(res.message=='not match'){
-                        alert("email maupun password tidak pas");
-                    }else if(res.message=='expired'){
-                        alert("Pengajuan tidak dapat dilakukan");
-                    }
-                    $("#button-login").removeClass('disabled');
-                    $("#button-login").text('Masuk');
-                },
-                statusCode: {
-                    500: function() {
-                        alert("Token login kadaluarsa, silahkan ulangi login anda");
-                        location.reload();
-                    }
-                }
-            })
-        });
-
         $(".btn-register").click(function(){
             $("#register-pengumuman-id").val($(this).data('id'));
         });
@@ -188,16 +160,7 @@
                     }else if(res.result==false){
                         $("#button-login-register").removeClass('disabled');
                         $("#button-login-register").text('Masuk');
-                        alert("Kode Masuk atau email salah");
-                    }else if(res.result=="full"){
-                        $("#button-login-register").removeClass('disabled');
-                        $("#button-login-register").text('Masuk');
-                        alert("Maaf lelang ini sudah terisi penuh\n Anda tidak dapat mendaftar");
-                    }else{
-                        $("#button-login-register").removeClass('disabled');
-                        $("#button-login-register").text('Masuk');
-                        alert("Terjadi kesalahan, silahkan login kembali");
-                        location.reload();
+                        alert(res.message);
                     }
                 },
                 statusCode: {
