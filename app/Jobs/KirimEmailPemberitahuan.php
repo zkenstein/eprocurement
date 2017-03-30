@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
+use App\Pengumuman;
 
 class KirimEmailPemberitahuan extends Job implements SelfHandling, ShouldQueue
 {
@@ -19,11 +20,16 @@ class KirimEmailPemberitahuan extends Job implements SelfHandling, ShouldQueue
      *
      * @return void
      */
-    protected $user;
 
-    public function __construct(User $user)
+    protected $pengumuman;
+    protected $subkontraktor;
+    protected $kodeRegistrasi;
+
+    public function __construct(Pengumuman $pengumuman, User $subkontraktor, $kodeRegistrasi)
     {
-        $this->user = $user;
+        $this->pengumuman = $pengumuman;
+        $this->subkontraktor = $subkontraktor;
+        $this->kodeRegistrasi = $kodeRegistrasi;
     }
 
     /**
@@ -33,8 +39,8 @@ class KirimEmailPemberitahuan extends Job implements SelfHandling, ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $user = $this->user;
-        $mailer->send('mail_undangan',['nama'=>$user->nama,'email'=>$user->email],function($message) use ($user){
+        $user = $this->subkontraktor;
+        $mailer->send('mail_undangan',['nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$this->kodeRegistrasi],function($message) use ($user){
             $message->to($user->email, $user->nama)->subject("PAL Tender Invitation");
             $message->from(env('MAIL_USERNAME'),"PT.PAL");
         });

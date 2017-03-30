@@ -21,7 +21,6 @@ INSERT INTO `barang` (`id`, `kode`, `satuan`, `deskripsi`, `gambar`, `pdf`, `cre
 (18,	'LGS13',	'PKG',	'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',	'LGS13_1490312861.jpg',	'LGS13_1490672963.pdf',	'2017-03-23 23:47:42',	'2017-03-28 05:35:08'),
 (20,	'TES',	'PCS',	'Per a eleifend a adipiscing blandit urna curae metus platea quam parturient inceptos vestibulum vestibulum suspendisse dui habitant vestibulum magna parturient placerat erat in ornare tincidunt dignissim adipiscing lorem.Inceptos et adipiscing a nisi turpis a sit scelerisque.',	'TES_1490679472.jpg',	NULL,	'2017-03-28 05:37:52',	'2017-03-28 05:37:52');
 
-
 INSERT INTO `cluster` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
 (1,	'1',	'PIPING, VALVE AND PROPULSI',	'2017-03-22 18:31:32',	'2017-03-22 18:31:32'),
 (2,	'2',	'BOTTOM CLEANING DAN REPLATING',	'2017-03-22 18:31:33',	'2017-03-22 18:31:33'),
@@ -29,32 +28,14 @@ INSERT INTO `cluster` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
 (4,	'4',	'DT AND NDT',	'2017-03-22 18:31:33',	'2017-03-22 18:31:33'),
 (5,	'5',	'GENERAL SERVICE',	'2017-03-22 18:31:33',	'2017-03-22 18:31:33');
 
-INSERT INTO `migrations` (`migration`, `batch`) VALUES
-('2017_03_19_212725_create_cluster_table',	1),
-('2017_03_19_212726_create_user_table',	1),
-('2017_03_19_213738_create_barang_table',	1),
-('2017_03_19_213915_create_pengumuman_table',	1),
-('2017_03_19_221808_create_pengumuman_cluster_table',	1),
-('2017_03_19_222314_create_pengumuman_user_table',	1),
-('2017_03_20_071652_create_pengumuman_barang_table',	1),
-('2017_03_22_092414_create_user_cluster_table',	1),
-('2017_03_28_162357_create_barang_eksternal_table',	1),
-('2017_03_19_212725_create_cluster_table',	1),
-('2017_03_19_212726_create_user_table',	1),
-('2017_03_19_213738_create_barang_table',	1),
-('2017_03_19_213915_create_pengumuman_table',	1),
-('2017_03_19_221808_create_pengumuman_cluster_table',	1),
-('2017_03_19_222314_create_pengumuman_user_table',	1),
-('2017_03_20_071652_create_pengumuman_barang_table',	1),
-('2017_03_22_092414_create_user_cluster_table',	1),
-('2017_03_28_162357_create_barang_eksternal_table',	2);
-
-INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `pic`, `created_at`, `updated_at`) VALUES
-(11,	'ABC',	'2017-03-29 00:00:00',	'2017-04-01 23:00:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	0,	21,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
-(12,	'ABCD',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	4,	22,	'2017-03-29 04:14:07',	'2017-03-29 04:14:07'),
-(13,	'DFG',	'2017-03-29 00:00:00',	'2017-04-22 23:00:00',	'2017-03-29 00:00:00',	'2017-03-31 00:00:00',	24000000,	'SGD',	3,	22,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
-(14,	'ZXC',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'SGD',	6,	21,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
-(15,	'DCV',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	9000000,	'IDR',	0,	22,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
+INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `pic`, `file_excel`, `created_at`, `updated_at`) VALUES
+(11,	'ABC',	'2017-03-29 00:00:00',	'2017-04-01 23:00:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	0,	21,	NULL,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
+(12,	'ABCD',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'IDR',	4,	22,	NULL,	'2017-03-29 04:14:07',	'2017-03-29 04:14:07'),
+(13,	'DFG',	'2017-03-29 00:00:00',	'2017-04-22 23:00:00',	'2017-03-29 00:00:00',	'2017-03-31 00:00:00',	24000000,	'SGD',	3,	22,	NULL,	'2017-03-29 05:23:21',	'2017-03-29 05:23:21'),
+(14,	'ZXC',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'SGD',	6,	21,	NULL,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
+(15,	'DCV',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	9000000,	'IDR',	0,	22,	NULL,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
+(16,	'GHI',	'2017-03-29 00:00:00',	'2017-03-29 23:59:00',	'2017-03-29 00:00:00',	'2017-03-29 00:00:00',	1000000,	'SGD',	7,	21,	'GHI_1490767346.csv',	'2017-03-29 06:02:26',	'2017-03-29 06:02:26'),
+(17,	'ADR',	'2017-03-30 00:00:00',	'2017-03-30 23:59:00',	'2017-03-30 00:00:00',	'2017-03-30 00:00:00',	1000000,	'SGD',	0,	21,	'ADR_1490822818.csv',	'2017-03-29 21:26:58',	'2017-03-29 21:26:58');
 
 INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`, `created_at`, `updated_at`) VALUES
 (16,	11,	6,	1,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
@@ -69,7 +50,11 @@ INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`,
 (25,	14,	10,	5,	'2017-03-29 05:38:39',	'2017-03-29 05:38:39'),
 (26,	15,	9,	4,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
 (27,	15,	15,	10,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
-(28,	15,	16,	11,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
+(28,	15,	16,	11,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
+(29,	16,	8,	3,	'2017-03-29 06:02:26',	'2017-03-29 06:02:26'),
+(30,	16,	14,	9,	'2017-03-29 06:02:26',	'2017-03-29 06:02:26'),
+(31,	17,	9,	4,	'2017-03-29 21:26:59',	'2017-03-29 21:26:59'),
+(32,	17,	10,	5,	'2017-03-29 21:26:59',	'2017-03-29 21:26:59');
 
 INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
 (8,	11,	5,	'2017-03-29 02:25:36',	'2017-03-29 02:25:36'),
@@ -78,8 +63,9 @@ INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_
 (11,	13,	2,	'2017-03-29 05:23:22',	'2017-03-29 05:23:22'),
 (12,	14,	4,	'2017-03-29 05:38:40',	'2017-03-29 05:38:40'),
 (13,	14,	5,	'2017-03-29 05:38:40',	'2017-03-29 05:38:40'),
-(14,	15,	4,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44');
-
+(14,	15,	4,	'2017-03-29 05:40:44',	'2017-03-29 05:40:44'),
+(15,	16,	3,	'2017-03-29 06:02:26',	'2017-03-29 06:02:26'),
+(16,	17,	2,	'2017-03-29 21:27:14',	'2017-03-29 21:27:14');
 
 INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `created_at`, `updated_at`) VALUES
 (1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	'12345',	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	'',	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-23 01:37:18'),
@@ -123,4 +109,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18'),
 (51,	1,	4,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18');
 
--- 2017-03-29 05:54:31
+-- 2017-03-30 00:11:39

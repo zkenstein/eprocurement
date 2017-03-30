@@ -22,6 +22,7 @@ class CreatePengumumanTable extends Migration
             $table->double('harga_netto');
             $table->string('mata_uang');
             $table->tinyInteger('max_register');
+            $table->tinyInteger('count_register')->default(0);
             $table->integer('pic')->unsigned();
             $table->foreign('pic')->references('id')->on('user')->onDelete('cascade');
             $table->string('file_excel')->nullable();

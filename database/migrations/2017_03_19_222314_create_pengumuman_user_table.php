@@ -19,6 +19,7 @@ class CreatePengumumanUserTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->string('kode_masuk')->nullable();
+            $table->dateTime('waktu_register')->nullable();
             $table->timestamps();
         });
     }

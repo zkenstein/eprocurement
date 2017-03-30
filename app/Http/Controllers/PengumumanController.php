@@ -14,6 +14,7 @@ use App\UserCluster;
 use Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\KirimEmailPemberitahuan;
+use App\Jobs\InsertPengumumanUser;
 
 class PengumumanController extends Controller
 {
@@ -77,28 +78,39 @@ class PengumumanController extends Controller
     public function addData(Request $request)
     {
         $date = date_format(date_create(),'U');
+
+        // Jika ada sumber data excel
         $excel = null;
         if($request->hasFile('barang_csv')){
             $excel = $request->input('kode').'_'.$date.'.'.$request->file('barang_csv')->getClientOriginalExtension();
             \Storage::disk('local')->put($excel, \File::get($request->file('barang_csv')));
             $request->merge(array('file_excel' => $excel));
         }
+
+        // Edit Request batas waktu penawaran agar bisa masuk database
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
+
+        // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
+
+        // Mulai backgroundprocess insert user + kirim email
+        $job = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
+        $this->dispatch($job);
+
+        // Insert pengumuman barang
         foreach($request->input('barang') as $barang){
             PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
         }
+
+        // Insert pengumuman cluster
         foreach($request->input('cluster') as $cluster){
-            $listUser = UserCluster::with('userInfo')->where('cluster_id',$cluster)->get();
-            foreach ($listUser as $key => $userCluster) {
-                $job = (new KirimEmailPemberitahuan($userCluster->userInfo));
-                $this->dispatch($job);
-            }
             PengumumanCluster::create(['pengumuman_id'=>$pengumuman->id,'cluster_id'=>$cluster]);
         }
+
+        // Return
         return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
     }
 
