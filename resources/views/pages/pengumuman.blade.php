@@ -128,6 +128,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Waktu Auction</label>
+                                            <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Durasi (Menit)</label>
+                                            <input id="add-durasi" type="number" required class="form-control input-sm will-clear" placeholder="Durasi" name="durasi">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <button id="add-submit" class="btn btn-primary pull-right" type="submit">Umumkan <i class="fa fa-bullhorn"></i></button>
                                     </div>

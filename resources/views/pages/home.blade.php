@@ -166,7 +166,7 @@
                 statusCode: {
                     500: function() {
                         alert("Token login kadaluarsa, silahkan ulangi login anda");
-                        location.reload();
+                        // location.reload();
                     }
                 }
             });

@@ -28,6 +28,8 @@ class CreatePengumumanTable extends Migration
             $table->integer('pic')->unsigned();
             $table->foreign('pic')->references('id')->on('user')->onDelete('cascade');
             $table->string('file_excel')->nullable();
+            $table->dateTime('start_auction');
+            $table->tinyInteger('durasi')->default(0);
             $table->timestamps();
         });
     }

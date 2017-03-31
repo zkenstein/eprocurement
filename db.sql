@@ -40,44 +40,21 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2017_03_20_071652_create_pengumuman_barang_table',	1),
 ('2017_03_22_092414_create_user_cluster_table',	1),
 ('2017_03_28_162357_create_barang_eksternal_table',	1),
+('2017_03_30_034715_create_jobs_table',	1),
+('2017_03_19_212725_create_cluster_table',	1),
+('2017_03_19_212726_create_user_table',	1),
+('2017_03_19_213738_create_barang_table',	1),
+('2017_03_19_213915_create_pengumuman_table',	1),
+('2017_03_19_221808_create_pengumuman_cluster_table',	1),
+('2017_03_19_222314_create_pengumuman_user_table',	1),
+('2017_03_20_071652_create_pengumuman_barang_table',	1),
+('2017_03_22_092414_create_user_cluster_table',	1),
+('2017_03_28_162357_create_barang_eksternal_table',	1),
 ('2017_03_30_034715_create_jobs_table',	1);
 
-INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `count_register`, `pic`, `file_excel`, `created_at`, `updated_at`) VALUES
-(26,	'XYZ',	'2017-03-30 00:00:00',	'2017-03-30 23:59:00',	'2017-03-30 00:00:00',	'2017-03-30 00:00:00',	3000000,	'IDR',	3,	0,	22,	NULL,	'2017-03-30 01:20:16',	'2017-03-30 01:20:16'),
-(27,	'JKL',	'2017-04-01 08:00:00',	'2017-04-05 16:00:00',	'2017-04-06 08:00:00',	'2017-04-21 10:00:00',	2000000,	'IDR',	3,	0,	21,	'JKL_1490838139.csv',	'2017-03-30 01:42:19',	'2017-03-30 01:42:19');
 
-INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(40,	26,	11,	6,	'2017-03-30 01:20:55',	'2017-03-30 01:20:55'),
-(41,	26,	12,	7,	'2017-03-30 01:20:55',	'2017-03-30 01:20:55'),
-(42,	27,	10,	5,	'2017-03-30 01:42:46',	'2017-03-30 01:42:46'),
-(43,	27,	11,	6,	'2017-03-30 01:42:46',	'2017-03-30 01:42:46'),
-(44,	27,	12,	7,	'2017-03-30 01:42:46',	'2017-03-30 01:42:46');
 
-INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
-(20,	26,	2,	'2017-03-30 01:20:55',	'2017-03-30 01:20:55'),
-(21,	26,	3,	'2017-03-30 01:20:55',	'2017-03-30 01:20:55'),
-(22,	26,	5,	'2017-03-30 01:20:55',	'2017-03-30 01:20:55'),
-(23,	27,	1,	'2017-03-30 01:42:46',	'2017-03-30 01:42:46'),
-(24,	27,	2,	'2017-03-30 01:42:46',	'2017-03-30 01:42:46');
 
-INSERT INTO `pengumuman_user` (`id`, `pengumuman_id`, `user_id`, `kode_masuk`, `waktu_register`, `created_at`, `updated_at`) VALUES
-(14,	26,	1,	'4a3f3ad3b13427f9c6332067b91d1a44',	NULL,	'2017-03-30 01:20:16',	'2017-03-30 01:20:16'),
-(15,	26,	2,	'06114c049fefd19ca3dad3fe65d8352f',	NULL,	'2017-03-30 01:20:20',	'2017-03-30 01:20:20'),
-(16,	26,	3,	'd27a4d0f292653d60ba5149f99beb657',	NULL,	'2017-03-30 01:20:24',	'2017-03-30 01:20:24'),
-(17,	26,	4,	'6e131d0d893746a3ae8a544d284d0e8c',	NULL,	'2017-03-30 01:20:28',	'2017-03-30 01:20:28'),
-(18,	26,	5,	'a645661a8dc0cd0b778d76128811564a',	NULL,	'2017-03-30 01:20:32',	'2017-03-30 01:20:32'),
-(19,	26,	6,	'65aa72a9d877482064d8691d40d2dc1e',	NULL,	'2017-03-30 01:20:36',	'2017-03-30 01:20:36'),
-(20,	26,	7,	'241e212b7e736902fdeb3637846905fa',	NULL,	'2017-03-30 01:20:40',	'2017-03-30 01:20:40'),
-(21,	26,	8,	'402f08900a2257e49288b04302d57dca',	NULL,	'2017-03-30 01:20:44',	'2017-03-30 01:20:44'),
-(22,	26,	9,	'9669aef0281d88ce1828f3d834fe5dad',	NULL,	'2017-03-30 01:20:48',	'2017-03-30 01:20:48'),
-(23,	26,	10,	'46117f3d7a20509fd1002082a322cfca',	NULL,	'2017-03-30 01:20:52',	'2017-03-30 01:20:52'),
-(24,	27,	1,	'22b7229ea2e91cec9b2ba0cd45565da8',	NULL,	'2017-03-30 01:42:19',	'2017-03-30 01:42:19'),
-(25,	27,	3,	'b0a0f9dd2769149a462be10f3eb87e80',	NULL,	'2017-03-30 01:42:23',	'2017-03-30 01:42:23'),
-(26,	27,	4,	'174176f2eeeca7a871bca16399892e46',	NULL,	'2017-03-30 01:42:27',	'2017-03-30 01:42:27'),
-(27,	27,	5,	'b61377920acccddf3e5f6624c2092593',	NULL,	'2017-03-30 01:42:31',	'2017-03-30 01:42:31'),
-(28,	27,	6,	'0c987172b70459c67e2bc58c3e0d2c07',	NULL,	'2017-03-30 01:42:35',	'2017-03-30 01:42:35'),
-(29,	27,	7,	'541c7ee208e640caf2ac2adeee16b569',	NULL,	'2017-03-30 01:42:39',	'2017-03-30 01:42:39'),
-(30,	27,	9,	'e6f3ad2aa5018cba4cef72e67b736795',	NULL,	'2017-03-30 01:42:43',	'2017-03-30 01:42:43');
 
 INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `created_at`, `updated_at`) VALUES
 (1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	'12345',	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	'',	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-23 01:37:18'),
@@ -121,4 +98,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18'),
 (51,	1,	4,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18');
 
--- 2017-03-30 15:10:16
+-- 2017-03-31 01:09:45

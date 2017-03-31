@@ -77,6 +77,7 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
+        // return response()->json($request->all(),500);
         $date = date_format(date_create(),'U');
 
         // Jika ada sumber data excel

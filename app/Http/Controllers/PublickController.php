@@ -11,6 +11,7 @@ use App\Cluster;
 use App\UserCluster;
 use App\Pengumuman;
 use App\PengumumanUser;
+use Mail;
 
 class PublickController extends Controller
 {
@@ -55,6 +56,14 @@ class PublickController extends Controller
                 }else{#Jika belum ada pengumuman pemenang
                     if($pengumuman->max_register==0 || $pengumuman->max_register > $pengumuman->count_register){#Jika max register = tidak dibatasi atau jika max register dibatasi tapi belum penuh
                         if($userPengumuman->waktu_register==null){#Jika user belum pernah login sebelumnya
+                            $data['nama_perusahaan'] = $user->nama;
+                            $data['kode_pengumuman'] = $pengumuman->kode;
+                            $data['waktu_auction'] = $pengumuman->start_auction;
+                            $data['durasi_auction'] = $pengumuman->durasi;
+                            Mail::queue('mail_followup',$data,function($message)use($user){
+                                $message->to($user->email, $user->nama)->subject("PAL Follow Up Registration");
+                                $message->from(env('MAIL_USERNAME'),"PT.PAL");
+                            });
                             $userPengumuman->waktu_register = \Carbon\Carbon::now();
                             $userPengumuman->save();
                             $pengumuman->count_register+=1;
@@ -93,7 +102,7 @@ class PublickController extends Controller
     	$data['TAG'] = 'home';
         if(session('mode')=='login'){
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
-            dd($data);
+            return view('pages.home_subkontraktor',$data);
         }else{
             $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->orderBy('created_at','desc')->get();
             return view('pages.home',$data);
