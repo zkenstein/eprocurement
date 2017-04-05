@@ -29,32 +29,25 @@ INSERT INTO `cluster` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
 (4,	'4',	'DT AND NDT',	'2017-03-22 18:31:33',	'2017-03-22 18:31:33'),
 (5,	'5',	'GENERAL SERVICE',	'2017-03-22 18:31:33',	'2017-03-22 18:31:33');
 
+INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `count_register`, `pemenang`, `pic`, `file_excel`, `start_auction`, `durasi`, `created_at`, `updated_at`) VALUES
+(3,	'ASD',	'2017-03-31 00:00:00',	'2017-03-31 23:59:00',	'2017-03-31 00:00:00',	'2017-03-31 00:00:00',	5000000,	'IDR',	0,	1,	NULL,	21,	'ASD_1490923871.csv',	'2017-04-07 10:00:00',	60,	'2017-03-31 01:31:11',	'2017-03-31 01:37:28'),
+(4,	'BSD',	'2017-04-05 19:00:00',	'2017-04-09 23:00:00',	'2017-05-09 19:00:00',	'2017-04-04 19:00:00',	1000000,	'IDR',	4,	0,	NULL,	21,	NULL,	'2017-04-05 10:00:00',	120,	'2017-04-03 22:19:52',	'2017-04-03 22:19:52');
 
-INSERT INTO `migrations` (`migration`, `batch`) VALUES
-('2017_03_19_212725_create_cluster_table',	1),
-('2017_03_19_212726_create_user_table',	1),
-('2017_03_19_213738_create_barang_table',	1),
-('2017_03_19_213915_create_pengumuman_table',	1),
-('2017_03_19_221808_create_pengumuman_cluster_table',	1),
-('2017_03_19_222314_create_pengumuman_user_table',	1),
-('2017_03_20_071652_create_pengumuman_barang_table',	1),
-('2017_03_22_092414_create_user_cluster_table',	1),
-('2017_03_28_162357_create_barang_eksternal_table',	1),
-('2017_03_30_034715_create_jobs_table',	1),
-('2017_03_19_212725_create_cluster_table',	1),
-('2017_03_19_212726_create_user_table',	1),
-('2017_03_19_213738_create_barang_table',	1),
-('2017_03_19_213915_create_pengumuman_table',	1),
-('2017_03_19_221808_create_pengumuman_cluster_table',	1),
-('2017_03_19_222314_create_pengumuman_user_table',	1),
-('2017_03_20_071652_create_pengumuman_barang_table',	1),
-('2017_03_22_092414_create_user_cluster_table',	1),
-('2017_03_28_162357_create_barang_eksternal_table',	1),
-('2017_03_30_034715_create_jobs_table',	1);
+INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(6,	3,	6,	1,	'2017-03-31 01:31:39',	'2017-03-31 01:31:39'),
+(7,	3,	8,	3,	'2017-03-31 01:31:39',	'2017-03-31 01:31:39');
 
+INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
+(3,	3,	1,	'2017-03-31 01:31:40',	'2017-03-31 01:31:40');
 
-
-
+INSERT INTO `pengumuman_user` (`id`, `pengumuman_id`, `user_id`, `kode_masuk`, `waktu_register`, `created_at`, `updated_at`) VALUES
+(13,	3,	1,	'595b66904b02194e2b3807cebeafd292',	'2017-03-31 08:37:28',	'2017-03-31 01:31:11',	'2017-03-31 01:37:28'),
+(14,	3,	3,	'c618971269e8fff2094c84e97ff8e464',	NULL,	'2017-03-31 01:31:18',	'2017-03-31 01:31:18'),
+(15,	3,	4,	'21fc2ec6241cb28d434ba47bd55721ba',	NULL,	'2017-03-31 01:31:21',	'2017-03-31 01:31:21'),
+(16,	3,	6,	'884f5786c5c7867e19a2a6aa90d7ae50',	NULL,	'2017-03-31 01:31:27',	'2017-03-31 01:31:27'),
+(17,	3,	7,	'61074902ea55a41e5bca52ce3d0015d9',	NULL,	'2017-03-31 01:31:32',	'2017-03-31 01:31:32'),
+(18,	3,	9,	'778253796a76e7a6567c7fd0ec7efd1b',	NULL,	'2017-03-31 01:31:35',	'2017-03-31 01:31:35'),
+(19,	4,	1,	'0b3d010342ce7dad1fc8047e04c17f88',	NULL,	'2017-04-03 22:19:52',	'2017-04-03 22:19:52');
 
 INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `created_at`, `updated_at`) VALUES
 (1,	'ADI25AS',	'ADITYA RIZKY ANUGERAH PT.',	'kontraktor1@herobimbel.id',	'12345',	'03211234561',	'KONSTRUKSI KAPAL; PIPING SYSTEM;ACCOMODATION; MEKANIKAL & ELEKTRIKAL,subkontraktor',	'',	'subkontraktor',	NULL,	NULL,	'2017-03-22 18:36:15',	'2017-03-23 01:37:18'),
@@ -98,4 +91,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18'),
 (51,	1,	4,	'2017-03-23 01:37:18',	'2017-03-23 01:37:18');
 
--- 2017-03-31 01:09:45
+-- 2017-04-03 22:25:27

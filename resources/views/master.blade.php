@@ -145,6 +145,11 @@
             <li class="nav-item px-1">
                 <a class="nav-link <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
             </li>
+            @if(session('role')=='subkontraktor')
+            <li class="nav-item px-1">
+                <a class="nav-link login" href="#" >Pemenang</a>
+            </li>
+            @endif
             @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
             <li class="nav-item px-1">
                 <a class="nav-link login" href="#" data-toggle="modal" data-target="#login-modal"><i class="icon-login"></i> Masuk</a>
@@ -216,6 +221,9 @@
                     </li>
                     <li class="nav-item <?=$TAG=='pengumuman'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-eye"></i> Monitoring</a>
                     </li>
                 </ul>
             </nav>

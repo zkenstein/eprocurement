@@ -53,10 +53,17 @@
                                             <td>
                                                 <div><strong>Kode </strong>: <a>{{$pengumuman->kode}}</a></div>
                                                 <div class="small">
-                                                    <strong>Mulai : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_awal_waktu_penawaran)->formatLocalized('%A %d %B %Y %H:%m')}}
+                                                    <strong>Mulai : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_awal_waktu_penawaran)->format('D d-M-Y H:i')}}
                                                 </div>
                                                 <div class="small">
-                                                    <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y  %H:%m')}}
+                                                    <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->format('D d-M-Y H:i')}}
+                                                </div>
+                                                <div class="small">
+                                                    @if($pengumuman->count_register < $pengumuman->max_register)
+                                                    <strong>Status : <span style="color:green;">Terbuka</span></strong>
+                                                    @else
+                                                    <strong>Status : <span style="color:red;">Penuh</span></strong>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>
@@ -83,10 +90,16 @@
                                             </td>
                                             @if(session('role')!='admin')
                                             <td class="text-center">
-                                                @if($pengumuman->batas_akhir_waktu_penawaran > \Carbon\Carbon::now())
-                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Daftar / Login Subkontraktor</button>
+                                                @if(strtotime($pengumuman->batas_awal_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()) && strtotime($pengumuman->batas_akhir_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
+                                                <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">
+                                                    @if($pengumuman->count_register < $pengumuman->max_register)
+                                                    Daftar / Login Subkontraktor
+                                                    @else
+                                                    Login Subkontraktor
+                                                    @endif
+                                                </button>
                                                 @else
-                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Lihat Pemenang</button>
+                                                <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Lihat Pemenang</button>
                                                 @endif
                                             </td>
                                             @endif
@@ -166,7 +179,7 @@
                 statusCode: {
                     500: function() {
                         alert("Token login kadaluarsa, silahkan ulangi login anda");
-                        // location.reload();
+                        location.reload();
                     }
                 }
             });

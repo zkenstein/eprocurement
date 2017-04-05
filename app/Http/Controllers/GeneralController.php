@@ -73,6 +73,23 @@ class GeneralController extends Controller
     	return view('pages.pengumuman',$data);
     }
 
+    public function monitoringPage(Request $request)
+    {
+        $data['TAG'] = 'monitoring';
+        $data['list_pengumuman'] = Pengumuman::with(['picInfo','listUser.userInfo','listCluster']);
+        if(session('role')=='pic'){
+            $data['list_pengumuman'] = $data['list_pengumuman']->where('pic',session('id'));
+        }
+        $data['list_pengumuman'] = $data['list_pengumuman']->get();
+        return view('pages.monitoring');
+    }
+
+    public function detailPengumumanPage(Request $request,$kode)
+    {
+        $data['TAG'] = 'monitoring';
+        $data['pengumuman'] = Pengumuman::with(['picInfo'])->where('kode',$kode)->first();
+    }
+
     public function validateInput(Request $request, $name)
     {
         $this->validate($request,[

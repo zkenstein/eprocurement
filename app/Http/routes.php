@@ -168,4 +168,8 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 	]);
 	Route::post('/pengumuman','PengumumanController@addData');
 	// Route::delete('/pengumuman/{id?}','PengumumanController@deleteData');
+
+	// MONITORING
+	Route::get('/monitoring','GeneralController@monitoringPage');
+	Route::get('/monitoring/{kode}','GeneralController@detailPengumumanPage');
 });

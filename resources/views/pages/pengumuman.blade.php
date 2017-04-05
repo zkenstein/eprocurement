@@ -395,6 +395,12 @@
                         $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
                         table.ajax.reload();
                         csrf = res.token;
+                    },
+                    statusCode: {
+                        500: function() {
+                            alert("Gagal melakukan pengumuman, periksa koneksi anda");
+                            $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
+                        }
                     }
                 });
             }else{
