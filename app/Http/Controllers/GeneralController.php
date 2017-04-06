@@ -76,11 +76,12 @@ class GeneralController extends Controller
     public function monitoringPage(Request $request)
     {
         $data['TAG'] = 'monitoring';
-        $data['list_pengumuman'] = Pengumuman::with(['picInfo','listUser.userInfo','listCluster']);
+        $data['list_pengumuman'] = Pengumuman::with(['picInfo','listUser.userInfo','listCluster'])->where('batas_awal_waktu_penawaran','<=',\Carbon\Carbon::now())->whereRaw('DATE_ADD(start_auction,INTERVAL durasi MINUTE) > NOW()');
         if(session('role')=='pic'){
             $data['list_pengumuman'] = $data['list_pengumuman']->where('pic',session('id'));
         }
         $data['list_pengumuman'] = $data['list_pengumuman']->get();
+        dd($data['list_pengumuman']);
         return view('pages.monitoring');
     }
 

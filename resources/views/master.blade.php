@@ -222,8 +222,11 @@
                     <li class="nav-item <?=$TAG=='pengumuman'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-eye"></i> Monitoring</a>
+                    <li class="nav-item <?=$TAG=='monitoring'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-eye"></i> Monitoring</a>
+                    </li>
+                    <li class="nav-item <?=$TAG=='arsip'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-docs"></i> Arsip</a>
                     </li>
                 </ul>
             </nav>

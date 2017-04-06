@@ -126,4 +126,9 @@ class PengumumanController extends Controller
         $file = \Storage::disk('local')->get($file_excel);
         return response($file, 200);
     }
+
+    public function getMonitoringData(Request $request)
+    {
+        
+    }
 }
