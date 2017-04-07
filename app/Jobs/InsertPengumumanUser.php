@@ -48,8 +48,14 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
                 'user_id' => $user->id,
                 'kode_masuk' => $kode_masuk
             ]);
-            $job = (new KirimEmailPemberitahuan($this->pengumuman,$user,$kode_masuk));
-            $this->dispatch($job);
+            $file = $this->pengumuman->file_excel;
+            $mailer->send('mail_undangan',['nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk],function($message) use ($user, $file){
+                $message->to($user->email, $user->nama)->subject("PAL Tender Invitation");
+                $message->from(env('MAIL_USERNAME'),"PT.PAL");
+                if($file!=null) $message->attach(storage_path('app/'.$file));
+            });
+            // $job = (new KirimEmailPemberitahuan($this->pengumuman,$user,$kode_masuk));
+            // $this->dispatch($job);
         }
     }
 }

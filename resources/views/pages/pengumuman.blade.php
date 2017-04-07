@@ -86,7 +86,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Harga Netto</label>
-                                            <input id="add-harga-netto" type="number" required class="form-control input-sm will-clear needvalidate" data-rule="required|numeric|min:1" placeholder="Harga Netto" name="harga_netto">
+                                            <input id="add-harga-netto" type="text" required class="form-control input-sm will-clear maskmoney" data-rule="required|numeric|min:1" placeholder="Harga Netto" name="harga_netto">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -226,7 +226,7 @@
             timePickerIncrement: 15,
             timePicker24Hour:true,
             locale: {
-                format: 'YYYY-MM-DD HH:mm',
+                format: 'YYYY-MM-DD HH:mm:ss',
                 cancelLabel: 'Clear'
             },
             singleDatePicker: true,
@@ -278,7 +278,7 @@
                 {
                     "targets": 3,
                     "render": function(data, type, row, meta){
-                        return row.harga_netto+" ("+row.mata_uang+")";
+                        return toCurrency(row.harga_netto)+" ("+row.mata_uang+")";
                     }
                 },
                 {

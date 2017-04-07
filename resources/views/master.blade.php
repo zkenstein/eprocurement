@@ -587,6 +587,7 @@
     <script type="text/javascript" src="/js/jquery.form.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
     <script type="text/javascript">
         $.navigation = $('nav > ul.nav');
         $.panelIconOpened = 'icon-arrow-up';
@@ -817,6 +818,10 @@
             var element = $(this);
             validate(element);
         });
+        $(".maskmoney").maskMoney({prefix:'Rp. ', allowNegative: false, thousands:'.', decimal:',',precision:0,affixesStay:true});
+        function toCurrency(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
     </script> 
     @yield('script')
     <script type="text/javascript">

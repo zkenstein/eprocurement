@@ -60,7 +60,7 @@
                                 		<div class="btn-group">
                                 			<button onclick="lihatDetailPengumuman({{$pengumuman->id}})" class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>
                                 			@if($pengumuman->count_register==0 && strtotime($pengumuman->batas_akhir_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()))
-                                				<button title="Extends" class="btn btn-danger btn-sm" disabled>Extends Waktu</button>
+                                				<button title="Extends" class="btn btn-danger btn-sm" onclick="getDataPengumuman({{$pengumuman->id}})">Extends Waktu</button>
                                 			@else
 	                                			@if(strtotime($pengumuman->start_auction) >= strtotime(\Carbon\Carbon::now()))
 	                                				<button title="Auction belum dimulai" class="btn btn-info btn-sm" disabled>Live Auction</button>
@@ -91,29 +91,63 @@
 	                <div class="row">
 	                	<div class="col-md-12 col-sm-12 col-xs-12 padding-side">
 	                		<strong id="detail-kode-pengumuman"></strong><br>
-	                		Batas Waktu Penawaran : <strong id="detail-batas-waktu-penawaran"></strong><br>
-	                		Validitas Harga : <strong id="detail-validitas-harga"></strong><br>
-	                		Waktu Pengiriman : <strong id="detail-waktu-pengiriman"></strong><br>
-	                		Harga Netto : <strong id="detail-harga-netto"></strong>
+	                		<table class="table table-bordered">
+	                			<tr>
+	                				<td width="30%;">Batas Waktu Penawaran</td>
+	                				<td><span id="detail-batas-waktu-penawaran"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Validitas Harga</td>
+	                				<td><span id="detail-validitas-harga"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Waktu Pengiriman</td>
+	                				<td><span id="detail-waktu-pengiriman"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Harga Netto</td>
+	                				<td><span id="detail-harga-netto"></span></td>
+	                			</tr>
+	                		</table>
 	                	</div>
 	                </div><br>
 	                <div class="row">
 	                	<div class="col-md-12 col-sm-12 col-xs-12 padding-side">
 	                		<strong>PIC</strong><br>
-							Kode PIC : <strong id="detail-kode-pic"></strong><br>
-	                		Nama PIC : <strong id="detail-nama-pic"></strong><br>
-	                		Telp PIC : <strong id="detail-telp-pic"></strong><br>
-	                		Email PIC : <strong id="detail-email-pic"></strong>	                		
+	                		<table class="table table-bordered">
+	                			<tr>
+	                				<td width="30%;">Kode PIC</td>
+	                				<td><span id="detail-kode-pic"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Nama PIC</td>
+	                				<td><span id="detail-nama-pic"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Telp PIC</td>
+	                				<td><span id="detail-telp-pic"></span></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Email PIC</td>
+	                				<td><span id="detail-email-pic"></span></td>
+	                			</tr>
+	                		</table>                		
 	                	</div>
 	                </div><br>
 	                <div class="row">
-	                	<div class="col-md-6 col-sm-12 col-xs-12 padding-side">
-		                	<strong>Cluster</strong><br>
-		                	<ul id="detail-list-cluster"></ul>
-	                	</div>
-	                	<div class="col-md-6 col-sm-12 col-xs-12 padding-side">
-		                	<strong>Barang</strong><br>
-		                	<ul id="detail-list-barang"></ul>
+	                	<div class="col col-md-12 col-sm-12 padding-side">
+	                		<table class="table table-bordered">
+		                		<tr>
+		                			<td width="30%;">
+		                				<strong>Cluster</strong><br>
+			                			<ul id="detail-list-cluster"></ul>
+		                			</td>
+		                			<td>
+		                				<strong>Barang</strong><br>
+			                			<ul id="detail-list-barang"></ul>
+		                			</td>
+		                		</tr>
+		                	</table>
 	                	</div>
 	                </div>
 	                <div class="row">
@@ -128,6 +162,69 @@
             </div>
         </div>
     </div>
+
+    <form class="modal fade" id="modal-extends" tabindex="-1" role="dialog" aria-hidden="true" method="post">
+        <div class="modal-dialog modal-lg modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Extends Pengumuman</h4>
+                </div>
+                <div class="modal-body">
+                	{{csrf_field()}}
+                    <div class="row">
+                    	<div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Batas Waktu Penawaran</label>
+                                <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" readonly name="batas_waktu_penawaran">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Validitas Harga</label>
+                                <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" readonly name="validitas_harga">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Waktu Pengiriman</label>
+                                <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" readonly name="waktu_pengiriman">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Maksimal Pendaftar</label>
+                                <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Maksimal Pendaftar" name="max_register">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Waktu Auction</label>
+                                <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Durasi (Menit)</label>
+                                <input id="add-durasi" type="number" required class="form-control input-sm will-clear" placeholder="Durasi" name="durasi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')" id="save-quantity-button">Batal</button>
+                    <button type="submit" class="btn btn-primary">Extends</button>
+                </div>
+            </div>
+        </div>
+    </form>
 @stop
 
 @section('script')
@@ -151,7 +248,7 @@
         		url:"{{route('intern.detail_pengumuman')}}/"+id,
         		success:function(res){
         			if(res.result===true){
-        				$("#detail-kode-pengumuman").text("Pengumuman kode "+res.data.kode);
+        				$("#detail-kode-pengumuman").text("Pengumuman kode : "+res.data.kode);
 	        			$("#detail-batas-waktu-penawaran").text(moment(res.data.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - "+moment(res.data.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-validitas-harga").text(moment(res.data.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-waktu-pengiriman").text(moment(res.data.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
@@ -183,6 +280,10 @@
         			}
         		}
         	});
+        }
+
+        function getDataPengumuman (id) {
+        	$("#modal-extends").modal("show");
         }
     </script>
 @stop

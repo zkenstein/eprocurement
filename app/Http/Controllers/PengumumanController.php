@@ -92,7 +92,7 @@ class PengumumanController extends Controller
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
-
+        $request->merge(array('harga_netto'=>str_replace(["Rp","."," "], "", $request->input('harga_netto'))));
         // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
@@ -117,7 +117,11 @@ class PengumumanController extends Controller
 
     public function deleteData(Request $request, $id)
     {
-        Pengumuman::where('id',$id)->delete();
+        // Cek Authority
+        if(session('role')=='admin')
+            Pengumuman::where('id',$id)->delete();
+        else
+            Pengumuman::where('id',$id)->where('pic',session('id'))->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
 
@@ -130,6 +134,7 @@ class PengumumanController extends Controller
     public function detailPengumuman(Request $request,$id)
     {
         $pengumuman = Pengumuman::with(['picInfo','listCluster.clusterInfo','listBarang.barangInfo','listUser.userInfo']);
+        // Cek Authority
         if(session('role')=='pic') $pengumuman = $pengumuman->where('pic',session('id'));
         $pengumuman = $pengumuman->find($id);
         if($pengumuman!=null) return response()->json(['result'=>true,'data'=>$pengumuman]);
