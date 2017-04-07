@@ -200,20 +200,17 @@
 @stop
 
 @section('script')
-    <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
-    <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
 	<script type="text/javascript">
         var resetNow = false;
         $(document).ready(function(){
             $("#form-add input:not([name='_token'], [name='_method'])").val('');
         });
-        
+
         var barang = [];
         @foreach($list_barang as $barang)
         barang[{{$barang->id}}] = "{{$barang->kode}}";
         @endforeach
 
-        moment.locale("id");
         $("input.daterange").daterangepicker({
             timePicker: true,
             timePickerIncrement: 15,

@@ -18,139 +18,6 @@
 
     <div class="container-fluid">
         <div class="animated fadeIn">
-        	<div class="row">
-                <div class="col-sm-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Buat Pengumuman
-                        </div>
-                        <div class="card-block">
-                            <form id="form-add" action="" method="post" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:pengumuman,kode|alpha_num" placeholder="Kode Pengumuman">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">PIC</label>
-                                            @if(session('role')=='pic')
-                                            <input type="text" name="pic" value="Anda" class="form-control" readonly placeholder="Anda">
-                                            @else
-                                            <select class="form-control input-sm" name="pic">
-                                                @foreach($list_pic as $pic)
-                                                <option value="{{$pic->id}}">{{$pic->nama}}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="help-block"></span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                	<div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Batas Waktu Penawaran</label>
-                                            <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" readonly name="batas_waktu_penawaran">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Validitas Harga</label>
-                                            <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" readonly name="validitas_harga">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Waktu Pengiriman</label>
-                                            <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" readonly name="waktu_pengiriman">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Maksimal Pendaftar</label>
-                                            <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Maksimal Pendaftar" name="max_register">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Harga Netto</label>
-                                            <input id="add-harga-netto" type="number" required class="form-control input-sm will-clear needvalidate" data-rule="required|numeric|min:1" placeholder="Harga Netto" name="harga_netto">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Mata Uang</label>
-                                            <input id="add-mata-uang" type="text" required class="form-control input-sm will-clear needvalidate" data-rule="required|alpha" placeholder="Mata Uang" name="mata_uang">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="row">
-                                            <div class="form-group col-sm-6 padding-side">
-                                                <label class="form-form-control-label">Barang</label>
-                                                <select title="Pilih Barang" data-selected-text-format="count > 1" id="add-barang" class="form-control will-clear selectpicker" multiple name="barang[]">
-                                                    @foreach($list_barang as $barang)
-                                                    <option value="{{$barang->id}}">{{$barang->kode.' | '.str_limit($barang->deskripsi,30)}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-sm-6 padding-side">
-                                                <label class="form-form-control-label">Import CSV</label>
-                                                <input type="file" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                            </div>
-                                        </div>
-                                        	
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                    	<div class="form-group">
-                                            <label class="form-form-control-label">Cluster</label>
-                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker" multiple name="cluster[]">
-                                                @foreach($list_cluster as $cluster)
-                                                <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Waktu Auction</label>
-                                            <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Durasi (Menit)</label>
-                                            <input id="add-durasi" type="number" required class="form-control input-sm will-clear" placeholder="Durasi" name="durasi">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 padding-side">
-                                        <button id="add-submit" class="btn btn-primary pull-right" type="submit">Umumkan <i class="fa fa-bullhorn"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -161,15 +28,50 @@
                             <table id="pengumuman-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:165px;">Kode / PIC</th>
-                                        <th style="min-width:165px;">Waktu</th>
+                                        <th style="min-width:165px;">Kode</th>
+                                        <th style="min-width:165px;">Jumlah Pendaftar</th>
                                         <th>Max Pendaftar</th>
-                                        <th>Harga Netto</th>
-                                        <th>Cluster</th>
-                                        <th>Barang</th>
+                                        <th>Auction</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($list_pengumuman as $pengumuman)
+                                <tr>
+                                	<td>
+                                		<a>{{$pengumuman->kode}}</a>
+                                	</td>
+                                	<td>
+                                	@if($pengumuman->count_register>=$pengumuman->max_register && $pengumuman->max_register!=0)
+                                		<span style="color:red;">{{$pengumuman->count_register}} (maksimal)</span>
+                                	@else
+                                		<span style="color:green;">{{$pengumuman->count_register}}</span>
+                                	@endif
+                                	</td>
+                                	<td>
+                                	@if($pengumuman->max_register!=0)
+                                	{{$pengumuman->max_register}}
+                                	@else
+                                	Tidak dibatasi
+                                	@endif
+                                	</td>
+                                	<td>{{\Carbon\Carbon::parse($pengumuman->start_auction)->formatLocalized('%A %d %B %Y %H:%m').' - '.\Carbon\Carbon::parse($pengumuman->start_auction)->addMinutes($pengumuman->durasi)->formatLocalized('%H:%m').' ('.$pengumuman->durasi.' minutes)'}}</td>
+                                	<td>
+                                		<div class="btn-group">
+                                			<button onclick="lihatDetailPengumuman({{$pengumuman->id}})" class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>
+                                			@if($pengumuman->count_register==0 && strtotime($pengumuman->batas_akhir_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()))
+                                				<button title="Extends" class="btn btn-danger btn-sm" disabled>Extends Waktu</button>
+                                			@else
+	                                			@if(strtotime($pengumuman->start_auction) >= strtotime(\Carbon\Carbon::now()))
+	                                				<button title="Auction belum dimulai" class="btn btn-info btn-sm" disabled>Live Auction</button>
+	                                			@else
+	                                				<a class="btn btn-info btn-sm" href="{{route('intern.live_auction',['id'=>$pengumuman->id])}}">Live Auction</a>
+	                                			@endif
+	                                		@endif
+                                		</div>
+                                	</td>
+                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -179,20 +81,49 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-quantity" tabindex="-1" role="dialog" aria-hidden="true" data-id="" method="post" enctype="multipart/form-data">
-        <div class="modal-dialog modal-primary" role="document">
+    <div class="modal fade" id="modal-lihat" tabindex="-1" role="dialog" aria-hidden="true" data-id="">
+        <div class="modal-dialog modal-lg modal-primary" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Quantity Barang</h4>
+                    <h4 class="modal-title">Detail Pengumuman</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row" id="add-quantity-div">
-                        
-                    </div>
+	                <div class="row">
+	                	<div class="col-md-12 col-sm-12 col-xs-12 padding-side">
+	                		<strong id="detail-kode-pengumuman"></strong><br>
+	                		Batas Waktu Penawaran : <strong id="detail-batas-waktu-penawaran"></strong><br>
+	                		Validitas Harga : <strong id="detail-validitas-harga"></strong><br>
+	                		Waktu Pengiriman : <strong id="detail-waktu-pengiriman"></strong><br>
+	                		Harga Netto : <strong id="detail-harga-netto"></strong>
+	                	</div>
+	                </div><br>
+	                <div class="row">
+	                	<div class="col-md-12 col-sm-12 col-xs-12 padding-side">
+	                		<strong>PIC</strong><br>
+							Kode PIC : <strong id="detail-kode-pic"></strong><br>
+	                		Nama PIC : <strong id="detail-nama-pic"></strong><br>
+	                		Telp PIC : <strong id="detail-telp-pic"></strong><br>
+	                		Email PIC : <strong id="detail-email-pic"></strong>	                		
+	                	</div>
+	                </div><br>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-12 col-xs-12 padding-side">
+		                	<strong>Cluster</strong><br>
+		                	<ul id="detail-list-cluster"></ul>
+	                	</div>
+	                	<div class="col-md-6 col-sm-12 col-xs-12 padding-side">
+		                	<strong>Barang</strong><br>
+		                	<ul id="detail-list-barang"></ul>
+	                	</div>
+	                </div>
+	                <div class="row">
+	                	<div class="col-md-12 padding-side">
+	                		<a class="btn btn-block btn-primary" download href="" id="detail-download-excel">Download File Excel</a>
+	                	</div>
+	                </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" onclick="resetMyModal();" id="save-quantity-button">Atur Ulang</button>
-                    <button type="button" class="btn btn-primary" onclick="realSubmit()" id="save-quantity-button">OK</button>
+                    <button type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')" id="save-quantity-button">OK</button>
                 </div>
             </div>
         </div>
@@ -203,48 +134,8 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
 	<script type="text/javascript">
-        var resetNow = false;
-        $(document).ready(function(){
-            $("#form-add input:not([name='_token'], [name='_method'])").val('');
-        });
-        
-        var barang = [];
-        @foreach($list_barang as $barang)
-        barang[{{$barang->id}}] = "{{$barang->kode}}";
-        @endforeach
-
-        moment.locale("id");
-        $("input.daterange").daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 15,
-            timePicker24Hour:true,
-            locale: {
-                format: 'YYYY-MM-DD h:mm A',
-                cancelLabel: 'Clear'
-            },
-            autoUpdateInput: false
-        });
-        $("input.singledate").daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 15,
-            timePicker24Hour:true,
-            locale: {
-                format: 'YYYY-MM-DD HH:mm',
-                cancelLabel: 'Clear'
-            },
-            singleDatePicker: true,
-            autoApply:true
-        });
-        $('input.daterange').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm'));
-        });
-		var csrf = "{{csrf_token()}}";
         var table = $("#pengumuman-data").DataTable({
         	"autoWidth": false,
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{route('intern.pengumuman_data')}}",
-            info:false,
             "language": {
                 "lengthMenu": "_MENU_",
                 "zeroRecords": "Maaf data tidak ditemukan",
@@ -252,184 +143,46 @@
                 "infoEmpty": "Data Tidak Ditemukan",
                 "infoFiltered": "(filtered from _MAX_ total records)",
                 "search": "Cari "
-            },
-            "columnDefs": [
-                {
-                    "className": "mystyle-column",
-                    "targets": 0,
-                    "render": function(data, type, row, meta){
-                        var res = "<strong>Kode Pengumuman : </strong><a>"+row.kode+"</a><br><br>Kode PIC : <a>"+row.pic_info.kode+"</a><br>Nama PIC : "+row.pic_info.nama+"<br>Telp PIC : "+row.pic_info.telp+"<br>Email PIC: "+row.pic_info.email;
-                        return res;
-                    }
-                },
-                {
-                    "targets": 1,
-                    "render": function(data, type, row, meta){
-                        return "<strong>Batas waktu penawaran</strong> :<br><small>"+moment(row.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - <br>"+moment(row.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Validitas Harga</strong> :<br><small>"+moment(row.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Waktu pengriman</strong> :<br><small>"+moment(row.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small>";
-                    }
-                },
-                {
-                    "targets": 2,
-                    "render": function(data, type, row, meta){
-                        if(row.max_register==0){
-                            return "Tidak dibatasi";
-                        }else{
-                            return row.max_register+" Pendaftar";
-                        }
-                    }
-                },
-                {
-                    "targets": 3,
-                    "render": function(data, type, row, meta){
-                        return row.harga_netto+" ("+row.mata_uang+")";
-                    }
-                },
-                {
-                    "className":"mystyle-column",
-                    "orderable":false,
-                    "targets": 4,
-                    "render": function(data, type, row, meta){
-                        var show = "";
-                        $.each(row.list_cluster,function(key,val){
-                            if(key==row.list_cluster.length-1)
-                                show+="<a>"+val.cluster_info.nama+"</a>";
-                            else
-                                show+="<a>"+val.cluster_info.nama+"</a>, ";
-                        });
-                        return show;
-                    }
-                },
-                {
-                    "orderable":false,
-                    "targets": 5,
-                    "render": function(data, type, row, meta){
-                        var show = "";
-                        $.each(row.list_barang,function(key,val){
-                            if(key==row.list_barang.length-1)
-                                show+="<a>"+val.barang_info.kode+"</a>";
-                            else
-                                show+="<a>"+val.barang_info.kode+"</a>, ";
-                        });
-                        if(row.file_excel!=null) show+="<br><a href='{{route('intern.get_file_excel')}}/"+row.file_excel+"' download class='btn btn-sm btn-primary'>Download Excel Barang</a>"
-                        return show;
-                    }
-                }
-                // ,
-                // {
-                //     "className":"no-print",
-                //     "orderable":false,
-                //     "targets": 6,
-                //     "render": function(data, type, row, meta){
-                //         return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getPengumuman('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusPengumuman('+row.id+')"><i class="icon-trash"></i></button></div>';
-                //     }
-                // }
-            ],
-        });
-
-        $("#form-add").submit(function(e){
-            e.preventDefault();
-            var _c = confirm("Anda yakin data yang telah diisikan benar ?\n Sistem akan mengirimkan email ke Subkontraktor dan Pengumuman tidak akan dapat dihapus setelah email terkirim");
-            if(_c===true){
-                $("#add-submit").prop('disabled', true);
-                var myForm = $(this);
-                if($("#add-barang").val().length>0){
-                    $("#modal-quantity").modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    }).on('hidden.bs.modal', function () {
-                        if(resetNow==false){
-                            $("#add-quantity-div").css("display","none");
-                            $("#add-quantity-div").appendTo("#form-add");
-                            myForm.ajaxSubmit({
-                                type:"POST",
-                                success:function(res,status,xhr,$form){
-                                    $("#add-submit").prop('disabled', false);
-                                    $("#form-add input:not([name='_token'], [name='_method'])").val('');
-                                    $("#form-add textarea").val('');
-                                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
-                                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
-                                    $("#form-add input.needvalidate").removeClass('form-control-danger');
-                                    $("#form-add input.needvalidate").removeClass('form-control-success');
-                                    $("#form-add input.needvalidate").next().removeClass('text-danger');
-                                    $("#form-add input.needvalidate").next().text('');
-                                    $('#form-add .selectpicker').selectpicker('deselectAll');
-                                    $("input[name='_token']").val(res.token);
-                                    csrf = res.token;
-                                    location.reload();
-                                }
-                            });
-                        }
-                    }).modal('show');
-                }else{
-                    myForm.ajaxSubmit({
-                        type:"POST",
-                        success:function(res,status,xhr,$form){
-                            $("#add-submit").prop('disabled', false);
-                            $("#form-add input:not([name='_token'], [name='_method'])").val('');
-                            $("#form-add textarea").val('');
-                            $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
-                            $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
-                            $("#form-add input.needvalidate").removeClass('form-control-danger');
-                            $("#form-add input.needvalidate").removeClass('form-control-success');
-                            $("#form-add input.needvalidate").next().removeClass('text-danger');
-                            $("#form-add input.needvalidate").next().text('');
-                            $('#form-add .selectpicker').selectpicker('deselectAll');
-                            $("input[name='_token']").val(res.token);
-                            csrf = res.token;
-                            location.reload();
-                        }
-                    });
-                }
             }
         });
 
-        function hapusPengumuman(id) {
-            $("button.delete-button[data-id='"+id+"']").prop('disabled', true);
-            var _c = confirm("Anda yakin akan menghapus Pengumuman ini ?\n Semua data yang berkaitan dengan barang ini akan terhapus");
-            if(_c===true){
-                $.ajax({
-                    url:"{{route('intern.pengumuman')}}/"+id,
-                    method:"POST",
-                    data:{_method:"delete",_token:csrf},
-                    success:function (res) {
-                        $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
-                        table.ajax.reload();
-                        csrf = res.token;
-                    },
-                    statusCode: {
-                        500: function() {
-                            alert("Gagal melakukan pengumuman, periksa koneksi anda");
-                            $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
-                        }
-                    }
-                });
-            }else{
-                $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
-            }
-        }
+        function lihatDetailPengumuman (id) {
+        	$.ajax({
+        		url:"{{route('intern.detail_pengumuman')}}/"+id,
+        		success:function(res){
+        			if(res.result===true){
+        				$("#detail-kode-pengumuman").text("Pengumuman kode "+res.data.kode);
+	        			$("#detail-batas-waktu-penawaran").text(moment(res.data.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - "+moment(res.data.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
+	        			$("#detail-validitas-harga").text(moment(res.data.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
+	        			$("#detail-waktu-pengiriman").text(moment(res.data.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
+	        			$("#detail-harga-netto").text(res.data.harga_netto+" ("+res.data.mata_uang+")");
 
-        function modalQuantityShow() {
-            $("#add-quantity-div").html('');
-            $.each($('#add-barang').val(),function(key,val){
-                $("#add-quantity-div").append('<div class="col-sm-12 col-md-12 padding-side"><div class="form-group">'+barang[val]+'<label class="form-form-control-label"></label><input type="number" name="quantity['+val+']" class="form-control"></div></div>');
-            });
-        }
+	        			$("#detail-kode-pic").text(res.data.pic_info.kode);
+	        			$("#detail-nama-pic").text(res.data.pic_info.nama);
+	        			$("#detail-telp-pic").text(res.data.pic_info.telp);
+	        			$("#detail-email-pic").text(res.data.pic_info.email);
 
-        $('#add-barang').on('hidden.bs.select', function (e) {
-            modalQuantityShow();
-        });
+	        			$("#detail-list-cluster").children().remove();
+	        			$.each(res.data.list_cluster,function(key,obj){
+	        				$("#detail-list-cluster").append("<li>"+obj.cluster_info.nama+"</li>");
+	        			});
+	        			$("#detail-list-barang").children().remove();
+	        			$.each(res.data.list_barang,function(key,obj){
+	        				$("#detail-list-barang").append("<li>"+obj.barang_info.kode+"</li>");
+	        			});
+	        			if(res.data.file_excel!=null){
+	        				$("#detail-download-excel").show();
+	        				$("#detail-download-excel").attr("href","{{route('intern.get_file_excel')}}/"+res.data.file_excel);
+	        			}else{
+	        				$("#detail-download-excel").hide();
+	        			}
 
-        function resetMyModal() {
-            resetNow = true;
-            $(".modal").modal('hide');
-            $("#add-quantity-div").children().remove();
-            $("#add-submit").prop('disabled', false);
-            modalQuantityShow();
-        }
-
-        function realSubmit() {
-            resetNow = false;
-            $('.modal').modal('hide')
+	        			$("#modal-lihat").modal('show');
+        			}else{
+        				alert("data tidak ditemukan");
+        			}
+        		}
+        	});
         }
     </script>
 @stop

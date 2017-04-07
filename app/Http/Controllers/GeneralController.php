@@ -81,8 +81,7 @@ class GeneralController extends Controller
             $data['list_pengumuman'] = $data['list_pengumuman']->where('pic',session('id'));
         }
         $data['list_pengumuman'] = $data['list_pengumuman']->get();
-        dd($data['list_pengumuman']);
-        return view('pages.monitoring');
+        return view('pages.monitoring',$data);
     }
 
     public function detailPengumumanPage(Request $request,$kode)

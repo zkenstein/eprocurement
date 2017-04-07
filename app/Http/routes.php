@@ -174,8 +174,19 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'GeneralController@monitoringPage',
 		'as'=>'monitoring'
 	]);
-	Route::get('/monitoring/{kode}',[
-		'uses'=>'GeneralController@detailPengumumanPage',
-		'as'=>'detail_monitoring'
+	Route::get('/pengumuman/{id?}',[
+		'uses'=>'PengumumanController@detailPengumuman',
+		'as'=>'detail_pengumuman'
+	]);
+	Route::get('/live_auction/{id?}',[
+		'uses'=>'GeneralController@monitoringPage',
+		'as'=>'live_auction'
+	]);
+
+
+	// ARSIP
+	Route::get('/arsip',[
+		'uses'=>'GeneralController@arsipPage',
+		'as'=>'arsip'
 	]);
 });

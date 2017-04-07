@@ -127,8 +127,13 @@ class PengumumanController extends Controller
         return response($file, 200);
     }
 
-    public function getMonitoringData(Request $request)
+    public function detailPengumuman(Request $request,$id)
     {
-        
+        $pengumuman = Pengumuman::with(['picInfo','listCluster.clusterInfo','listBarang.barangInfo','listUser.userInfo']);
+        if(session('role')=='pic') $pengumuman = $pengumuman->where('pic',session('id'));
+        $pengumuman = $pengumuman->find($id);
+        if($pengumuman!=null) return response()->json(['result'=>true,'data'=>$pengumuman]);
+        return response()->json(['result'=>false]);
     }
+
 }

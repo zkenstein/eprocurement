@@ -226,7 +226,7 @@
                         <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-eye"></i> Monitoring</a>
                     </li>
                     <li class="nav-item <?=$TAG=='arsip'?'active':''?>">
-                        <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-docs"></i> Arsip</a>
+                        <a class="nav-link" href="{{route('intern.arsip')}}"><i class="icon-docs"></i> Arsip</a>
                     </li>
                 </ul>
             </nav>
@@ -585,6 +585,8 @@
     <!-- Multiple Select -->
     <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
     <script type="text/javascript">
         $.navigation = $('nav > ul.nav');
         $.panelIconOpened = 'icon-arrow-up';
@@ -713,7 +715,6 @@
             $('body').toggleClass('sidebar-opened').parent().toggleClass('sidebar-opened');
         });
     </script>
-
     @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
     <script type="text/javascript">
         $("#login-modal").submit(function(e){
@@ -818,6 +819,9 @@
         });
     </script> 
     @yield('script')
+    <script type="text/javascript">
+        moment.locale("id");
+    </script>
 </body>
 
 </html>
