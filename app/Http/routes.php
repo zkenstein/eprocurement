@@ -46,8 +46,8 @@ Route::post('register_check',[
 	'uses'=>'PublickController@registerCheck',
 	'as'=>'register_check'
 ]);
-// Route::get('gc','PublickController@generateCluster');
-// Route::get('gu','PublickController@generateUser');
+Route::get('gc','PublickController@generateCluster');
+Route::get('gu','PublickController@generateUser');
 
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC

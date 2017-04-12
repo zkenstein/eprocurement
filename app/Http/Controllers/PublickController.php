@@ -127,7 +127,7 @@ class PublickController extends Controller
     	return redirect()->route('home');
     }
 
-    /*
+    
     public function generateCluster(Request $request)
     {
         $cluster = [
@@ -144,53 +144,37 @@ class PublickController extends Controller
             ]);
         }
     }
-    */
+    
     
     public function generateUser(Request $request)
     {
-    	// $user = new User();
-    	// $user->kode = 'KODE-0';
-    	// $user->nama = 'Administrator';
-    	// $user->email = 'kurniawan@herobimbel.id';
-    	// $user->password = '12345';
-    	// $user->telp = '03210987651';
-    	// $user->session_id = null;
-    	// $user->role = 'admin';
-    	// $user->aktif = null;
-    	// $user->kadaluarsa = null;
-    	// $user->save();
-    /*
-        $subkontraktor = [
-            
-        ];
-
-    	$listCluster = collect(Cluster::select('id')->get())->toArray();
-
-    	foreach ($listCluster as $key => $value) {
-    		$listCluster[$key] = $value['id'];
-    	}
-
-        $rand_keys = array_rand($listCluster, rand(1,5));
-
-        foreach ($rand_keys as $r) {
-            
-        }
+    	$user = new User();
+    	$user->kode = 'KODE-0';
+    	$user->nama = 'Administrator';
+    	$user->email = 'kurniawan@herobimbel.id';
+    	$user->password = '12345';
+    	$user->telp = '03210987651';
+    	$user->session_id = null;
+    	$user->role = 'admin';
+    	$user->aktif = null;
+    	$user->kadaluarsa = null;
+    	$user->save();
 
     	for($i=1;$i<=10;$i++){
     		User::create([
     			'kode'=>'KODE-'.$i,
     			'nama'=>'Sub Kontraktor '.$i,
     			'email'=>'kontraktor'.$i.'@herobimbel.id',
-    			'password'=>null,
+    			'password'=>'12345',
     			'telp'=>'03210987782'.$i,
+                'bidang_usaha'=>'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod',
     			'session_id'=>null,
     			'role'=>'subkontraktor',
     			'aktif'=>null,
     			'kadaluarsa'=>null
-    			// 'cluster_id'=>$listCluster[array_rand($listCluster)]
     		]);
     	}
-    */
+    
     }
     
 }

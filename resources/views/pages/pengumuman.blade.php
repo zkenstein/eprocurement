@@ -105,7 +105,7 @@
                                                 <label class="form-form-control-label">Barang</label>
                                                 <select title="Pilih Barang" data-selected-text-format="count > 1" id="add-barang" class="form-control will-clear selectpicker" multiple name="barang[]">
                                                     @foreach($list_barang as $barang)
-                                                    <option value="{{$barang->id}}">{{$barang->kode.' | '.str_limit($barang->deskripsi,30)}}</option>
+                                                    <option value="{{$barang->id}}">{{$barang->kode}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
