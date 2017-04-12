@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -35,7 +36,7 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Mailer $mailer)
     {
         $listIdCluster = $this->listIdCluster;
         $listUser = User::whereHas('listCluster',function($q) use ($listIdCluster){
@@ -54,8 +55,6 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
                 $message->from(env('MAIL_USERNAME'),"PT.PAL");
                 if($file!=null) $message->attach(storage_path('app/'.$file));
             });
-            // $job = (new KirimEmailPemberitahuan($this->pengumuman,$user,$kode_masuk));
-            // $this->dispatch($job);
         }
     }
 }
