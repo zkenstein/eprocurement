@@ -64,6 +64,9 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 	]);
 
 	// HALAMAN BERANDA
+	Route::get('/',function(){
+		return redirect()->route('intern.beranda');
+	});
 	Route::get('/beranda',[
 		'uses'=>'GeneralController@berandaPage',
 		'as'=>'beranda'

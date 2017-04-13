@@ -10,6 +10,11 @@ use App\User;
 
 class PicController extends Controller
 {
+    public function __construct()
+    {
+        \Carbon\Carbon::setLocale('id');
+    }
+    
     public function getData(Request $request)
     {	
     	$orderBy = '';

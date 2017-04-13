@@ -10,6 +10,11 @@ use App\Barang;
 
 class BarangController extends Controller
 {
+    public function __construct()
+    {
+        \Carbon\Carbon::setLocale('id');
+    }
+    
 	public function getData(Request $request)
     {	
     	$orderBy = '';

@@ -44,8 +44,12 @@
                                 	<td>
                                 	@if($pengumuman->count_register>=$pengumuman->max_register && $pengumuman->max_register!=0)
                                 		<span style="color:red;">{{$pengumuman->count_register}} (maksimal)</span>
-                                	@else
-                                		<span style="color:green;">{{$pengumuman->count_register}}</span>
+                                    @elseif($pengumuman->count_register==0)
+                                        <strong style="color:red;">Belum ada pendaftar</strong>
+                                	@elseif($pengumuman->count_register==1)
+                                        <span style="color:red;">{{$pengumuman->count_register}} Sub kontraktor</span>
+                                    @else
+                                		<span style="color:green;">{{$pengumuman->count_register}} Sub kontraktor</span>
                                 	@endif
                                 	</td>
                                 	<td>
@@ -198,7 +202,7 @@
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Maksimal Pendaftar</label>
-                                <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Maksimal Pendaftar" name="max_register">
+                                <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Kosongkan jika tidak dibatasi" name="max_register">
                                 <span class="help-block"></span>
                             </div>
                         </div>

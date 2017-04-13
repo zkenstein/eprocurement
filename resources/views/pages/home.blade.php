@@ -59,10 +59,16 @@
                                                     <strong>Penutupan : </strong> {{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->format('D d-M-Y H:i')}}
                                                 </div>
                                                 <div class="small">
-                                                    @if($pengumuman->count_register < $pengumuman->max_register)
-                                                    <strong>Status : <span style="color:green;">Terbuka</span></strong>
-                                                    @else
-                                                    <strong>Status : <span style="color:red;">Penuh</span></strong>
+                                                    @if(strtotime($pengumuman->batas_awal_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
+                                                    <strong>Status : <span style="color:red;">Belum dibuka</span></strong>
+                                                    @elseif(strtotime($pengumuman->batas_akhir_waktu_penawaran) < strtotime(\Carbon\Carbon::now()))
+                                                    <strong>Status : <span style="color:red;">Ditutup</span></strong>
+                                                    @elseif(strtotime($pengumuman->batas_awal_waktu_penawaran) < strtotime(\Carbon\Carbon::now()))
+                                                        @if($pengumuman->count_register < $pengumuman->max_register || $pengumuman->max_register<=0)
+                                                        <strong>Status : <span style="color:green;">Terbuka</span></strong>
+                                                        @else
+                                                        <strong>Status : <span style="color:red;">Penuh</span></strong>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </td>
@@ -70,7 +76,7 @@
                                                 @if($pengumuman->max_register!=0)
                                                     Maksimal {{$pengumuman->max_register}} Pendaftar
                                                 @else
-                                                    Tidak ada batasan pendaftar
+                                                    Tidak ada batasan
                                                 @endif
                                             </td>
                                             <td>
@@ -90,16 +96,23 @@
                                             </td>
                                             @if(session('role')!='admin')
                                             <td class="text-center">
-                                                @if(strtotime($pengumuman->batas_awal_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()) && strtotime($pengumuman->batas_akhir_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
-                                                <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">
-                                                    @if($pengumuman->count_register < $pengumuman->max_register)
+                                                @if(strtotime($pengumuman->batas_awal_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
+                                                <button class="btn btn-primary disabled">
+                                                    Pendaftaran Belum dibuka
+                                                </button>
+                                                @elseif(strtotime($pengumuman->batas_awal_waktu_penawaran) < strtotime(\Carbon\Carbon::now()) && strtotime($pengumuman->batas_akhir_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
+                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">
+                                                    @if($pengumuman->count_register < $pengumuman->max_register || $pengumuman->max_register<=0)
                                                     Daftar / Login Subkontraktor
                                                     @else
                                                     Login Subkontraktor
+                                                    </button>
+                                                    <strong>Status : <span style="color:red;">Penuh</span></strong>
                                                     @endif
-                                                </button>
                                                 @else
-                                                <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">Lihat Pemenang</button>
+                                                    <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">
+                                                        Login Subkontraktor
+                                                    </button>
                                                 @endif
                                             </td>
                                             @endif

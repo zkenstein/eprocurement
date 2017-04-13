@@ -29,14 +29,36 @@
                                 			: <strong>{{$pengumuman->kode}}</strong>
                                 		</div>
                                 	</div>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-3 padding-side">
+                                            PIC
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 padding-side">
+                                            : <strong>{{$pengumuman->picInfo->kode.' - '.$pengumuman->picInfo->nama}}</strong>
+                                        </div>
+                                    </div>
                                 	<div class="row">
                                 		<div class="col-sm-6 col-md-3 padding-side">
                                 			Auction
                                 		</div>
                                 		<div class="col-sm-6 col-md-6 padding-side">
-                                			: <strong>{{$pengumuman->start_auction}}</strong> selama <a href="#">{{$pengumuman->durasi}} Menit</a>
+                                			: <strong>{{\Carbon\Carbon::parse($pengumuman->start_auction)->format('l d F Y h:i:s')}}</strong> selama <a href="#">{{$pengumuman->durasi}} Menit</a>
                                 		</div>
                                 	</div>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-3 padding-side">
+                                            Harga Netto
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 padding-side">
+                                            : <span>{{$pengumuman->harga_netto.' ('.$pengumuman->mata_uang.')'}}</span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    @if(strtotime($pengumuman->start_auction) > strtotime(\Carbon\Carbon::now()))
+                                    <button class="btn btn-primary btn-lg btn-block disabled">Auction Belum Dimulai</button>
+                                    @else
+                                    <a class="btn btn-primary btn-lg btn-block">Auction</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

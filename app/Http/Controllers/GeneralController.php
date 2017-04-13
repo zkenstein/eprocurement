@@ -14,6 +14,10 @@ use App\Pengumuman;
 
 class GeneralController extends Controller
 {
+    public function __construct()
+    {
+        \Carbon\Carbon::setLocale('id');
+    }
 
     public function invite()
     {

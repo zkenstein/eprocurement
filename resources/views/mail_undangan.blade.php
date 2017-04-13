@@ -39,7 +39,13 @@
 	        </tr>
 	        <tr>
 	            <td>Batasan peserta</td>
-	            <td>: {{$pengumuman->max_register}}</td>
+	            <td>: 
+	            	@if($pengumuman->max_register>0)
+	            		{{$pengumuman->max_register}}
+            		@else
+            			Tidak dibatasi
+            		@endif
+	            </td>
 	        </tr>
 	        <tr>
 	            <td>&nbsp;</td>

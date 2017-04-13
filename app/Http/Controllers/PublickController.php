@@ -15,6 +15,11 @@ use Mail;
 
 class PublickController extends Controller
 {
+    public function __construct()
+    {
+        \Carbon\Carbon::setLocale('id');
+    }
+
     // Cek login umum
 	public function loginCheck(Request $request)
 	{
@@ -104,7 +109,7 @@ class PublickController extends Controller
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
             return view('pages.home_subkontraktor',$data);
         }else{
-            $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->orderBy('created_at','desc')->get();
+            $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','picInfo'])->orderBy('created_at','desc')->get();
             return view('pages.home',$data);
         }
     }

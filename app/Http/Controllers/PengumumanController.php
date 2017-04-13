@@ -19,6 +19,10 @@ use App\Jobs\InsertPengumumanUser;
 class PengumumanController extends Controller
 {
     use DispatchesJobs;
+    public function __construct()
+    {
+        \Carbon\Carbon::setLocale('id');
+    }
 
 	public function getData(Request $request)
     {	
@@ -77,6 +81,7 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
+        
         // return response()->json($request->all(),500);
         $date = date_format(date_create(),'U');
 
