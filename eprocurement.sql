@@ -35,23 +35,6 @@ INSERT INTO `barang` (`id`, `kode`, `satuan`, `deskripsi`, `gambar`, `pdf`, `cre
 (18,	'LGS13',	'PKG',	'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',	'LGS13_1490312861.jpg',	'LGS13_1490672963.pdf',	'2017-03-23 16:47:42',	'2017-03-27 22:35:08'),
 (20,	'TES',	'PCS',	'Per a eleifend a adipiscing blandit urna curae metus platea quam parturient inceptos vestibulum vestibulum suspendisse dui habitant vestibulum magna parturient placerat erat in ornare tincidunt dignissim adipiscing lorem.Inceptos et adipiscing a nisi turpis a sit scelerisque.',	'TES_1490679472.jpg',	NULL,	'2017-03-27 22:37:52',	'2017-03-27 22:37:52');
 
-DROP TABLE IF EXISTS `barang_eksternal`;
-CREATE TABLE `barang_eksternal` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `kode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `satuan` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8_unicode_ci NOT NULL,
-  `gambar` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'default.gif',
-  `pdf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pengumuman_id` int(10) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `barang_eksternal_pengumuman_id_foreign` (`pengumuman_id`),
-  CONSTRAINT `barang_eksternal_pengumuman_id_foreign` FOREIGN KEY (`pengumuman_id`) REFERENCES `pengumuman` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `cluster`;
 CREATE TABLE `cluster` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -69,60 +52,6 @@ INSERT INTO `cluster` (`id`, `kode`, `nama`, `created_at`, `updated_at`) VALUES
 (3,	'3',	'ELECTRIKAL DAN MECANICAL',	'2017-04-13 04:27:05',	'2017-04-13 04:27:05'),
 (4,	'4',	'DT AND NDT',	'2017-04-13 04:27:05',	'2017-04-13 04:27:05'),
 (5,	'5',	'GENERAL SERVICE',	'2017-04-13 04:27:05',	'2017-04-13 04:27:05');
-
-DROP TABLE IF EXISTS `extends_pengumuman`;
-CREATE TABLE `extends_pengumuman` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `batas_akhir_waktu_penawaran` datetime NOT NULL,
-  `validitas_harga` datetime NOT NULL,
-  `waktu_pengiriman` datetime NOT NULL,
-  `max_register` tinyint(4) NOT NULL,
-  `start_auction` datetime NOT NULL,
-  `durasi` tinyint(4) NOT NULL DEFAULT '0',
-  `pengumuman_id` int(10) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `extends_pengumuman_pengumuman_id_foreign` (`pengumuman_id`),
-  CONSTRAINT `extends_pengumuman_pengumuman_id_foreign` FOREIGN KEY (`pengumuman_id`) REFERENCES `pengumuman` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `jobs`;
-CREATE TABLE `jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `attempts` tinyint(3) unsigned NOT NULL,
-  `reserved` tinyint(3) unsigned NOT NULL,
-  `reserved_at` int(10) unsigned DEFAULT NULL,
-  `available_at` int(10) unsigned NOT NULL,
-  `created_at` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `jobs_queue_reserved_reserved_at_index` (`queue`,`reserved`,`reserved_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved`, `reserved_at`, `available_at`, `created_at`) VALUES
-(4,	'default',	'{\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"data\":{\"command\":\"O:29:\\\"App\\\\Jobs\\\\InsertPengumumanUser\\\":5:{s:13:\\\"\\u0000*\\u0000pengumuman\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":2:{s:5:\\\"class\\\";s:14:\\\"App\\\\Pengumuman\\\";s:2:\\\"id\\\";i:5;}s:16:\\\"\\u0000*\\u0000listIdCluster\\\";a:1:{i:0;s:1:\\\"1\\\";}s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:6:\\\"\\u0000*\\u0000job\\\";N;}\"}}',	0,	1,	1492072623,	1492072344,	1492072344);
-
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations` (
-  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `migrations` (`migration`, `batch`) VALUES
-('2017_03_19_212725_create_cluster_table',	1),
-('2017_03_19_212726_create_user_table',	1),
-('2017_03_19_213738_create_barang_table',	1),
-('2017_03_19_213915_create_pengumuman_table',	1),
-('2017_03_19_221808_create_pengumuman_cluster_table',	1),
-('2017_03_19_222314_create_pengumuman_user_table',	1),
-('2017_03_20_071652_create_pengumuman_barang_table',	1),
-('2017_03_22_092414_create_user_cluster_table',	1),
-('2017_03_28_162357_create_barang_eksternal_table',	1),
-('2017_03_30_034715_create_jobs_table',	1),
-('2017_04_07_135504_create_extends_pengumuman_table',	1);
 
 DROP TABLE IF EXISTS `pengumuman`;
 CREATE TABLE `pengumuman` (
@@ -152,9 +81,9 @@ CREATE TABLE `pengumuman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `count_register`, `pemenang`, `pic`, `file_excel`, `start_auction`, `durasi`, `created_at`, `updated_at`) VALUES
-(3,	'ABCDE',	'2017-10-01 00:00:00',	'2017-10-07 23:00:00',	'2017-10-08 23:00:00',	'2017-10-21 16:00:00',	5000000,	'IDR',	0,	0,	NULL,	21,	NULL,	'2017-10-09 10:00:00',	120,	'2017-04-13 06:33:02',	'2017-04-13 06:33:02'),
-(4,	'ZXCV',	'2017-04-12 00:00:00',	'2017-04-26 23:00:00',	'2017-04-27 19:00:00',	'2017-05-01 12:00:00',	50000000,	'SGD',	0,	1,	NULL,	21,	NULL,	'2017-04-29 10:00:00',	127,	'2017-04-13 07:06:25',	'2017-04-13 07:18:59'),
-(5,	'LKJH',	'2017-04-01 00:00:00',	'2017-04-12 23:00:00',	'2017-04-13 00:00:00',	'2017-04-28 19:00:00',	4000000,	'SGD',	0,	0,	NULL,	22,	NULL,	'2017-04-13 20:30:00',	127,	'2017-04-13 08:32:24',	'2017-04-13 08:32:24');
+(9,	'WDS',	'2017-04-14 00:00:00',	'2017-04-17 11:19:00',	'2017-04-18 11:00:00',	'2017-04-26 11:00:00',	2000000,	'SGD',	0,	3,	NULL,	21,	NULL,	'2017-04-19 10:00:00',	120,	'2017-04-17 03:56:59',	'2017-04-17 04:15:40'),
+(10,	'MKO',	'2017-04-20 00:00:00',	'2017-04-27 11:20:00',	'2017-04-28 08:00:00',	'2017-04-30 13:00:00',	500000000,	'IDR',	0,	0,	NULL,	21,	NULL,	'2017-04-29 09:00:00',	127,	'2017-04-17 04:00:08',	'2017-04-17 04:00:08'),
+(11,	'ART',	'2017-08-01 00:00:00',	'2017-08-05 23:00:00',	'2017-08-05 23:00:00',	'2017-08-31 00:00:00',	300000000,	'IDR',	4,	0,	NULL,	21,	NULL,	'2017-09-05 10:00:00',	120,	'2017-04-17 14:01:34',	'2017-04-17 14:01:34');
 
 DROP TABLE IF EXISTS `pengumuman_barang`;
 CREATE TABLE `pengumuman_barang` (
@@ -172,15 +101,14 @@ CREATE TABLE `pengumuman_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman_barang` (`id`, `pengumuman_id`, `barang_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(4,	3,	12,	7,	'2017-04-13 06:33:03',	'2017-04-13 06:33:03'),
-(5,	3,	13,	8,	'2017-04-13 06:33:03',	'2017-04-13 06:33:03'),
-(6,	3,	14,	9,	'2017-04-13 06:33:03',	'2017-04-13 06:33:03'),
-(7,	4,	13,	8,	'2017-04-13 07:06:25',	'2017-04-13 07:06:25'),
-(8,	4,	16,	11,	'2017-04-13 07:06:25',	'2017-04-13 07:06:25'),
-(9,	4,	18,	13,	'2017-04-13 07:06:25',	'2017-04-13 07:06:25'),
-(10,	5,	10,	5,	'2017-04-13 08:32:24',	'2017-04-13 08:32:24'),
-(11,	5,	14,	9,	'2017-04-13 08:32:24',	'2017-04-13 08:32:24'),
-(12,	5,	16,	11,	'2017-04-13 08:32:24',	'2017-04-13 08:32:24');
+(13,	9,	11,	6,	'2017-04-17 03:57:35',	'2017-04-17 03:57:35'),
+(14,	9,	12,	7,	'2017-04-17 03:57:36',	'2017-04-17 03:57:36'),
+(15,	10,	14,	9,	'2017-04-17 04:00:09',	'2017-04-17 04:00:09'),
+(16,	10,	15,	10,	'2017-04-17 04:00:09',	'2017-04-17 04:00:09'),
+(17,	11,	7,	2,	'2017-04-17 14:01:34',	'2017-04-17 14:01:34'),
+(18,	11,	8,	3,	'2017-04-17 14:01:34',	'2017-04-17 14:01:34'),
+(19,	11,	9,	4,	'2017-04-17 14:01:34',	'2017-04-17 14:01:34'),
+(20,	11,	15,	10,	'2017-04-17 14:01:35',	'2017-04-17 14:01:35');
 
 DROP TABLE IF EXISTS `pengumuman_cluster`;
 CREATE TABLE `pengumuman_cluster` (
@@ -197,9 +125,9 @@ CREATE TABLE `pengumuman_cluster` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_at`, `updated_at`) VALUES
-(2,	3,	5,	'2017-04-13 06:33:03',	'2017-04-13 06:33:03'),
-(3,	4,	2,	'2017-04-13 07:06:25',	'2017-04-13 07:06:25'),
-(4,	5,	1,	'2017-04-13 08:32:24',	'2017-04-13 08:32:24');
+(5,	9,	2,	'2017-04-17 03:57:36',	'2017-04-17 03:57:36'),
+(6,	10,	4,	'2017-04-17 04:00:09',	'2017-04-17 04:00:09'),
+(7,	11,	2,	'2017-04-17 14:01:35',	'2017-04-17 14:01:35');
 
 DROP TABLE IF EXISTS `pengumuman_user`;
 CREATE TABLE `pengumuman_user` (
@@ -218,19 +146,19 @@ CREATE TABLE `pengumuman_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman_user` (`id`, `pengumuman_id`, `user_id`, `kode_masuk`, `waktu_register`, `created_at`, `updated_at`) VALUES
-(7,	3,	2,	'77da4fe3385fbc512cf2fd96453e68dd',	NULL,	'2017-04-13 06:33:06',	'2017-04-13 06:33:06'),
-(8,	3,	6,	'e9181fb17816dbecad4c17ddff126dea',	NULL,	'2017-04-13 06:33:15',	'2017-04-13 06:33:15'),
-(9,	3,	7,	'd97752b9735c978509d8106b8bcea3b2',	NULL,	'2017-04-13 06:33:34',	'2017-04-13 06:33:34'),
-(10,	3,	10,	'7fcce16a91109fd6767197750b9b53bd',	NULL,	'2017-04-13 06:33:42',	'2017-04-13 06:33:42'),
-(11,	4,	3,	'ea9c357b3ae3c4ad937ebf8e9dafb0ab',	NULL,	'2017-04-13 07:06:27',	'2017-04-13 07:06:27'),
-(12,	4,	5,	'47feac00dbb273fc94d45ac8933a4a9f',	'2017-04-13 14:18:59',	'2017-04-13 07:06:41',	'2017-04-13 07:18:59'),
-(13,	4,	7,	'fec35448f5b7e7a13e5806b075939381',	NULL,	'2017-04-13 07:06:51',	'2017-04-13 07:06:51'),
-(14,	4,	9,	'059e1c3adfaa4c22c9720733c0e4454f',	NULL,	'2017-04-13 07:06:58',	'2017-04-13 07:06:58'),
-(15,	5,	1,	'9b92df8ebc77dfcdb093ea9a453aa207',	NULL,	'2017-04-13 08:37:03',	'2017-04-13 08:37:03'),
-(16,	5,	3,	'6699eb130e0835ca840daf3124236e9e',	NULL,	'2017-04-13 08:37:25',	'2017-04-13 08:37:25'),
-(17,	5,	4,	'abcf52d48ec257e80a99fa9ecf84fe3c',	NULL,	'2017-04-13 08:37:36',	'2017-04-13 08:37:36'),
-(18,	5,	6,	'e68a80dd399b21d65a45d736bff95b20',	NULL,	'2017-04-13 08:37:45',	'2017-04-13 08:37:45'),
-(19,	5,	7,	'c940854d81671934c406b6810a8c02e3',	NULL,	'2017-04-13 08:37:55',	'2017-04-13 08:37:55');
+(23,	9,	3,	'cac69279167296f370106a5f9963efc8',	'2017-04-17 11:10:03',	'2017-04-17 03:56:59',	'2017-04-17 04:10:03'),
+(24,	9,	5,	'abe055810b45127f84bb176c20ab4ea9',	'2017-04-17 11:13:30',	'2017-04-17 03:57:12',	'2017-04-17 04:13:30'),
+(25,	9,	7,	'4b3bc0527fc32f01d22a14ecd6945ce8',	NULL,	'2017-04-17 03:57:20',	'2017-04-17 03:57:20'),
+(26,	9,	9,	'744aeeac086911fe295f32b56bb975bc',	'2017-04-17 11:15:39',	'2017-04-17 03:57:27',	'2017-04-17 04:15:39'),
+(27,	10,	1,	'0687dfcb90129baf5301a0b01031ebc0',	NULL,	'2017-04-17 04:00:38',	'2017-04-17 04:00:38'),
+(28,	10,	2,	'87d3958d3ffdcaa86f197c7be835a9a6',	NULL,	'2017-04-17 04:00:48',	'2017-04-17 04:00:48'),
+(29,	10,	5,	'718e5e0f5165ef68bdf88713ed4a2d07',	NULL,	'2017-04-17 04:00:56',	'2017-04-17 04:00:56'),
+(30,	10,	8,	'eab252c59d98cf8822aca3769d926114',	NULL,	'2017-04-17 04:01:03',	'2017-04-17 04:01:03'),
+(31,	10,	10,	'58ea2f6b009543e85c1ae62a7769fbdc',	NULL,	'2017-04-17 04:01:09',	'2017-04-17 04:01:09'),
+(32,	11,	3,	'169afbc59f0cfbb69adbc55f85a463f2',	NULL,	'2017-04-17 14:06:00',	'2017-04-17 14:06:00'),
+(33,	11,	5,	'467e8374643e4e04660b10c20d4bbde3',	NULL,	'2017-04-17 14:06:14',	'2017-04-17 14:06:14'),
+(34,	11,	7,	'76342e2e5a0cd461de9882834f15f5d7',	NULL,	'2017-04-17 14:06:22',	'2017-04-17 14:06:22'),
+(35,	11,	9,	'6bedb99ed613f156651d067ecc991beb',	NULL,	'2017-04-17 14:06:29',	'2017-04-17 14:06:29');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -309,4 +237,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-22 18:37:18',	'2017-03-22 18:37:18'),
 (51,	1,	4,	'2017-03-22 18:37:18',	'2017-03-22 18:37:18');
 
--- 2017-04-15 00:58:52
+-- 2017-04-17 22:07:51

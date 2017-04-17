@@ -46,8 +46,10 @@ Route::post('register_check',[
 	'uses'=>'PublickController@registerCheck',
 	'as'=>'register_check'
 ]);
-Route::get('gc','PublickController@generateCluster');
-Route::get('gu','PublickController@generateUser');
+// RENEW CAPTCHA
+Route::get('renew_captcha','PublickController@renewCaptcha');
+// Route::get('gc','PublickController@generateCluster');
+// Route::get('gu','PublickController@generateUser');
 
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC

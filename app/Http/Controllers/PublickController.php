@@ -38,6 +38,14 @@ class PublickController extends Controller
     // Cek subkontraktor yg terdaftar
     public function registerCheck(Request $request)
     {
+        $rules = ['captcha' => 'required|captcha'];
+        $validator = \Validator::make(\Input::all(), $rules);
+
+        if ($validator->fails())
+        {
+            return response()->json(['result'=>false,'message'=>'Masukkan captcha dengan benar', 'captcha_src'=>captcha_src()]);
+        }
+
         $email = $request->input('email');
         $kodeMasuk = $request->input('kode_masuk');
         $pengumuman = $request->input('pengumuman');
@@ -72,13 +80,13 @@ class PublickController extends Controller
                                 session()->put('nama',$user->nama);
                                 return response()->json(['result'=>true],200);
                             }else{#Jika kode masuk salah
-                                return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah']);
+                                return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah', 'captcha_src'=>captcha_src()]);
                             }
                         }else{#Jika pendaftaran sudah ditutup
-                            return response()->json(['result'=>false,'message'=>'Anda belum melakukan pendaftaran. Pendaftaran sudah ditutup']);
+                            return response()->json(['result'=>false,'message'=>'Anda belum melakukan pendaftaran. Pendaftaran sudah ditutup', 'captcha_src'=>captcha_src()]);
                         }
                     }else{#Jika pendaftaran belum dibuka
-                        return response()->json(['result'=>false,'message'=>'Pendaftaran belum dibuka']);
+                        return response()->json(['result'=>false,'message'=>'Pendaftaran belum dibuka', 'captcha_src'=>captcha_src()]);
                     }
                 }else{#Jika statusRegister login, cek apakah kode_masuk cocok
                     if($userPengumuman->kode_masuk==$kodeMasuk){#Jika kode_masuk yang dimasukkan benar
@@ -90,11 +98,11 @@ class PublickController extends Controller
                         session()->put('nama',$user->nama);
                         return response()->json(['result'=>true],200);
                     }else{#Jika kode masuk salah
-                        return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah']);
+                        return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah','captcha_src'=>captcha_src()]);
                     }
                 }
             }else{#JIKA User tidak terdaftar dalam tender sama sekali
-                return response()->json(['result'=>false,'message'=>'Email anda tidak terdaftar pada tender ini']);
+                return response()->json(['result'=>false,'message'=>'Email anda tidak terdaftar pada tender ini','captcha_src'=>captcha_src()]);
             }
 
 
@@ -167,7 +175,7 @@ class PublickController extends Controller
 
 
         }else{#Jika user tidak ditemukan
-            return response()->json(['result'=>false,'message'=>'Email tidak terdaftar dalam subkontraktor PT.PAL']);
+            return response()->json(['result'=>false,'message'=>'Email tidak terdaftar dalam subkontraktor PT.PAL','captcha_src'=>captcha_src()]);
         }
     }
 
@@ -175,6 +183,7 @@ class PublickController extends Controller
     {
         // if(session('role')=='subkontraktor') dd(session()->all());
     	$data['TAG'] = 'home';
+        $data['captcha_src'] = captcha_src();
         if(session()->has('pengumuman')){
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
             $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
@@ -205,7 +214,12 @@ class PublickController extends Controller
     	return redirect()->route('home');
     }
 
-    
+    // RENEW CAPTCHA
+    public function renewCaptcha()
+    {
+        return response()->json(captcha_src());
+    }
+    /*
     public function generateCluster(Request $request)
     {
         $cluster = [
@@ -254,5 +268,5 @@ class PublickController extends Controller
     	}
     
     }
-    
+    */
 }

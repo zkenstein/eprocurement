@@ -127,6 +127,11 @@
             </div>
         </div>
     </div>
+    <pre>
+    <?php /*
+        print_r(session()->all());
+    */ ?>
+    </pre>  
 
     @if(!session()->has('logged_in'))
     <form class="modal fade" id="login-subkon-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -154,8 +159,8 @@
                             <input autocomplete="false" type="password" id="kode-masuk" name="kode_masuk" class="form-control" placeholder="Kode Masuk">
                         </div>
                     </div>
-                    <strong>Captcha : </strong><img src="{{captcha_src()}}" style="margin-bottom:5px;border:1px solid gray;"><br>
-                    <input class="form-control" name="captcha" placeholder="Masukkan captcha sesuai gambar">
+                    <strong>Captcha : </strong><img src="{{$captcha_src}}" class="captcha-img" style="margin-bottom:5px;border:1px solid gray;"> &nbsp;<button title="perbarui captcha" type="button" class="btn btn-sm btn-captcha"><i class="icon-reload"></i></button><br>
+                    <input class="form-control" name="captcha" placeholder="Masukkan captcha sesuai gambar" id="input-captcha-subkontraktor">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -180,7 +185,7 @@
             $.ajax({
                 url:"{{route('register_check')}}",
                 method:"POST",
-                data:{email:$("#email-login-register").val().trim(),kode_masuk:$("#kode-masuk").val().trim(),pengumuman:$("#register-pengumuman-id").val(),_token:"{{csrf_token()}}"},
+                data:{email:$("#email-login-register").val().trim(),kode_masuk:$("#kode-masuk").val().trim(),pengumuman:$("#register-pengumuman-id").val(),_token:"{{csrf_token()}}",captcha:$("#input-captcha-subkontraktor").val()},
                 success:function(res){
                     if(res.result==true){
                         $("#button-login-register").text('Berhasil');
@@ -188,6 +193,12 @@
                     }else if(res.result==false){
                         $("#button-login-register").removeClass('disabled');
                         $("#button-login-register").text('Masuk');
+                        $(".captcha-img").attr("src",res.captcha_src);
+                        alert(res.message);
+                    }else if(res.result=="captcha_false"){
+                        $("#button-login-register").removeClass('disabled');
+                        $("#button-login-register").text('Masuk');
+                        $(".captcha-img").attr("src",res.captcha_src);
                         alert(res.message);
                     }
                 },

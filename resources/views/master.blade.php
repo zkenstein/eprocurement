@@ -552,6 +552,8 @@
                             <input autocomplete="false" type="password" id="password-login" name="password" class="form-control" placeholder="Kode">
                         </div>
                     </div>
+                    <strong>Captcha : </strong><img src="{{$captcha_src}}" class="captcha-img" style="margin-bottom:5px;border:1px solid gray;"> &nbsp;<button title="perbarui captcha" type="button" class="btn btn-sm btn-captcha"><i class="icon-reload"></i></button><br>
+                    <input class="form-control" name="captcha" placeholder="Masukkan captcha sesuai gambar" id="input-captcha-admin">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -734,9 +736,11 @@
                             location.reload();
                         }
                     }else if(res.message=='not match'){
-                        alert("email maupun password tidak pas");
+                        alert("email maupun password salah");
+                        $(".captcha-img").attr("src",res.captcha_src);
                     }else if(res.message=='expired'){
                         alert("Pengajuan tidak dapat dilakukan");
+                        $(".captcha-img").attr("src",res.captcha_src);
                     }
                     $("#button-login").removeClass('disabled');
                     $("#button-login").text('Masuk');
@@ -826,6 +830,14 @@
     @yield('script')
     <script type="text/javascript">
         moment.locale("id");
+        $(".btn-captcha").click(function(){
+            $.ajax({
+                url:"/renew_captcha",
+                success: function(src){
+                    $(".captcha-img").attr('src',src);
+                }
+            });
+        });
     </script>
 </body>
 
