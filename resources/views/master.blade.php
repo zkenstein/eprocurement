@@ -129,7 +129,7 @@
         @if(session('role')=='admin' || session('role')=='pic')
         <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
         @endif
-        <a class="navbar-brand" href="#"></a>
+        <a class="navbar-brand" href="/"></a>
         <ul class="nav navbar-nav hidden-md-down">
             @if(session('role')=='admin' || session('role')=='pic')
             <li class="nav-item">

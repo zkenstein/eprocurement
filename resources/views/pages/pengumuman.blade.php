@@ -223,7 +223,7 @@
         });
         $("input.singledate").daterangepicker({
             timePicker: true,
-            timePickerIncrement: 15,
+            timePickerIncrement: 10,
             timePicker24Hour:true,
             locale: {
                 format: 'YYYY-MM-DD HH:mm:ss',

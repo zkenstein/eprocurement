@@ -43,70 +43,143 @@ class PublickController extends Controller
         $pengumuman = $request->input('pengumuman');
         $user = User::where('email',$email)->first();
         if($user!=null){#Jika user ditemukan
-            $userPengumuman = PengumumanUser::whereHas('pengumumanInfo',function($q) use($pengumuman){
-                $q->where('batas_akhir_waktu_penawaran','>',\Carbon\Carbon::now());
-            })->where('user_id',$user->id)->where('kode_masuk',$kodeMasuk)->where('pengumuman_id',$pengumuman)->first();#BAHAYA, MUNGKIN BISA JADI BUG
-            if($userPengumuman!=null){#Jika user terdaftar dalam calon pelelang
-                $pengumuman = Pengumuman::find($pengumuman);
-                if($pengumuman->pemenang!=null){#Jika sudah ada pengumuman pemenang
-                    if($userPengumuman->waktu_register!=null){#Jika user pernah login sebelumnya
+            $userPengumuman = PengumumanUser::where('pengumuman_id',$pengumuman)->where('user_id',$user->id)->first();
+            if($userPengumuman!=null){#JIKA user terdata dalam tender pal tapi belum daftar
+                $statusRegsiter = "daftar";#Default status register daftar
+                if($userPengumuman->waktu_register!=null) $statusRegsiter = "login"; #JIKA User sudah melakukan pendaftaran , ganti statusRegister menjadi login
+                
+                if($statusRegsiter=="daftar"){#Jika statusRegsiter daftar, cek apakah masih ada kuota atau tidak
+                    if(strtotime($userPengumuman->pengumumanInfo->batas_awal_waktu_penawaran) <= strtotime(\Carbon\Carbon::now())){#Jika pendaftaran sudah dibuka
+                        if(strtotime($userPengumuman->pengumumanInfo->batas_akhir_waktu_penawaran) >= strtotime(\Carbon\Carbon::now())){#Jika pendaftaran masih dibuka
+                            if($userPengumuman->kode_masuk==$kodeMasuk){#Jika kode_masuk yang dimasukkan benar
+                                $pengumuman = Pengumuman::find($pengumuman);
+                                $data['nama_perusahaan'] = $user->nama;
+                                $data['kode_pengumuman'] = $pengumuman->kode;
+                                $data['waktu_auction'] = $pengumuman->start_auction;
+                                $data['durasi_auction'] = $pengumuman->durasi;
+                                Mail::queue('mail_followup',$data,function($message)use($user){
+                                    $message->to($user->email, $user->nama)->subject("PAL Follow Up Registration");
+                                    $message->from(env('MAIL_USERNAME'),"PT.PAL");
+                                });
+                                $userPengumuman->waktu_register = \Carbon\Carbon::now();
+                                $userPengumuman->save();
+                                $pengumuman->count_register+=1;
+                                $pengumuman->save();
+                                session()->put('pengumuman',$pengumuman->id);
+                                session()->put('mode','lihat');
+                                session()->put('role',$user->role);
+                                session()->put('id',$user->id);
+                                session()->put('nama',$user->nama);
+                                return response()->json(['result'=>true],200);
+                            }else{#Jika kode masuk salah
+                                return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah']);
+                            }
+                        }else{#Jika pendaftaran sudah ditutup
+                            return response()->json(['result'=>false,'message'=>'Anda belum melakukan pendaftaran. Pendaftaran sudah ditutup']);
+                        }
+                    }else{#Jika pendaftaran belum dibuka
+                        return response()->json(['result'=>false,'message'=>'Pendaftaran belum dibuka']);
+                    }
+                }else{#Jika statusRegister login, cek apakah kode_masuk cocok
+                    if($userPengumuman->kode_masuk==$kodeMasuk){#Jika kode_masuk yang dimasukkan benar
+                        $pengumuman = Pengumuman::find($pengumuman);
                         session()->put('pengumuman',$pengumuman->id);
                         session()->put('mode','lihat');
                         session()->put('role',$user->role);
                         session()->put('id',$user->id);
                         session()->put('nama',$user->nama);
                         return response()->json(['result'=>true],200);
-                    }
-                    return response()->json(['result'=>false,'message'=>'Anda tidak mengikuti lelang ini']);
-                }else{#Jika belum ada pengumuman pemenang
-                    if($pengumuman->max_register==0 || $pengumuman->max_register > $pengumuman->count_register){#Jika max register = tidak dibatasi atau jika max register dibatasi tapi belum penuh
-                        if($userPengumuman->waktu_register==null){#Jika user belum pernah login sebelumnya
-                            $data['nama_perusahaan'] = $user->nama;
-                            $data['kode_pengumuman'] = $pengumuman->kode;
-                            $data['waktu_auction'] = $pengumuman->start_auction;
-                            $data['durasi_auction'] = $pengumuman->durasi;
-                            Mail::queue('mail_followup',$data,function($message)use($user){
-                                $message->to($user->email, $user->nama)->subject("PAL Follow Up Registration");
-                                $message->from(env('MAIL_USERNAME'),"PT.PAL");
-                            });
-                            $userPengumuman->waktu_register = \Carbon\Carbon::now();
-                            $userPengumuman->save();
-                            $pengumuman->count_register+=1;
-                            $pengumuman->save();
-                        }
-                        session()->put('pengumuman',$pengumuman->id);
-                        session()->put('mode','login');
-                        session()->put('role',$user->role);
-                        session()->put('id',$user->id);
-                        session()->put('nama',$user->nama);
-                        return response()->json(['result'=>true],200);
-                    }else{#jika max_register dibatasi dan sudah penuh
-                        if($userPengumuman->waktu_register==null){#Jika user belum pernah login sebelumnya
-                            return response()->json(['result'=>false,'message'=>'Pendaftar sudah pernuh, anda tidak dapat mendaftar untuk lelang ini']);
-                        }
-                        #Jika sudah pernah daftar
-                        session()->put('pengumuman',$pengumuman->id);
-                        session()->put('mode','login');
-                        session()->put('role',$user->role);
-                        session()->put('id',$user->id);
-                        session()->put('nama',$user->nama);
-                        return response()->json(['result'=>true],200);
+                    }else{#Jika kode masuk salah
+                        return response()->json(['result'=>false,'message'=>'Kode masuk yang anda masukkan salah']);
                     }
                 }
+            }else{#JIKA User tidak terdaftar dalam tender sama sekali
+                return response()->json(['result'=>false,'message'=>'Email anda tidak terdaftar pada tender ini']);
             }
+
+
+
+
+
+
+            // $status = "daftar";#DEFAULT STATUS REGISTER = daftar
+            // $userRegister = PengumumanUser::with('pengumumanInfo')->where('user_id',$user->id)->where('kode_masuk',$kodeMasuk)->where('pengumuman_id',$pengumuman)->where('waktu_register','<>',NULL)->first();#CEK APAKAH USER SUDAH MENDAFTAR ATAU BELUM
+            // if($userRegister!=null){
+            //     $status = "login";#Jika user sudah register status berubah menjadi login
+            // }
+            // if($status=="daftar"){
+            //     $pengumuman = Pengumuman::find($pengumuman);
+            //     if(strtotime($pengumuman->batas_akhir_waktu_penawaran) > )
+            //     // $userPengumuman = PengumumanUser::whereHas('pengumumanInfo',function($q) use($pengumuman){
+            //     //     $q->where('batas_akhir_waktu_penawaran','>',\Carbon\Carbon::now());
+            //     // })->where('user_id',$user->id)->where('kode_masuk',$kodeMasuk)->where('pengumuman_id',$pengumuman)->first();#BAHAYA, MUNGKIN BISA JADI BUG
+            // }
+            // if($userPengumuman!=null){#Jika user terdaftar dalam calon pelelang
+            //     $pengumuman = Pengumuman::find($pengumuman);
+            //     if($pengumuman->pemenang!=null){#Jika sudah ada pengumuman pemenang
+            //         if($userPengumuman->waktu_register!=null){#Jika user pernah login sebelumnya
+                        // session()->put('pengumuman',$pengumuman->id);
+                        // session()->put('mode','lihat');
+                        // session()->put('role',$user->role);
+                        // session()->put('id',$user->id);
+                        // session()->put('nama',$user->nama);
+                        // return response()->json(['result'=>true],200);
+            //         }
+            //         return response()->json(['result'=>false,'message'=>'Anda tidak mengikuti lelang ini']);
+            //     }else{#Jika belum ada pengumuman pemenang
+            //         if($pengumuman->max_register==0 || $pengumuman->max_register > $pengumuman->count_register){#Jika max register = tidak dibatasi atau jika max register dibatasi tapi belum penuh
+            //             if($userPengumuman->waktu_register==null){#Jika user belum pernah login sebelumnya
+                            // $data['nama_perusahaan'] = $user->nama;
+                            // $data['kode_pengumuman'] = $pengumuman->kode;
+                            // $data['waktu_auction'] = $pengumuman->start_auction;
+                            // $data['durasi_auction'] = $pengumuman->durasi;
+                            // Mail::queue('mail_followup',$data,function($message)use($user){
+                            //     $message->to($user->email, $user->nama)->subject("PAL Follow Up Registration");
+                            //     $message->from(env('MAIL_USERNAME'),"PT.PAL");
+                            // });
+                            // $userPengumuman->waktu_register = \Carbon\Carbon::now();
+                            // $userPengumuman->save();
+                            // $pengumuman->count_register+=1;
+                            // $pengumuman->save();
+            //             }
+            //             session()->put('pengumuman',$pengumuman->id);
+            //             session()->put('mode','login');
+            //             session()->put('role',$user->role);
+            //             session()->put('id',$user->id);
+            //             session()->put('nama',$user->nama);
+            //             return response()->json(['result'=>true],200);
+            //         }else{#jika max_register dibatasi dan sudah penuh
+            //             if($userPengumuman->waktu_register==null){#Jika user belum pernah login sebelumnya
+            //                 return response()->json(['result'=>false,'message'=>'Pendaftar sudah pernuh, anda tidak dapat mendaftar untuk lelang ini']);
+            //             }
+            //             #Jika sudah pernah daftar
+            //             session()->put('pengumuman',$pengumuman->id);
+            //             session()->put('mode','login');
+            //             session()->put('role',$user->role);
+            //             session()->put('id',$user->id);
+            //             session()->put('nama',$user->nama);
+            //             return response()->json(['result'=>true],200);
+            //         }
+            //     }
+            // }
             #Jika user tidak seharusnya mendaftar
-            return response()->json(['result'=>false,'message'=>'Email anda tidak terdaftar pada tender ini']);
+            // return response()->json(['result'=>false,'message'=>'Email anda tidak terdaftar pada tender ini']);
+
+
+        }else{#Jika user tidak ditemukan
+            return response()->json(['result'=>false,'message'=>'Email tidak terdaftar dalam subkontraktor PT.PAL']);
         }
-        #Jika user tidak ditemukan
-        return response()->json(['result'=>false,'message'=>'Email tidak terdaftar dalam subkontraktor PT.PAL']);
     }
 
     public function homePage(Request $request)
     {
         // if(session('role')=='subkontraktor') dd(session()->all());
     	$data['TAG'] = 'home';
-        if(session('mode')=='login'){
+        if(session()->has('pengumuman')){
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
+            $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
+            if($data['countdown'] > 0) $data['allow_auction'] = false;
+            else $data['allow_auction'] = true;
             return view('pages.home_subkontraktor',$data);
         }else{
             $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','picInfo'])->orderBy('created_at','desc')->get();

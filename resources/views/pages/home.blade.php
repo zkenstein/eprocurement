@@ -60,9 +60,9 @@
                                                 </div>
                                                 <div class="small">
                                                     @if(strtotime($pengumuman->batas_awal_waktu_penawaran) > strtotime(\Carbon\Carbon::now()))
-                                                    <strong>Status : <span style="color:red;">Belum dibuka</span></strong>
+                                                    <strong>Status : <span style="color:red;">Pendaftaran Belum dibuka</span></strong>
                                                     @elseif(strtotime($pengumuman->batas_akhir_waktu_penawaran) < strtotime(\Carbon\Carbon::now()))
-                                                    <strong>Status : <span style="color:red;">Ditutup</span></strong>
+                                                    <strong>Status : <span style="color:red;">Pendaftaran Ditutup</span></strong>
                                                     @elseif(strtotime($pengumuman->batas_awal_waktu_penawaran) < strtotime(\Carbon\Carbon::now()))
                                                         @if($pengumuman->count_register < $pengumuman->max_register || $pengumuman->max_register<=0)
                                                         <strong>Status : <span style="color:green;">Terbuka</span></strong>
@@ -154,6 +154,8 @@
                             <input autocomplete="false" type="password" id="kode-masuk" name="kode_masuk" class="form-control" placeholder="Kode Masuk">
                         </div>
                     </div>
+                    <strong>Captcha : </strong><img src="{{captcha_src()}}" style="margin-bottom:5px;border:1px solid gray;"><br>
+                    <input class="form-control" name="captcha" placeholder="Masukkan captcha sesuai gambar">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
