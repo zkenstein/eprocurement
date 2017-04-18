@@ -23,6 +23,6 @@ class VerifikasiAuction
                 return $next($request);
             return response()->json(['result'=>false,'message'=>'Auction belum dimulai atau sudah selesai']);
         }
-        return response()->json(['result'=>false,'message'=>'Anda memasuki tender yang salah, silahkan kembali ke halaman <a href="'.route('home').'">Home</a>'])
+        return response()->json(['result'=>false,'message'=>'Anda memasuki tender yang salah, silahkan kembali ke halaman <a href="'.route('home').'">Home</a>']);
     }
 }

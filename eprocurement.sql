@@ -81,7 +81,7 @@ CREATE TABLE `pengumuman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman` (`id`, `kode`, `batas_awal_waktu_penawaran`, `batas_akhir_waktu_penawaran`, `validitas_harga`, `waktu_pengiriman`, `harga_netto`, `mata_uang`, `max_register`, `count_register`, `pemenang`, `pic`, `file_excel`, `start_auction`, `durasi`, `created_at`, `updated_at`) VALUES
-(9,	'WDS',	'2017-04-14 00:00:00',	'2017-04-17 11:19:00',	'2017-04-18 11:00:00',	'2017-04-26 11:00:00',	2000000,	'SGD',	0,	3,	NULL,	21,	NULL,	'2017-04-19 10:00:00',	120,	'2017-04-17 03:56:59',	'2017-04-17 04:15:40'),
+(9,	'WDS',	'2017-04-14 00:00:00',	'2017-04-17 11:19:00',	'2017-04-18 11:00:00',	'2017-04-26 11:00:00',	2000000,	'SGD',	0,	3,	NULL,	21,	NULL,	'2017-04-19 02:00:00',	120,	'2017-04-17 03:56:59',	'2017-04-17 04:15:40'),
 (10,	'MKO',	'2017-04-20 00:00:00',	'2017-04-27 11:20:00',	'2017-04-28 08:00:00',	'2017-04-30 13:00:00',	500000000,	'IDR',	0,	0,	NULL,	21,	NULL,	'2017-04-29 09:00:00',	127,	'2017-04-17 04:00:08',	'2017-04-17 04:00:08'),
 (11,	'ART',	'2017-08-01 00:00:00',	'2017-08-05 23:00:00',	'2017-08-05 23:00:00',	'2017-08-31 00:00:00',	300000000,	'IDR',	4,	0,	NULL,	21,	NULL,	'2017-09-05 10:00:00',	120,	'2017-04-17 14:01:34',	'2017-04-17 14:01:34');
 
@@ -129,21 +129,21 @@ INSERT INTO `pengumuman_cluster` (`id`, `pengumuman_id`, `cluster_id`, `created_
 (6,	10,	4,	'2017-04-17 04:00:09',	'2017-04-17 04:00:09'),
 (7,	11,	2,	'2017-04-17 14:01:35',	'2017-04-17 14:01:35');
 
-DROP TABLE IF EXISTS `pengumuman_user`;
-CREATE TABLE `pengumuman_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pengumuman_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `kode_masuk` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `waktu_register` datetime DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `pengumuman_user_pengumuman_id_foreign` (`pengumuman_id`),
-  KEY `pengumuman_user_user_id_foreign` (`user_id`),
-  CONSTRAINT `pengumuman_user_pengumuman_id_foreign` FOREIGN KEY (`pengumuman_id`) REFERENCES `pengumuman` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pengumuman_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- DROP TABLE IF EXISTS `pengumuman_user`;
+-- CREATE TABLE `pengumuman_user` (
+--   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--   `pengumuman_id` int(10) unsigned NOT NULL,
+--   `user_id` int(10) unsigned NOT NULL,
+--   `kode_masuk` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+--   `waktu_register` datetime DEFAULT NULL,
+--   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+--   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+--   PRIMARY KEY (`id`),
+--   KEY `pengumuman_user_pengumuman_id_foreign` (`pengumuman_id`),
+--   KEY `pengumuman_user_user_id_foreign` (`user_id`),
+--   CONSTRAINT `pengumuman_user_pengumuman_id_foreign` FOREIGN KEY (`pengumuman_id`) REFERENCES `pengumuman` (`id`) ON DELETE CASCADE,
+--   CONSTRAINT `pengumuman_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `pengumuman_user` (`id`, `pengumuman_id`, `user_id`, `kode_masuk`, `waktu_register`, `created_at`, `updated_at`) VALUES
 (23,	9,	3,	'cac69279167296f370106a5f9963efc8',	'2017-04-17 11:10:03',	'2017-04-17 03:56:59',	'2017-04-17 04:10:03'),
@@ -237,4 +237,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (50,	1,	3,	'2017-03-22 18:37:18',	'2017-03-22 18:37:18'),
 (51,	1,	4,	'2017-03-22 18:37:18',	'2017-03-22 18:37:18');
 
--- 2017-04-17 22:07:51
+-- 2017-04-18 19:13:12

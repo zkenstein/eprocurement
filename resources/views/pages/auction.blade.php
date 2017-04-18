@@ -26,38 +26,41 @@
                             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                             <br><br>
-                            <table id="barang-data" class="table table-bordered table-striped">
-                                <thead>
+                            <form method="post" action="" id="form-auction">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
+                                <table id="barang-data" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Kode</th>
+                                            <th>Satuan</th>
+                                            <th>Deskripsi</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($list_barang as $barang)
                                     <tr>
-                                        <th>Kode</th>
-                                        <th>Satuan</th>
-                                        <th>Deskripsi</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga</th>
+                                        <td>{{$barang->barangInfo->kode}}</td>
+                                        <td>{{$barang->barangInfo->satuan}}</td>
+                                        <td>{{$barang->barangInfo->deskripsi}}</td>
+                                        <td>{{$barang->quantity}}</td>
+                                        <td>
+                                            <input required name="harga[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder="">
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($list_barang as $barang)
-                                <tr>
-                                    <td>{{$barang->barangInfo->kode}}</td>
-                                    <td>{{$barang->barangInfo->satuan}}</td>
-                                    <td>{{$barang->barangInfo->deskripsi}}</td>
-                                    <td>{{$barang->quantity}}</td>
-                                    <td>
-                                        <input data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder="">
-                                    </td>
-                                </tr>
-                                @endforeach
-                                <tr>
-                                    <td colspan="4">
-                                        
-                                    </td>
-                                    <td>
-                                        <button id="btn-simpan" class="btn btn-primary btn-block">Simpan</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="4">
+                                            
+                                        </td>
+                                        <td>
+                                            <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Simpan</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -98,12 +101,18 @@
             $("#modal-preview").modal('show');
         }
 
-        $("#btn-simpan").click(function(){
-            $.ajax({
-                url:"{{route('auction')}}",
-                method:"POST",
-
-            });
+        $("#form-auction").submit(function(e){
+            e.preventDefault();
+            $("#btn-simpan").addClass('disabled');
+            $("#btn-simpan").text('Mengirim');
+            var theForm = $(this);
+            theForm.ajaxSubmit({
+                type:"POST",
+                success:function(res){
+                    $("#btn-simpan").removeClass("disabled");
+                    $("#btn-simpan").text("Simpan");
+                }
+            })
         });
 	</script>
 @stop

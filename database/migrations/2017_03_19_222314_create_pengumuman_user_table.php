@@ -20,6 +20,7 @@ class CreatePengumumanUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->string('kode_masuk')->nullable();
             $table->dateTime('waktu_register')->nullable();
+            $table->double('total_auction')->nullable()->default(0);
             $table->timestamps();
         });
     }
