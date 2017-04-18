@@ -727,7 +727,7 @@
             $.ajax({
                 url:"{{route('login')}}",
                 method:"POST",
-                data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}"},
+                data:{email:$("#email-login").val().trim(),password:$("#password-login").val().trim(),_token:"{{csrf_token()}}",captcha:$("#input-captcha-admin").val()},
                 success:function(res){
                     if(res.result==true){
                         if(res.data.role=='admin'){
@@ -735,12 +735,9 @@
                         }else{
                             location.reload();
                         }
-                    }else if(res.message=='not match'){
-                        alert("email maupun password salah");
+                    }else{
                         $(".captcha-img").attr("src",res.captcha_src);
-                    }else if(res.message=='expired'){
-                        alert("Pengajuan tidak dapat dilakukan");
-                        $(".captcha-img").attr("src",res.captcha_src);
+                        alert(res.message);
                     }
                     $("#button-login").removeClass('disabled');
                     $("#button-login").text('Masuk');

@@ -23,6 +23,12 @@ class PublickController extends Controller
     // Cek login umum
 	public function loginCheck(Request $request)
 	{
+        $rules = ['captcha' => 'required|captcha'];
+        $validator = \Validator::make(\Input::all(), $rules);
+        if ($validator->fails())
+        {
+            return response()->json(['result'=>false,'message'=>'Masukkan captcha dengan benar', 'captcha_src'=>captcha_src()]);
+        }
 		$email = $request->input('email');
 		$password = $request->input('password');
 		$user = User::where(['email'=>$email,'password'=>$password])->first();
@@ -32,7 +38,7 @@ class PublickController extends Controller
             session()->put('nama',$user->nama);
 			return response()->json(['data'=>$user,'result'=>true]);
 		}
-		return response()->json(['result'=>false,'message'=>'not match']);
+		return response()->json(['result'=>false,'message'=>'Email ataupun password tidak cocok', 'captcha_src'=>captcha_src()]);
 	}
 
     // Cek subkontraktor yg terdaftar
@@ -40,7 +46,6 @@ class PublickController extends Controller
     {
         $rules = ['captcha' => 'required|captcha'];
         $validator = \Validator::make(\Input::all(), $rules);
-
         if ($validator->fails())
         {
             return response()->json(['result'=>false,'message'=>'Masukkan captcha dengan benar', 'captcha_src'=>captcha_src()]);
