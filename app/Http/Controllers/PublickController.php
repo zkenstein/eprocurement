@@ -197,7 +197,7 @@ class PublickController extends Controller
                 $data['allow_auction'] = false;
             }else if(strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)) < strtotime(\Carbon\Carbon::now())){
                 $data['countdown'] = 0;
-                $data['allow_auction'] = false;
+                $data['allow_auction'] = true;
                 $data['auction_finish'] = true;
             }else{
                 return redirect()->route('auction');

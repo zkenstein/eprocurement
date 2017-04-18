@@ -18,4 +18,9 @@ class PengumumanBarang extends Model
     {
     	return $this->belongsTo('App\Pengumuman');
     }
+
+    public function listAuction()
+    {
+        return $this->hasMany('App\Auction','pengumuman_barang_id','id');
+    }
 }

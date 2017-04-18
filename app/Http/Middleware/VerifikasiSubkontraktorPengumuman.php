@@ -16,8 +16,9 @@ class VerifikasiSubkontraktorPengumuman
     public function handle($request, Closure $next)
     {
         if(session()->has('pengumuman') && session()->has('id')){
-            $pengumumanUser = PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->where('waktu_register','<>',NULL)->first();
-            if($pengumumanUser!=null) return $next($request);
+            $pengumumanUser = PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->whereNotNull('waktu_register')->first();
+            if($pengumumanUser!=null) 
+                return $next($request);
             session()->put('error','Silahkan login terlebih dahulu ke tender yang sesuai');
             return redirect()->route('home');
         }

@@ -46,4 +46,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\UserCluster');
     }
+
+    public function listAuction()
+    {
+        return $this->hasMany('App\Auction','user_id','id');
+    }
 }

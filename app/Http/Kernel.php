@@ -31,6 +31,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'admin_only' => \App\Http\Middleware\AdminOnly::class,
         'pic_admin_only' => \App\Http\Middleware\PicAdminOnly::class,
-        'verify_subkon_pengumuman' => \App\Http\Middleware\VerifikasiSubkontraktorPengumuman::class
+        'verify_subkon_pengumuman' => \App\Http\Middleware\VerifikasiSubkontraktorPengumuman::class,
+        'verify_auction' => \App\Http\Middleware\VerifikasiAuction::class
     ];
 }

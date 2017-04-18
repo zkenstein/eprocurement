@@ -27,6 +27,10 @@ Route::get('auction',[
 	'as'=>'auction',
 	'middleware'=>'verify_subkon_pengumuman'
 ]);
+Route::post('auction',[
+	'uses'=>'AuctionController@addAuction',
+	'middleware'=>['verify_subkon_pengumuman','verify_auction']
+]);
 
 Route::get('tentang',[
 	'uses'=>'PublickController@tentangPage',

@@ -146,9 +146,11 @@
                 <a class="nav-link <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
             </li>
             @if(session('role')=='subkontraktor')
+            <!--
             <li class="nav-item px-1">
                 <a class="nav-link login" href="#" >Pemenang</a>
             </li>
+            -->
             @endif
             @if(session('role')!='admin' && session('role')!='subkontraktor' && session('role')!='pic')
             <li class="nav-item px-1">
@@ -219,9 +221,11 @@
                     <li class="nav-title">
                         Transaksional
                     </li>
+                    <!--
                     <li class="nav-item <?=$TAG=='pengumuman'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
                     </li>
+                    -->
                     <li class="nav-item <?=$TAG=='monitoring'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-eye"></i> Monitoring</a>
                     </li>
@@ -820,6 +824,7 @@
             validate(element);
         });
         $(".maskmoney").maskMoney({prefix:'Rp. ', allowNegative: false, thousands:'.', decimal:',',precision:0,affixesStay:true});
+        $(".maskmoneywithoutrp").maskMoney({prefix:'', allowNegative: false, thousands:'.', decimal:',',precision:0,affixesStay:true});
         function toCurrency(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }

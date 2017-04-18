@@ -53,15 +53,18 @@
                                             : <span>{{$pengumuman->harga_netto.' ('.$pengumuman->mata_uang.')'}}</span>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-6 padding-side">
-                                            <strong>Auction</strong>
-                                        </div>
-                                    </div>
+                                    <br>
                                     @if($allow_auction==false)
                                     <button id="auction-button" class="btn btn-primary btn-lg btn-block disabled">Auction Belum Dimulai</button>
                                     @else
-                                    <a class="btn btn-primary btn-lg btn-block">Auction</a>
+                                    <div class="card card-inverse card-success">
+                                        <div class="card-header">
+                                            Pengumuman Pemenang Tender
+                                        </div>
+                                        <div class="card-block">
+                                            Auction telah selesai. Pemenang untuk tender ini adalah : PT.BLABLABLA dengan pengajuan dana sebesar : 5.000.000.000 (IDR)
+                                        </div>
+                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -80,7 +83,7 @@
 @if($allow_auction==false)
 $('#auction-button').countdown({until: +{{$countdown}}, format: 'yowdHMS', onExpiry: goToAuction});
 function goToAuction(){
-    alert("Goto Auction");
+    location.reload();
 }
 @endif
 </script>

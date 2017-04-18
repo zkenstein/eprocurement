@@ -311,15 +311,6 @@
                         return show;
                     }
                 }
-                // ,
-                // {
-                //     "className":"no-print",
-                //     "orderable":false,
-                //     "targets": 6,
-                //     "render": function(data, type, row, meta){
-                //         return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getPengumuman('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusPengumuman('+row.id+')"><i class="icon-trash"></i></button></div>';
-                //     }
-                // }
             ],
         });
 
