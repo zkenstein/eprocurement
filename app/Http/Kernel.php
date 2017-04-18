@@ -30,6 +30,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'admin_only' => \App\Http\Middleware\AdminOnly::class,
-        'pic_admin_only' => \App\Http\Middleware\PicAdminOnly::class
+        'pic_admin_only' => \App\Http\Middleware\PicAdminOnly::class,
+        'verify_subkon_pengumuman' => \App\Http\Middleware\VerifikasiSubkontraktorPengumuman::class
     ];
 }

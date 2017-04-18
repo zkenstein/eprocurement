@@ -22,6 +22,12 @@ Route::get('/',[
 	'as'=>'home'
 ]);
 
+Route::get('auction',[
+	'uses'=>'GeneralController@auctionPage',
+	'as'=>'auction',
+	'middleware'=>'verify_subkon_pengumuman'
+]);
+
 Route::get('tentang',[
 	'uses'=>'PublickController@tentangPage',
 	'as'=>'tentang'

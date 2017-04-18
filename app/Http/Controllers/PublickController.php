@@ -189,13 +189,21 @@ class PublickController extends Controller
         // if(session('role')=='subkontraktor') dd(session()->all());
     	$data['TAG'] = 'home';
         $data['captcha_src'] = captcha_src();
-        if(session()->has('pengumuman')){
+        // CEK APAKAH USER SUDAH MASUK SEBAGAI SUBKONTRAKTOR DALAM SEBUAH TENDER ATAU BELUM
+        if(session()->has('pengumuman')){#JIKA SUDAH MASUK KE TENDER LOAD HALAMAN HOME TENDER
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
-            $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
-            if($data['countdown'] > 0) $data['allow_auction'] = false;
-            else $data['allow_auction'] = true;
+            if(strtotime($data['pengumuman']->start_auction) > strtotime(\Carbon\Carbon::now())){
+                $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
+                $data['allow_auction'] = false;
+            }else if(strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)) < strtotime(\Carbon\Carbon::now())){
+                $data['countdown'] = 0;
+                $data['allow_auction'] = false;
+                $data['auction_finish'] = true;
+            }else{
+                return redirect()->route('auction');
+            }
             return view('pages.home_subkontraktor',$data);
-        }else{
+        }else{#JIKA BELUM MASUK KE TENDER LOAD HALAMAN HOME BIASA
             $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','picInfo'])->orderBy('created_at','desc')->get();
             return view('pages.home',$data);
         }

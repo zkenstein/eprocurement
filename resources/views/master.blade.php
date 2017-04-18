@@ -835,6 +835,9 @@
                 }
             });
         });
+        @if(session()->has('error'))
+        alert("{{session()->pull('error')}}");
+        @endif
     </script>
 </body>
 

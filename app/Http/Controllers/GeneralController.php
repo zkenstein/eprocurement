@@ -101,4 +101,14 @@ class GeneralController extends Controller
             $name=>$request->input('_rule')
         ]);
     }
+
+    public function auctionPage(Request $request)
+    {
+        $data['TAG'] = 'auction';
+        $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
+        $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
+        // if($data['countdown'] > 0) $data['allow_auction'] = false;
+        // else $data['allow_auction'] = true;
+        dd($data);
+    }
 }
