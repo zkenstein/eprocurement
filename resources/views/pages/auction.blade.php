@@ -50,6 +50,17 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @foreach($list_barang_eksternal as $barang)
+                                    <tr>
+                                        <td>{{$barang->kode}}</td>
+                                        <td>{{$barang->satuan}}</td>
+                                        <td>{{$barang->deskripsi}}</td>
+                                        <td>{{$barang->quantity}}</td>
+                                        <td>
+                                            <input required name="harga[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder="">
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                     <tr>
                                         <td colspan="4">
                                             

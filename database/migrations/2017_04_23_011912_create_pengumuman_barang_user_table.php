@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAuctionTable extends Migration
+class CreatePengumumanBarangUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateAuctionTable extends Migration
      */
     public function up()
     {
-        Schema::create('auction', function (Blueprint $table) {
+        Schema::create('pengumuman_barang_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pengumuman_id')->unsigned();
-            $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');
+            $table->integer('pengumuman_barang_id')->unsigned();
+            $table->foreign('pengumuman_barang_id')->references('id')->on('pengumuman_barang')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->double('total');
+            $table->double('harga');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateAuctionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('auction');
+        Schema::drop('pengumuman_barang_user');
     }
 }

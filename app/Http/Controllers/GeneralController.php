@@ -12,6 +12,7 @@ use App\Cluster;
 use App\Barang;
 use App\Pengumuman;
 use App\PengumumanBarang;
+use App\BarangEksternal;
 
 class GeneralController extends Controller
 {
@@ -108,6 +109,7 @@ class GeneralController extends Controller
         $data['TAG'] = 'auction';
         $data['pengumuman'] = Pengumuman::find(session('pengumuman'));
         $data['list_barang'] = PengumumanBarang::with('barangInfo')->where('pengumuman_id',session('pengumuman'))->get();
+        $data['list_barang_eksternal'] = BarangEksternal::where('pengumuman_id',session('pengumuman'))->get();
         $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
         return view('pages.auction',$data);
     }

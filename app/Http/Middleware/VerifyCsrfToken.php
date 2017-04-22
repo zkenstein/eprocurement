@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         "intern/*",
-        "f52bc44a34340cbf4c1aae1eb32e351160858b0d"
+        "f52bc44a34340cbf4c1aae1eb32e351160858b0d",
+        "auction"
     ];
 }

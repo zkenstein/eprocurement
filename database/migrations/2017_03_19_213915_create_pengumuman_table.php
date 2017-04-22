@@ -21,15 +21,15 @@ class CreatePengumumanTable extends Migration
             $table->dateTime('waktu_pengiriman');
             $table->double('harga_netto');
             $table->string('mata_uang');
-            $table->tinyInteger('max_register');
-            $table->tinyInteger('count_register')->default(0);
+            $table->integer('max_register');
+            $table->integer('count_register')->default(0);
             $table->integer('pemenang')->unsigned()->nullable();
             $table->foreign('pemenang')->references('id')->on('user')->onDelete('cascade');
             $table->integer('pic')->unsigned();
             $table->foreign('pic')->references('id')->on('user')->onDelete('cascade');
             $table->string('file_excel')->nullable();
             $table->dateTime('start_auction');
-            $table->tinyInteger('durasi')->default(0);
+            $table->integer('durasi')->default(0);
             $table->timestamps();
         });
     }
