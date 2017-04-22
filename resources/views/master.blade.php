@@ -221,11 +221,11 @@
                     <li class="nav-title">
                         Transaksional
                     </li>
-                    <!--
+                    
                     <li class="nav-item <?=$TAG=='pengumuman'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.pengumuman')}}"><i class="icon-volume-2"></i> Pengumuman</a>
                     </li>
-                    -->
+                    
                     <li class="nav-item <?=$TAG=='monitoring'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.monitoring')}}"><i class="icon-eye"></i> Monitoring</a>
                     </li>

@@ -18,7 +18,7 @@ class CreatePengumumanBarangTable extends Migration
             $table->foreign('pengumuman_id')->references('id')->on('pengumuman')->onDelete('cascade');
             $table->integer('barang_id')->unsigned();
             $table->foreign('barang_id')->references('id')->on('barang')->onDelete('cascade');
-            $table->integer('quantity');
+            $table->string('quantity',20);
             $table->timestamps();
         });
     }

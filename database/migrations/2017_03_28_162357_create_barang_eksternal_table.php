@@ -15,8 +15,9 @@ class CreateBarangEksternalTable extends Migration
         Schema::create('barang_eksternal', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kode');
-            $table->string('satuan');
             $table->text('deskripsi');
+            $table->string('satuan');
+            $table->string('quantity',20);
             $table->string('gambar')->nullable()->default('default.gif');
             $table->string('pdf')->nullable();
             $table->integer('pengumuman_id')->unsigned();

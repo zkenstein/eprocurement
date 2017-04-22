@@ -15,6 +15,8 @@ use Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\KirimEmailPemberitahuan;
 use App\Jobs\InsertPengumumanUser;
+use App\Jobs\InsertBarangEksternal;
+use App\BarangEksternal;
 
 class PengumumanController extends Controller
 {
@@ -84,15 +86,6 @@ class PengumumanController extends Controller
         
         // return response()->json($request->all(),500);
         $date = date_format(date_create(),'U');
-
-        // Jika ada sumber data excel
-        $excel = null;
-        if($request->hasFile('barang_csv')){
-            $excel = $request->input('kode').'_'.$date.'.'.$request->file('barang_csv')->getClientOriginalExtension();
-            \Storage::disk('local')->put($excel, \File::get($request->file('barang_csv')));
-            $request->merge(array('file_excel' => $excel));
-        }
-
         // Edit Request batas waktu penawaran agar bisa masuk database
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
@@ -102,13 +95,30 @@ class PengumumanController extends Controller
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
 
-        // Mulai backgroundprocess insert user + kirim email
-        $job = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
-        $this->dispatch($job);
+        // Jika ada sumber data excel
+        $excel = null;
+        if($request->hasFile('barang_csv')){
+            $excel = $request->input('kode').'_'.$date.'.'.$request->file('barang_csv')->getClientOriginalExtension();
+            $pengumuman->file_excel = $excel;
+            $file = \File::get($request->file('barang_csv'));
+            \Storage::disk('local')->put($excel, $file);
+            $pengumuman->save();
+            
+            // Mulai backgroundprocess insert barang eksternal
+            $job1 = new InsertBarangEksternal($pengumuman->id,$excel);
+            $this->dispatch($job1);
+        }
 
-        // Insert pengumuman barang
-        foreach($request->input('barang') as $barang){
-            PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
+        // Mulai backgroundprocess insert user + kirim email
+        $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
+        $this->dispatch($job2);
+
+        // cek jika ada inputan barang
+        if(count($request->input('barang'))>0){
+            // Insert pengumuman barang
+            foreach($request->input('barang') as $barang){
+                PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
+            }
         }
 
         // Insert pengumuman cluster
