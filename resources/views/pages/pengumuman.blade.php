@@ -343,7 +343,7 @@
                                     $('#form-add .selectpicker').selectpicker('deselectAll');
                                     $("input[name='_token']").val(res.token);
                                     csrf = res.token;
-                                    // location.reload();
+                                    location.reload();
                                 }
                             });
                         }
