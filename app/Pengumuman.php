@@ -31,4 +31,14 @@ class Pengumuman extends Model
     {
         return $this->hasOne('App\User','id','pic');
     }
+
+    public function listAuction()
+    {
+        return $this->hasMany('App\Auction','pengumuman_id');
+    }
+
+    public function listActiveAuction()
+    {
+        return $this->hasMany('App\Auction','pengumuman_id')->where('status',1);
+    }
 }

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Auction extends Model
+class PengumumanBarangUser extends Model
 {
-    protected $table = 'auction';
-    protected $fillable = ['pengumuman_id','user_id','total','status'];
+    protected $table = "pengumuman_barang_user";
+    protected $fillable = ['pengumuman_barang_id','user_id','harga','status'];
 
     public function pengumumanBarangInfo()
     {
@@ -17,10 +17,5 @@ class Auction extends Model
     public function userInfo()
     {
     	return $this->belongsTo('App\User','user_id');
-    }
-
-    public function pengumumanInfo()
-    {
-        return $this->belongsTo('App\Pengumuman','pengumuman_id');
     }
 }
