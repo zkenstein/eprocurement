@@ -256,7 +256,7 @@
 	        			$("#detail-batas-waktu-penawaran").text(moment(res.data.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - "+moment(res.data.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-validitas-harga").text(moment(res.data.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-waktu-pengiriman").text(moment(res.data.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
-	        			$("#detail-harga-netto").text(res.data.harga_netto+" ("+res.data.mata_uang+")");
+	        			$("#detail-harga-netto").text(accounting.formatMoney(res.data.harga_netto, "", 0, ".", ",")+''+" ("+res.data.mata_uang+")");
 
 	        			$("#detail-kode-pic").text(res.data.pic_info.kode);
 	        			$("#detail-nama-pic").text(res.data.pic_info.nama);

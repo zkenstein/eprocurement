@@ -588,6 +588,9 @@
     <!-- Plugins and scripts required by all views -->
     <script src="/bower_components/chart.js/dist/Chart.min.js"></script>
 
+    <!-- Accounting -->
+    <script type="text/javascript" src="/js/accounting.min.js"></script>
+
     <!-- Multiple Select -->
     <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="/js/jquery.form.min.js"></script>

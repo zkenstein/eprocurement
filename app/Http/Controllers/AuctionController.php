@@ -106,4 +106,21 @@ class AuctionController extends Controller
             'data'=>$barang
         ],200);
 	}
+
+	public function internGetDataAuction(Request $request, $id)
+	{
+		$data = PengumumanUser::with('userInfo')->where('pengumuman_id',$id)->whereNotNull('waktu_register')->get();
+		$recordsFiltered = count($data);
+		return response()->json([
+        	'draw'=>$request->input('draw'),
+            'recordsTotal'=>count($data)/$request->input('length'),
+            'recordsFiltered'=>$recordsFiltered,
+            'data'=>$data
+        ],200);
+	}
+
+	public function subkonGetDataAuction(Request $request)
+	{
+		
+	}
 }

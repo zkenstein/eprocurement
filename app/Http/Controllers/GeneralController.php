@@ -92,6 +92,13 @@ class GeneralController extends Controller
         return view('pages.monitoring',$data);
     }
 
+    public function liveAuctionPage(Request $request,$id)
+    {
+        $data['TAG'] = 'monitoring';
+        $data['pengumuman'] = Pengumuman::with('listUser.userInfo')->find($id);
+        return view('pages.live_auction',$data);
+    }
+
     public function detailPengumumanPage(Request $request,$kode)
     {
         $data['TAG'] = 'monitoring';

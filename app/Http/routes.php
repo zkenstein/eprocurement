@@ -198,8 +198,12 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'as'=>'detail_pengumuman'
 	]);
 	Route::get('/live_auction/{id?}',[
-		'uses'=>'GeneralController@monitoringPage',
+		'uses'=>'GeneralController@liveAuctionPage',
 		'as'=>'live_auction'
+	]);
+	Route::get('/live_auction_data/{id}',[
+		'uses'=>'AuctionController@internGetDataAuction',
+		'as'=>'live_auction_data'
 	]);
 
 
