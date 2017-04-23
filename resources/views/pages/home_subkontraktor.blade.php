@@ -50,7 +50,7 @@
                                             Harga Netto
                                         </div>
                                         <div class="col-sm-6 col-md-6 padding-side">
-                                            : <span>{{$pengumuman->harga_netto.' ('.$pengumuman->mata_uang.')'}}</span>
+                                            : <span>{{number_format($pengumuman->harga_netto,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
                                         </div>
                                     </div>
                                     <br>

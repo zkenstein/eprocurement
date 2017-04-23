@@ -76,7 +76,7 @@
                                     <tr>
                                         <td colspan="4"></td>
                                         <td>
-                                            <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Simpan</button>
+                                            <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -135,7 +135,8 @@
                 type:"POST",
                 success:function(res){
                     $("#btn-simpan").removeClass("disabled");
-                    $("#btn-simpan").text("Simpan");
+                    $("#btn-simpan").text("Submit");
+                    console.log(res);
                 }
             })
         });

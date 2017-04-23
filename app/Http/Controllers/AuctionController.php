@@ -10,13 +10,45 @@ use App\Auction;
 use App\PengumumanUser;
 use App\BarangEksternal;
 use App\BarangEksternalUser;
+use App\PengumumanBarang;
 use App\PengumumanBarangUser;
 
 class AuctionController extends Controller
 {
 	public function addAuction(Request $request)
 	{
-		$request->merge(array('harga'=>str_replace(["Rp","."," "], "", $request->input('harga'))));
+		// dd($request->all());
+		$total = 0;
+		$request->merge(array('harga_barang'=>str_replace(["Rp","."," "], "", $request->input('harga_barang'))));
+		$request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
+
+		foreach ($request->input('harga_barang') as $key => $value) {
+			PengumumanBarangUser::where('pengumuman_barang_id',$key)->update(['status'=>0]);
+			PengumumanBarangUser::create([
+				'pengumuman_barang_id'=>$key,
+				'user_id'=>session('id'),
+				'harga'=>$value
+			]);
+			$total+=$value;
+		}
+		foreach ($request->input('harga_barang_eksternal') as $key => $value) {
+			BarangEksternalUser::where('barang_eksternal_id',$key)->update(['status'=>0]);
+			BarangEksternalUser::create([
+				'barang_eksternal_id'=>$key,
+				'user_id'=>session('id'),
+				'harga'=>$value
+			]);
+			$total+=$value;
+		}
+		Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
+		Auction::create([
+			'pengumuman_id'=>session('pengumuman'),
+			'user_id'=>session('id'),
+			'total'=>$total
+		]);
+		PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->update(['total_auction'=>$total]);
+		dd($request->all());
+
 		$pengumumanUser = PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->first();
 		$total = $pengumumanUser->totalAuction;
 		if($total>0){
