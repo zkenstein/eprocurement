@@ -106,11 +106,20 @@ class GeneralController extends Controller
 
     public function auctionPage(Request $request)
     {
-        $data['TAG'] = 'auction';
+        $allowAccessAuction = false;
         $data['pengumuman'] = Pengumuman::find(session('pengumuman'));
-        $data['list_barang'] = PengumumanBarang::with('barangInfo')->where('pengumuman_id',session('pengumuman'))->get();
-        $data['list_barang_eksternal'] = BarangEksternal::where('pengumuman_id',session('pengumuman'))->get();
-        $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
-        return view('pages.auction',$data);
+        $startAuction = strtotime($data['pengumuman']->start_auction);
+        $stopAuction = strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi));
+        if($stopAuction >= strtotime(\Carbon\Carbon::now()) && $startAuction <= strtotime(\Carbon\Carbon::now())) $allowAccessAuction = true;
+        
+        if($allowAccessAuction){
+            $data['TAG'] = 'auction';
+            $data['list_barang'] = PengumumanBarang::with('barangInfo')->where('pengumuman_id',session('pengumuman'))->get();
+            $data['list_barang_eksternal'] = BarangEksternal::where('pengumuman_id',session('pengumuman'))->get();
+            $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
+            return view('pages.auction',$data);
+        }
+        session()->put("error","Auction belum dimulai atau sudah selesai dilakukan");
+        return redirect()->route("home");
     }
 }

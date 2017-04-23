@@ -8,6 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Auction;
 use App\PengumumanUser;
+use App\BarangEksternal;
+use App\BarangEksternalUser;
+use App\PengumumanBarangUser;
+
 class AuctionController extends Controller
 {
 	public function addAuction(Request $request)
@@ -46,5 +50,41 @@ class AuctionController extends Controller
 			$pengumumanUser->update(['total_auction',$total]);
 		}
 		return response()->json(['result'=>true]);
+	}
+
+	public function getDataBarang(Request $request)
+	{
+		$orderBy = '';
+        // switch($request->input('order.0.column')){
+        //     case "0":
+        //         $orderBy = 'kode';
+        //     break;
+        //     case "1":
+        //         $orderBy = 'deskripsi';
+        //     break;
+        //     default:
+        //         $orderBy = 'kode';
+        //     break;
+        // }
+
+        $barang = BarangEksternal::where('id','>',0);
+        if($request->input('search.value')!=''){
+            $barang = $barang
+            	->where('kode','like','%'.$request->input('search.value').'%')
+                ->orWhere('deskripsi','like','%'.$request->input('search.value').'%')
+                ->orWhere('satuan','like','%'.$request->input('search.value').'%')
+                ->orWhere('quantity','like','%'.$request->input('search.value').'%');
+        }
+
+        $recordsFiltered = $barang->count();
+        $barang = $barang->get();
+        // $barang = $barang->skip($request->input('start'))->take($request->input('length'))->get();
+        // dd($barang);
+        return response()->json([
+        	'draw'=>$request->input('draw'),
+            'recordsTotal'=>count($barang)/$request->input('length'),
+            'recordsFiltered'=>$recordsFiltered,
+            'data'=>$barang
+        ],200);
 	}
 }
