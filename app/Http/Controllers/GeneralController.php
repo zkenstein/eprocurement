@@ -11,6 +11,7 @@ use App\User;
 use App\Cluster;
 use App\Barang;
 use App\Pengumuman;
+use App\PengumumanUser;
 use App\PengumumanBarang;
 use App\BarangEksternal;
 
@@ -110,15 +111,23 @@ class GeneralController extends Controller
         $data['pengumuman'] = Pengumuman::find(session('pengumuman'));
         $startAuction = strtotime($data['pengumuman']->start_auction);
         $stopAuction = strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi));
+
         if($stopAuction >= strtotime(\Carbon\Carbon::now()) && $startAuction <= strtotime(\Carbon\Carbon::now())) $allowAccessAuction = true;
         
+        // JIKA AUCTION SUDAH DIBUKA DAN BELUM DITUTUP
         if($allowAccessAuction){
+            $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
             $data['TAG'] = 'auction';
-            $data['list_barang'] = PengumumanBarang::with('barangInfo')->where('pengumuman_id',session('pengumuman'))->get();
-            $data['list_barang_eksternal'] = BarangEksternal::where('pengumuman_id',session('pengumuman'))->get();
+            // MENGAMBIL DATA LIST BARANG INTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
+            $data['list_barang'] = PengumumanBarang::with(['barangInfo','inUserAuction'])->where('pengumuman_id',session('pengumuman'))->get();
+            // MENGAMBIL DATA LIST BARANG EKSTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
+            $data['list_barang_eksternal'] = BarangEksternal::with('inUserAuction')->where('pengumuman_id',session('pengumuman'))->get();
+            // COUNTDOWN WAKTU TERSISA
             $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
             return view('pages.auction',$data);
         }
+
+        // JIKA AUCTION BELUM DIBUKA ATAU SUDAH DITUTUP
         session()->put("error","Auction belum dimulai atau sudah selesai dilakukan");
         return redirect()->route("home");
     }

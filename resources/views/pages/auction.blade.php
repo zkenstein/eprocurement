@@ -50,7 +50,11 @@
                                         <td>{{$barang->barangInfo->satuan}}</td>
                                         <td>{{$barang->quantity}}</td>
                                         <td>
-                                            <input required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder="">
+                                            <input required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                            @if($barang->inUserAuction!=null)
+                                            value = "{{$barang->inUserAuction->harga}}"
+                                            @endif
+                                            >
                                         </td>
                                     </tr>
                                     @endforeach
@@ -61,7 +65,11 @@
                                         <td>{{$barang->satuan}}</td>
                                         <td>{{$barang->quantity}}</td>
                                         <td>
-                                            <input required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder="">
+                                            <input required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                            @if($barang->inUserAuction!=null)
+                                            value = "{{$barang->inUserAuction->harga}}"
+                                            @endif
+                                            >
                                         </td>
                                     </tr>
                                     @endforeach
@@ -110,7 +118,8 @@
 		var csrf = "{{csrf_token()}}";
         var total = 0;
         $(document).ready(function(){
-            $("#total_harga_input").maskMoney('mask', 0);
+            $("#total_harga_input").maskMoney('mask', {{$total_auction}});
+            $(".maskmoneywithoutrp").maskMoney('mask');
         });
         function previewImage(src) {
             $("#preview-gambar-barang").show();
