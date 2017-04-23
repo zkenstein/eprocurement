@@ -17,14 +17,18 @@ class AuctionController extends Controller
 {
 	public function addAuction(Request $request)
 	{
-		// dd($request->all());
+		// INISIALISASI VARIABEL
 		$total = 0;
+		$hargaBarang = [];
+		$hargaBarangEksternal = [];
+		
+		// MANIPULASI INPUTAN, MENGHAPUS . , 
 		$request->merge(array('harga_barang'=>str_replace(["Rp","."," "], "", $request->input('harga_barang'))));
 		$request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
 
+		// PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
 		foreach ($request->input('harga_barang') as $key => $value) {
-			PengumumanBarangUser::where('pengumuman_barang_id',$key)->update(['status'=>0]);
-			PengumumanBarangUser::create([
+			$hargaBarang[$key] = new PengumumanBarangUser([
 				'pengumuman_barang_id'=>$key,
 				'user_id'=>session('id'),
 				'harga'=>$value
@@ -32,56 +36,39 @@ class AuctionController extends Controller
 			$total+=$value;
 		}
 		foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-			BarangEksternalUser::where('barang_eksternal_id',$key)->update(['status'=>0]);
-			BarangEksternalUser::create([
+			$hargaBarangEksternal[$key] = new BarangEksternalUser([
 				'barang_eksternal_id'=>$key,
 				'user_id'=>session('id'),
 				'harga'=>$value
 			]);
 			$total+=$value;
 		}
-		Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
-		Auction::create([
-			'pengumuman_id'=>session('pengumuman'),
-			'user_id'=>session('id'),
-			'total'=>$total
-		]);
-		PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->update(['total_auction'=>$total]);
-		dd($request->all());
 
-		$pengumumanUser = PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->first();
-		$total = $pengumumanUser->totalAuction;
-		if($total>0){
-			$total = 0;
-			$auctionInput = array();
-			foreach($request->input('harga') as $key=>$harga){
-				array_push($auctionInput, new Auction([
-					'pengumuman_barang_id'=>$key,
-					'user_id'=>session('id'),
-					'harga'=>$harga
-				]));
-				$total+=$harga;
-			}
-			$checkTotal = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->first();
-			if($checkTotal!=null){
-				
-				return response()->json(['result'=>false,'data_prev'=>'']);
-			}else{
-				foreach($auctionInput as $a) $a->save();
-				return response()->json(['result'=>true]);
-			}
-		}else{
-			foreach($request->input('harga') as $key=>$harga){
-				Auction::create([
-					'pengumuman_barang_id'=>$key,
-					'user_id'=>session('id'),
-					'harga'=>$harga
-				]);
-				$total+=$harga;
-			}
-			$pengumumanUser->update(['total_auction',$total]);
+		// CEK APAKAH TOTAL INPUTAN SAMA DENGAN USER LAIN
+		$pengumumanUser = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->first();
+		// JIKA SUDAH DIAMBIL USER LAIN
+		if($pengumumanUser!=null) {
+			return response()->json(['result'=>false,'message'=>'Total auction yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga barang sebelum submit']);	
 		}
-		return response()->json(['result'=>true]);
+		// JIKA BELUM DIAMBIL OLEH USER LAIN
+		else{
+			foreach ($hargaBarang as $key => $obj) {
+				PengumumanBarangUser::where('pengumuman_barang_id',$key)->update(['status'=>0]);
+				$obj->save();
+			}
+			foreach ($hargaBarangEksternal as $key => $obj) {
+				BarangEksternalUser::where('barang_eksternal_id',$key)->update(['status'=>0]);
+				$obj->save();
+			}
+			Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
+			Auction::create([
+				'pengumuman_id'=>session('pengumuman'),
+				'user_id'=>session('id'),
+				'total'=>$total
+			]);
+			PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->update(['total_auction'=>$total]);
+			return response()->json(['result'=>true,'message'=>'Tawaran anda berhasil disimpan']);
+		}
 	}
 
 	public function getDataBarang(Request $request)

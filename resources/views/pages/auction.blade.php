@@ -131,7 +131,7 @@
             $("#btn-simpan").addClass('disabled');
             $("#btn-simpan").text('Mengirim');
             var theForm = $(this);
-            theForm.ajaxSubmit({
+            $(theForm).ajaxSubmit({
                 type:"POST",
                 success:function(res){
                     $("#btn-simpan").removeClass("disabled");
@@ -142,7 +142,6 @@
         });
 
         $(".input-auction-barang").keyup(function(){
-            // var anInput = $(this).val().replace(/[^\w\s]/gi, '');
             total = 0;
             $.each($(".input-auction-barang"),function(key,object){
                 var val = $(object).val();
