@@ -32,7 +32,7 @@
                             </div>
                             <!--/.row-->
                             <br>
-                            <table class="table table-hover table-outline mb-0 hidden-sm-down">
+                            <table class="table table-hover table-outline mb-0">
                                 <thead class="thead-default">
                                     <tr>
                                         <th colspan="<?php if(session('role')!='admin') echo '6'; else echo '5'; ?>">

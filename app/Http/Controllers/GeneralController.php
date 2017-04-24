@@ -123,6 +123,9 @@ class GeneralController extends Controller
         
         // JIKA AUCTION SUDAH DIBUKA DAN BELUM DITUTUP
         if($allowAccessAuction){
+            // UNTUK MENAMPILKAN COUNTDOWN SAAT AUCTION
+            $data['auctionNow'] = true;
+
             $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
             $data['TAG'] = 'auction';
             // MENGAMBIL DATA LIST BARANG INTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
@@ -130,7 +133,12 @@ class GeneralController extends Controller
             // MENGAMBIL DATA LIST BARANG EKSTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
             $data['list_barang_eksternal'] = BarangEksternal::with('inUserAuction')->where('pengumuman_id',session('pengumuman'))->get();
             // COUNTDOWN WAKTU TERSISA
-            $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)->diffInSeconds(\Carbon\Carbon::now());
+            $data['countdown'] = 
+            \Carbon\Carbon::parse($data['pengumuman']->start_auction)
+            ->addMinutes($data['pengumuman']->durasi)->
+            addSeconds(-5)->//TOLERANSI WAKTU TRANSFER DATA KE CLIENT . WAKTU AUCTION AKAN 5 DETIK LEBIH CEPAT DIBANDING ASLINYA
+            diffInSeconds(\Carbon\Carbon::now());
+
             return view('pages.auction',$data);
         }
 

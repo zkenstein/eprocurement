@@ -1,10 +1,21 @@
 @extends('master')
 
 @section('style')
+    <link rel="stylesheet" type="text/css" href="/jquery-countdown/jquery.countdown.css">
 	<style type="text/css">
     #barang-data{
         width: 100% !important;
-    }   
+    }
+    .total_auction_field{
+        font-size: 200%;
+        clear: both;
+        width: 100%;
+        padding: 0px 2px;
+        text-align: center;
+    }
+    #win-flag{
+        transition: 0.5s;
+    }
     </style>
 @stop
 
@@ -114,12 +125,17 @@
 @stop
 
 @section('script')
+    <script type="text/javascript" src="/jquery-countdown/jquery.plugin.min.js"></script>
+    <script type="text/javascript" src="/jquery-countdown/jquery.countdown.min.js"></script>
 	<script type="text/javascript">
+        $('#timer').countdown({until: +{{$countdown}},compact: true, format: 'yowdHMS', onExpiry: function(){location.href="{{route('home')}}"}});
+
 		var csrf = "{{csrf_token()}}";
         var total = 0;
         $(document).ready(function(){
             $("#total_harga_input").maskMoney('mask', {{$total_auction}});
             $(".maskmoneywithoutrp").maskMoney('mask');
+            cekIfIWin();
         });
         function previewImage(src) {
             $("#preview-gambar-barang").show();
@@ -159,6 +175,23 @@
             });
             $("#total_harga_input").maskMoney('mask', total);
         });
+
+        function cekIfIWin() {
+            $.ajax({
+                url:"/is_i_win",
+                success:function(res){
+                    if(res===true) {
+                        $("#win-flag").css({"color":"blue","font-size":"120%"});
+                        $("#win-flag").attr("title","Anda mencapai harga terendah");
+                    }
+                    else {
+                        $("#win-flag").css({"color":"gray","font-size":"100%"});
+                        $("#win-flag").attr("title","Anda tidak mencapai harga terendah");
+                    }
+                    cekIfIWin();
+                }
+            });
+        }
 
         <?php
         /*

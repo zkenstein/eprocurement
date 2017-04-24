@@ -186,9 +186,19 @@
                         
                 </div>
             </li>
-<!--             <li class="nav-item hidden-md-down">
-                <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
-            </li> -->
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            @if(isset($auctionNow))
+            <li class="nav-item d-md-down-none">
+                <span>Sisa Waktu : </span> &nbsp;
+            </li>
+            <li class="nav-item d-md-down-none">
+                <span id="timer" class="nav-link" href="#"></span>
+            </li>
+            <li class="nav-item d-md-down-none">
+                <a class="nav-link" href="#" id="win-flag"><i class="icon-flag"></i></a>
+            </li>
+            @endif
         </ul>
     </header>
 

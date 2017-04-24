@@ -53,11 +53,11 @@ class AuctionController extends Controller
 		// JIKA BELUM DIAMBIL OLEH USER LAIN
 		else{
 			foreach ($hargaBarang as $key => $obj) {
-				PengumumanBarangUser::where('pengumuman_barang_id',$key)->update(['status'=>0]);
+				PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
 				$obj->save();
 			}
 			foreach ($hargaBarangEksternal as $key => $obj) {
-				BarangEksternalUser::where('barang_eksternal_id',$key)->update(['status'=>0]);
+				BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
 				$obj->save();
 			}
 			Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
@@ -119,8 +119,12 @@ class AuctionController extends Controller
         ],200);
 	}
 
-	public function subkonGetDataAuction(Request $request)
+	public function isIWin(Request $request)
 	{
-		
+		$data = PengumumanUser::where('pengumuman_id',session('pengumuman'))->whereNotNull('waktu_register')->orderBy('total_auction','asc')->get();
+		if($data[0]->user_id==session('id'))
+			return response()->json(true,200);
+		else
+			return response()->json(false,200);
 	}
 }
