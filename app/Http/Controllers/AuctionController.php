@@ -15,6 +15,7 @@ use App\PengumumanBarangUser;
 
 class AuctionController extends Controller
 {
+	// FUNGSI INI MENGGUNAKAN MIDDELWARE VERIFYAUCTION UNTUK CEK APAKAH AUCTION SUDAH DIMLAI ATAU BELUM DAN APAKAH AUCTION SUDAH SELESAI ATAU BELUM
 	public function addAuction(Request $request)
 	{
 		// INISIALISASI VARIABEL
