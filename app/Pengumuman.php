@@ -41,4 +41,9 @@ class Pengumuman extends Model
     {
         return $this->hasMany('App\Auction','pengumuman_id')->where('status',1);
     }
+
+    public function pemenangInfo()
+    {
+        return $this->hasOne('App\User','pemenang','id');
+    }
 }

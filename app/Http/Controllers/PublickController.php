@@ -190,8 +190,12 @@ class PublickController extends Controller
     	$data['TAG'] = 'home';
         $data['captcha_src'] = captcha_src();
         // CEK APAKAH USER SUDAH MASUK SEBAGAI SUBKONTRAKTOR DALAM SEBUAH TENDER ATAU BELUM
-        if(session()->has('pengumuman')){#JIKA SUDAH MASUK KE TENDER LOAD HALAMAN HOME TENDER
+        if(session()->has('pengumuman')){#JIKA SUDAH,  MASUK KE TENDER LOAD HALAMAN HOME TENDER
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
+            if(  $data['pengumuman']->pemenang!=null  ){
+                if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;
+                else $data['isIWin'] = false;
+            }
             if(strtotime($data['pengumuman']->start_auction) > strtotime(\Carbon\Carbon::now())){
                 $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
                 $data['allow_auction'] = false;

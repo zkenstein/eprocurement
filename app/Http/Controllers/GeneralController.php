@@ -136,7 +136,7 @@ class GeneralController extends Controller
             $data['countdown'] = 
             \Carbon\Carbon::parse($data['pengumuman']->start_auction)
             ->addMinutes($data['pengumuman']->durasi)->
-            addSeconds(-5)->//TOLERANSI WAKTU TRANSFER DATA KE CLIENT . WAKTU AUCTION AKAN 5 DETIK LEBIH CEPAT DIBANDING ASLINYA
+            addSeconds(-1)->//TOLERANSI WAKTU TRANSFER DATA KE CLIENT . WAKTU AUCTION AKAN 1 DETIK LEBIH CEPAT DIBANDING ASLINYA
             diffInSeconds(\Carbon\Carbon::now());
 
             return view('pages.auction',$data);

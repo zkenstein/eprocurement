@@ -57,14 +57,25 @@
                                     @if($allow_auction==false)
                                     <button id="auction-button" class="btn btn-primary btn-lg btn-block disabled">Auction Belum Dimulai</button>
                                     @else
-                                    <div class="card card-inverse card-success">
-                                        <div class="card-header">
-                                            Pengumuman Pemenang Tender
+                                        @if($isIWin)
+                                        <div class="card card-inverse card-success">
+                                            <div class="card-header">
+                                                Pengumuman Pemenang Tender
+                                            </div>
+                                            <div class="card-block">
+                                                Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="/download_kontrak/{{session('pengumuman')}}">Download Kontrak</a>
+                                            </div>
                                         </div>
-                                        <div class="card-block">
-                                            Auction telah selesai. Pemenang untuk tender ini adalah : PT.BLABLABLA dengan pengajuan dana sebesar : 5.000.000.000 (IDR)
+                                        @else
+                                        <div class="card card-inverse card-danger">
+                                            <div class="card-header">
+                                                Pengumuman Tender
+                                            </div>
+                                            <div class="card-block">
+                                                Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
+                                            </div>
                                         </div>
-                                    </div>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
