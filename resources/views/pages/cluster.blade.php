@@ -174,9 +174,9 @@
             var nama = $("#add-nama").val();
             
             $.ajax({
-                url:"",
+                url:"/intern/cluster",
                 method:"POST",
-                data:{kode:kode,nama:nama,_token:csrf},
+                data:{kode:kode,nama:nama,jenis:"{{$jenis}}",_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');
@@ -199,7 +199,7 @@
             var _c = confirm("Anda yakin akan menghapus Cluster ini ?\n Semua data yang berkaitan dengan cluster ini akan terhapus");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('intern.cluster_'.$jenis)}}/"+id,
+                    url:"/intern/cluster/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -216,7 +216,7 @@
         function getCluster(id) {
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             $.ajax({
-                url:"{{route('intern.cluster_single_data')}}/"+id,
+                url:"/intern/cluster_data_single/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -245,9 +245,9 @@
             var nama = $("#edit-nama").val();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('intern.cluster_'.$jenis)}}/"+id,
+                url:"/intern/cluster/"+id,
                 method:"POST",
-                data:{kode:kode,nama:nama,_token:csrf,_method:"patch"},
+                data:{kode:kode,nama:nama,jenis:"{{$jenis}}",_token:csrf,_method:"patch"},
                 success:function(res){
                     $("#save-edit-button").prop('disabled', false);
                     $("form#edit-modal input:not([name='_token'], [name='_method'])").val('');

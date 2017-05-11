@@ -145,7 +145,7 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 			'uses'=>'ClusterController@getData',
 			'as'=>'cluster_data'
 		]);
-		Route::get('/cluster_data/{id?}',[
+		Route::get('/cluster_data_single/{id?}',[
 			'uses'=>'ClusterController@getSingleData',
 			'as'=>'cluster_single_data'
 		]);
