@@ -16,6 +16,7 @@ class CreateClusterTable extends Migration
             $table->increments('id');
             $table->string('kode')->unique();
             $table->string('nama');
+            $table->string('jenis')->default('barang');
             $table->timestamps();
         });
     }

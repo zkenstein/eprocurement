@@ -15,7 +15,7 @@ class ClusterController extends Controller
         \Carbon\Carbon::setLocale('id');
     }
     
-    public function getData(Request $request)
+    public function getData(Request $request, $jenis)
     {	
     	$orderBy = '';
         switch($request->input('order.0.column')){
@@ -30,7 +30,7 @@ class ClusterController extends Controller
             break;
         }
 
-        $cluster = Cluster::where('id','>',0);
+        $cluster = Cluster::where('id','>',0)->where('jenis',$jenis);
         if($request->input('search.value')!=''){
             $cluster = $cluster
             	->where('nama','like','%'.$request->input('search.value').'%')

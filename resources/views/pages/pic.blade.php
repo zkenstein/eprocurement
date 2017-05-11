@@ -98,6 +98,15 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Telp</th>
+                                        <th style="width:5%;"></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

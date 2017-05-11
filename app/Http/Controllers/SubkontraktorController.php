@@ -16,7 +16,7 @@ class SubkontraktorController extends Controller
         \Carbon\Carbon::setLocale('id');
     }
     
-    public function getData(Request $request)
+    public function getData(Request $request,$jenis)
     {	
     	$orderBy = '';
         switch($request->input('order.0.column')){
@@ -37,7 +37,11 @@ class SubkontraktorController extends Controller
             break;
         }
 
-        $subkontraktor = User::with(['listCluster.clusterInfo']);
+        $subkontraktor = User::with(['listCluster.clusterInfo'])->whereHas('listCluster',function($q1) use($jenis){
+            $q1->whereHas('clusterInfo',function($q2)use($jenis){
+                $q2->where('jenis',$jenis);
+            });
+        });
 
         if($request->input('search.value')!=''){
             $subkontraktor = $subkontraktor

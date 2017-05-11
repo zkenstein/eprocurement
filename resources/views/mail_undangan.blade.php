@@ -4,8 +4,8 @@
 	<title>Pengumuman Lelang</title>
 </head>
 <body>
-	<h3 style="color: #5e9ca0;"><span style="color: #333333;">Kepada Yth. Kepala {{$nama_perusahaan}}</span><br /><span style="color: #333333;">di Tempat</span></h3>
-	<p><span style="color: #333333;">Dengan ini PT.PAL Surabaya mengumumkan pembukaan lelang untuk Proyek dengan kode <strong>{{$pengumuman->kode}}</strong>&nbsp;</span>
+	<h3 style="color: #5e9ca0;"><span style="color: #333333;">Kepada Yth. Direktur/Pimpinan {{$nama_perusahaan}}</span><br /><span style="color: #333333;">di Tempat</span></h3>
+	<p><span style="color: #333333;">Dengan ini PT.PAL Indonesia (Persero) mengumumkan pembukaan lelang untuk Proyek dengan kode <strong>{{$pengumuman->kode}}</strong>&nbsp;</span>
 	</p>
 	<p><span style="color: #333333;">Kode registrasi anda untuk proyek ini adalah : {{$kode_registrasi}}</span>
 	</p>
@@ -29,10 +29,12 @@
 	            <td>Delivery Time</td>
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
+	        <?php /*
 	        <tr>
 	            <td>Harga Netto</td>
 	            <td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
 	        </tr>
+	        */ ?>
 	        <tr>
 	            <td>No SPPH</td>
 	            <td>: {{$pengumuman->kode}}</td>

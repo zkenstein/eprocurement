@@ -171,6 +171,16 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th style="min-width:165px;">Kode / PIC</th>
+                                        <th style="min-width:165px;">Waktu</th>
+                                        <th>Max Pendaftar</th>
+                                        <th>Harga Netto</th>
+                                        <th>Cluster</th>
+                                        <th>Barang</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

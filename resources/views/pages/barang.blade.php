@@ -117,6 +117,15 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Satuan</th>
+                                        <th>Deskripsi</th>
+                                        <th style="width: 100px;">Gambar</th>
+                                        <th style="width:5%;"></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

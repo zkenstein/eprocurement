@@ -186,7 +186,7 @@ class PublickController extends Controller
 
     public function homePage(Request $request)
     {
-        // if(session('role')=='subkontraktor') dd(session()->all());
+        // dd(session()->all());
     	$data['TAG'] = 'home';
         $data['captcha_src'] = captcha_src();
         // CEK APAKAH USER SUDAH MASUK SEBAGAI SUBKONTRAKTOR DALAM SEBUAH TENDER ATAU BELUM
@@ -216,12 +216,14 @@ class PublickController extends Controller
     public function tentangPage(Request $request)
     {
     	$data['TAG'] = 'tentang';
+        $data['captcha_src'] = captcha_src();
     	return view('pages.tentang',$data);
     }
 
     public function kontakPage(Request $request)
     {
     	$data['TAG'] = 'kontak';
+        $data['captcha_src'] = captcha_src();
     	return view('pages.kontak',$data);
     }
 

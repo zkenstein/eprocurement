@@ -97,7 +97,11 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 			'uses'=>'GeneralController@subkontraktorPage',
 			'as'=>'subkontraktor'
 		]);
-		Route::get('/subkontraktor_data',[
+		Route::get('/vendor',[
+			'uses'=>'GeneralController@vendorPage',
+			'as'=>'vendor'
+		]);
+		Route::get('/subkontraktor_data/{jenis?}',[
 			'uses'=>'SubkontraktorController@getData',
 			'as'=>'subkontraktor_data'
 		]);
@@ -129,11 +133,15 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 
 
 		// CLUSTER
-		Route::get('/cluster',[
-			'uses'=>'GeneralController@clusterPage',
-			'as'=>'cluster'
+		Route::get('/cluster_barang',[
+			'uses'=>'GeneralController@clusterBarangPage',
+			'as'=>'cluster_barang'
 		]);
-		Route::get('/cluster_data',[
+		Route::get('/cluster_jasa',[
+			'uses'=>'GeneralController@clusterJasaPage',
+			'as'=>'cluster_jasa'
+		]);
+		Route::get('/cluster_data/{jenis?}',[
 			'uses'=>'ClusterController@getData',
 			'as'=>'cluster_data'
 		]);

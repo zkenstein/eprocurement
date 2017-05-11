@@ -217,11 +217,17 @@
                     <li class="nav-item <?=$TAG=='subkontraktor'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.subkontraktor')}}"><i class="icon-user-follow"></i> Sub Kontraktor</a>
                     </li>
+                    <li class="nav-item <?=$TAG=='vendor'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.vendor')}}"><i class="icon-user-follow"></i> Vendor</a>
+                    </li>
                     <li class="nav-item <?=$TAG=='pic'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.pic')}}"><i class="icon-user-follow"></i> PIC</a>
                     </li>
-                    <li class="nav-item <?=$TAG=='cluster'?'active':''?>">
-                        <a class="nav-link" href="{{route('intern.cluster')}}"><i class="icon-layers"></i> Cluster</a>
+                    <li class="nav-item <?=$TAG=='cluster_barang'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.cluster_barang')}}"><i class="icon-layers"></i> Cluster Barang</a>
+                    </li>
+                    <li class="nav-item <?=$TAG=='cluster_jasa'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.cluster_jasa')}}"><i class="icon-layers"></i> Cluster Jasa</a>
                     </li>
                     <li class="nav-item <?=$TAG=='barang'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.barang')}}"><i class="icon-grid"></i> Barang</a>

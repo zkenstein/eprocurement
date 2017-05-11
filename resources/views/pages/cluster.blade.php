@@ -72,6 +72,13 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Nama</th>
+                                        <th style="width:3%;"></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -123,7 +130,7 @@
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('intern.cluster_data')}}",
+            "ajax": "{{route('intern.cluster_data',['jenis'=>$jenis])}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -192,7 +199,7 @@
             var _c = confirm("Anda yakin akan menghapus Cluster ini ?\n Semua data yang berkaitan dengan cluster ini akan terhapus");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('intern.cluster')}}/"+id,
+                    url:"{{route('intern.cluster_'.$jenis)}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -238,7 +245,7 @@
             var nama = $("#edit-nama").val();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('intern.cluster')}}/"+id,
+                url:"{{route('intern.cluster_'.$jenis)}}/"+id,
                 method:"POST",
                 data:{kode:kode,nama:nama,_token:csrf,_method:"patch"},
                 success:function(res){
