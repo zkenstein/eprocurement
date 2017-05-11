@@ -65,7 +65,7 @@ Route::post('register_check',[
 // RENEW CAPTCHA
 Route::get('renew_captcha','PublickController@renewCaptcha');
 // Route::get('gc','PublickController@generateCluster');
-// Route::get('gu','PublickController@generateUser');
+ Route::get('gu','PublickController@generateUser');
 
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC
@@ -105,7 +105,7 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 			'uses'=>'SubkontraktorController@getData',
 			'as'=>'subkontraktor_data'
 		]);
-		Route::get('/subkontraktor_data/{id?}',[
+		Route::get('/subkontraktor_data_single/{id?}',[
 			'uses'=>'SubkontraktorController@getSingleData',
 			'as'=>'subkontraktor_single_data'
 		]);

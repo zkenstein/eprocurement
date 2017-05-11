@@ -49,6 +49,7 @@ class GeneralController extends Controller
     public function subkontraktorPage(Request $request)
     {
     	$data['TAG'] = 'subkontraktor';
+    	$data['title'] = 'Subkontraktor';
         $data['jenis'] = 'jasa';
         $data['list_cluster'] = Cluster::where('jenis','jasa')->get();
     	return view('pages.subkontraktor',$data);
@@ -57,6 +58,7 @@ class GeneralController extends Controller
     public function vendorPage(Request $request)
     {
         $data['TAG'] = 'vendor';
+        $data['title'] = 'Vendor';
         $data['jenis'] = 'barang';
         $data['list_cluster'] = Cluster::where('jenis','barang')->get();
         return view('pages.subkontraktor',$data);

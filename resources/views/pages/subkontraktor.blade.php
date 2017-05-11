@@ -16,7 +16,7 @@
 	<ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Sub Kontraktor</li>
+        <li class="breadcrumb-item active">{{$title}}</li>
     </ol>
 
     <div class="container-fluid">
@@ -25,7 +25,7 @@
                 <div class="col-sm-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Tambah Data Subkontraktor
+                            <i class="fa fa-align-justify"></i> Tambah Data {{$title}}
                         </div>
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,kode|alpha_num" placeholder="Kode Sub Kontraktor">
+                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,kode|alpha_num" placeholder="Kode {{$title}}">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -42,14 +42,14 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label" for="inputSuccess1">Nama</label>
-                                            <input id="add-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,nama" placeholder="Nama Sub Kontraktor">
+                                            <input id="add-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,nama" placeholder="Nama {{$title}}">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label" for="inputSuccess1">Email</label>
-                                            <input id="add-email" type="email" required name="email" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,email|email" placeholder="Email Sub Kontraktor">
+                                            <input id="add-email" type="email" required name="email" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,email|email" placeholder="Email {{$title}}">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Telp</label>
-                                            <input id="add-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,telp|min:11|numeric" placeholder="Telp Sub Kontraktor">
+                                            <input id="add-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,telp|min:11|numeric" placeholder="Telp {{$title}}">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Data Subkontraktor
+                            <i class="fa fa-align-justify"></i> Data {{$title}}
                         </div>
                         <div class="card-block">
                             <table id="subkontraktor-data" class="table table-bordered table-striped">
@@ -142,7 +142,7 @@
                         <div class="col-sm-12 col-md-12 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Kode</label>
-                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Kode Sub Kontraktor">
+                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear" data-rule="" placeholder="Kode {{$title}}">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -151,14 +151,14 @@
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label" for="inputSuccess1">Nama</label>
-                                <input id="edit-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Nama Sub Kontraktor">
+                                <input id="edit-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Nama {{$title}}">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label" for="inputSuccess1">Email</label>
-                                <input id="edit-email" type="email" required name="email" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Email Sub Kontraktor">
+                                <input id="edit-email" type="email" required name="email" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Email {{$title}}">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label" for="inputSuccess1">Telp</label>
-                                <input id="edit-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Telp Sub Kontraktor">
+                                <input id="edit-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Telp {{$title}}">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -278,7 +278,7 @@
             var cluster = $("#add-cluster").val();
             var bidang_usaha = $("#add-bidang-usaha").val().trim();
             $.ajax({
-                url:"",
+                url:"/intern/subkontraktor",
                 method:"POST",
                 data:{kode:kode,nama:nama,email:email,telp:telp,bidang_usaha:bidang_usaha,role:2,cluster:cluster,_token:csrf},
                 success:function(res){
@@ -303,7 +303,7 @@
             var _c = confirm("Anda yakin akan menghapus Subkontraktor ini ?");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('intern.subkontraktor')}}/"+id,
+                    url:"/intern/subkontraktor/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {
@@ -321,7 +321,7 @@
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             var listCluster = [];
             $.ajax({
-                url:"{{route('intern.subkontraktor_single_data')}}/"+id,
+                url:"/intern/subkontraktor_data_single/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -363,7 +363,7 @@
             var bidang_usaha = $("#edit-bidang-usaha").val().trim();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('intern.subkontraktor')}}/"+id,
+                url:"/intern/subkontraktor/"+id,
                 method:"POST",
                 data:{kode:kode,nama:nama,email:email,telp:telp,bidang_usaha:bidang_usaha,role:2,cluster:cluster,_token:csrf,_method:"patch"},
                 success:function(res){

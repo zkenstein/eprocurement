@@ -255,23 +255,23 @@ class PublickController extends Controller
             ]);
         }
     }
-    
+
     
     public function generateUser(Request $request)
     {
-    	$user = new User();
-    	$user->kode = 'KODE-0';
-    	$user->nama = 'Administrator';
-    	$user->email = 'kurniawan@herobimbel.id';
-    	$user->password = '12345';
-    	$user->telp = '03210987651';
-    	$user->session_id = null;
-    	$user->role = 'admin';
-    	$user->aktif = null;
-    	$user->kadaluarsa = null;
-    	$user->save();
+//    	$user = new User();
+//    	$user->kode = 'KODE-11';
+//    	$user->nama = 'Administrator';
+//    	$user->email = 'kurniawan@herobimbel.id';
+//    	$user->password = '12345';
+//    	$user->telp = '03210987651';
+//    	$user->session_id = null;
+//    	$user->role = 'admin';
+//    	$user->aktif = null;
+//    	$user->kadaluarsa = null;
+//    	$user->save();
 
-    	for($i=1;$i<=10;$i++){
+    	for($i=11;$i<=19;$i++){
     		User::create([
     			'kode'=>'KODE-'.$i,
     			'nama'=>'Sub Kontraktor '.$i,
@@ -285,7 +285,6 @@ class PublickController extends Controller
     			'kadaluarsa'=>null
     		]);
     	}
-    
     }
     */
 }
