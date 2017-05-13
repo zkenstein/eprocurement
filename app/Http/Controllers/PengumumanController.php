@@ -40,9 +40,11 @@ class PengumumanController extends Controller
             case "2":
                 $orderBy = 'max_register';
             break;
+            /*
             case "3":
                 $orderBy = 'harga_netto';
             break;
+            */
             default:
                 $orderBy = 'kode';
             break;

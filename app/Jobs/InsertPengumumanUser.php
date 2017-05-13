@@ -43,7 +43,7 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
             $q->whereIn('cluster_id',$listIdCluster);
         })->distinct()->get();
         foreach($listUser as $user){
-            $kode_masuk = md5(uniqid($this->pengumuman->id.'-'.$user->id, true));
+            $kode_masuk = substr(md5(uniqid($this->pengumuman->id.'-'.$user->id, true)),5,6);
             PengumumanUser::create([
                 'pengumuman_id' => $this->pengumuman->id,
                 'user_id' => $user->id,

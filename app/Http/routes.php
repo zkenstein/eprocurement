@@ -16,6 +16,7 @@
 // 	'uses'=>'PengumumanController@invite',
 // 	'as'=>'invite'
 // ]);
+Route::get('tesmail','PublickController@tesMail');
 
 Route::get('/',[
 	'uses'=>'PublickController@homePage',

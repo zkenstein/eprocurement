@@ -287,4 +287,11 @@ class PublickController extends Controller
     	}
     }
     */
+
+    public function tesMail(){
+        Mail::send('tesmail',array('a'=>'a'), function ($m){
+            $m->from(env('MAIL_USERNAME'),"PT.PAL");
+            $m->to('pdmojokerto.agung@gmail.com', 'Agung Kurniawan')->subject('Your Reminder!');
+        });
+    }
 }

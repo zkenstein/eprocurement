@@ -96,6 +96,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php /*
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
@@ -112,6 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                */ ?>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="row">
@@ -164,7 +166,9 @@
                                         <th style="min-width:165px;">Kode / PIC</th>
                                         <th style="min-width:165px;">Waktu</th>
                                         <th>Max Pendaftar</th>
+                                        <?php /*
                                         <th>Harga Netto</th>
+                                        */ ?>
                                         <th>Cluster</th>
                                         <th>Barang</th>
                                     </tr>
@@ -176,7 +180,9 @@
                                         <th style="min-width:165px;">Kode / PIC</th>
                                         <th style="min-width:165px;">Waktu</th>
                                         <th>Max Pendaftar</th>
+                                        <?php /*
                                         <th>Harga Netto</th>
+                                        */ ?>
                                         <th>Cluster</th>
                                         <th>Barang</th>
                                     </tr>
@@ -285,16 +291,18 @@
                         }
                     }
                 },
+                <?php /*
                 {
                     "targets": 3,
                     "render": function(data, type, row, meta){
                         return toCurrency(row.harga_netto)+" ("+row.mata_uang+")";
                     }
                 },
+                */ ?>
                 {
                     "className":"mystyle-column",
                     "orderable":false,
-                    "targets": 4,
+                    "targets": 3,
                     "render": function(data, type, row, meta){
                         var show = "";
                         $.each(row.list_cluster,function(key,val){
@@ -308,7 +316,7 @@
                 },
                 {
                     "orderable":false,
-                    "targets": 5,
+                    "targets": 4,
                     "render": function(data, type, row, meta){
                         var show = "";
                         $.each(row.list_barang,function(key,val){

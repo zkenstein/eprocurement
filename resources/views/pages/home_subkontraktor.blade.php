@@ -45,6 +45,7 @@
                                 			: <strong>{{\Carbon\Carbon::parse($pengumuman->start_auction)->format('l d F Y h:i:s')}}</strong> selama <a href="#">{{$pengumuman->durasi}} Menit</a>
                                 		</div>
                                 	</div>
+                                    <?php /*
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3 padding-side">
                                             Harga Netto
@@ -53,6 +54,7 @@
                                             : <span>{{number_format($pengumuman->harga_netto,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
                                         </div>
                                     </div>
+                                    */ ?>
                                     <br>
                                     @if($allow_auction==false)
                                     <button id="auction-button" class="btn btn-primary btn-lg btn-block disabled">Auction Belum Dimulai</button>

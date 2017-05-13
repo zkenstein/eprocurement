@@ -122,10 +122,13 @@ class AuctionController extends Controller
 
 	public function isIWin(Request $request)
 	{
-		$data = PengumumanUser::where('pengumuman_id',session('pengumuman'))->whereNotNull('waktu_register')->orderBy('total_auction','asc')->get();
-		if($data[0]->user_id==session('id'))
-			return response()->json(true,200);
-		else
-			return response()->json(false,200);
+		$data = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction','>',0)->whereNotNull('waktu_register')->orderBy('total_auction','asc')->get();
+		if(count($data)>0){
+            if($data[0]->user_id==session('id')){
+                return response()->json(true,200);
+            }
+            return response()->json(false,200);
+        }
+        return response()->json(false,200);
 	}
 }

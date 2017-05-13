@@ -19,8 +19,8 @@ class CreatePengumumanTable extends Migration
             $table->dateTime('batas_akhir_waktu_penawaran');
             $table->dateTime('validitas_harga');
             $table->dateTime('waktu_pengiriman');
-            $table->double('harga_netto');
-            $table->string('mata_uang');
+            $table->double('harga_netto')->default(0);
+            $table->string('mata_uang')->default("-");
             $table->integer('max_register');
             $table->integer('count_register')->default(0);
             $table->integer('pemenang')->unsigned()->nullable();
