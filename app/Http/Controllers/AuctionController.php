@@ -28,21 +28,32 @@ class AuctionController extends Controller
 		$request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
 
 		// PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
-		foreach ($request->input('harga_barang') as $key => $value) {
-			$hargaBarang[$key] = new PengumumanBarangUser([
-				'pengumuman_barang_id'=>$key,
-				'user_id'=>session('id'),
-				'harga'=>$value
-			]);
-			$total+=$value;
-		}
+        if($request->input('harga_barang')!=""){
+            foreach ($request->input('harga_barang') as $key => $value) {
+                if($value>0){
+                    $hargaBarang[$key] = new PengumumanBarangUser([
+                        'pengumuman_barang_id'=>$key,
+                        'user_id'=>session('id'),
+                        'harga'=>$value
+                    ]);
+                    $total+=$value;
+                }else{
+                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
+                }
+            }
+        }
+
 		foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-			$hargaBarangEksternal[$key] = new BarangEksternalUser([
-				'barang_eksternal_id'=>$key,
-				'user_id'=>session('id'),
-				'harga'=>$value
-			]);
-			$total+=$value;
+            if($value>0){
+                $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                    'barang_eksternal_id'=>$key,
+                    'user_id'=>session('id'),
+                    'harga'=>$value
+                ]);
+                $total+=$value;
+            }else{
+                return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
+            }
 		}
 
 		// CEK APAKAH TOTAL INPUTAN SAMA DENGAN USER LAIN

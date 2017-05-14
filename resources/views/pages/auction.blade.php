@@ -5,17 +5,20 @@
 	<style type="text/css">
     #barang-data{
         width: 100% !important;
-    }
-    .total_auction_field{
-        font-size: 200%;
-        clear: both;
-        width: 100%;
-        padding: 0px 2px;
-        text-align: center;
-    }
-    #win-flag{
-        transition: 0.5s;
-    }
+        }
+        .total_auction_field{
+            font-size: 200%;
+            clear: both;
+            width: 100%;
+            padding: 0px 2px;
+            text-align: center;
+        }
+        #win-flag{
+            transition: 0.5s;
+        }
+        .danger-input,.danger-input:focus{
+            border: 1px solid red;
+        }
     </style>
 @stop
 
@@ -34,13 +37,6 @@
                             <i class="fa fa-align-justify"></i> Form Auction
                         </div>
                         <div class="card-block">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            <br><br>
                             <form method="post" action="" id="form-auction">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
                                 <table id="barang-data" class="table table-bordered table-striped">
@@ -61,7 +57,7 @@
                                         <td>{{$barang->barangInfo->satuan}}</td>
                                         <td>{{$barang->quantity}}</td>
                                         <td>
-                                            <input required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                            <input id="input_harga_barang{{$barang->id}}" required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
                                             @if($barang->inUserAuction!=null)
                                             value = "{{$barang->inUserAuction->harga}}"
                                             @endif
@@ -76,7 +72,7 @@
                                         <td>{{$barang->satuan}}</td>
                                         <td>{{$barang->quantity}}</td>
                                         <td>
-                                            <input required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                            <input id="input_harga_barang_eksternal{{$barang->id}}" required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
                                             @if($barang->inUserAuction!=null)
                                             value = "{{$barang->inUserAuction->harga}}"
                                             @endif
@@ -153,6 +149,7 @@
 
         $("#form-auction").submit(function(e){
             e.preventDefault();
+            $("input").removeClass('danger-input');
             $("#btn-simpan").addClass('disabled');
             $("#btn-simpan").text('Mengirim');
             var theForm = $(this);
@@ -161,7 +158,11 @@
                 success:function(res){
                     $("#btn-simpan").removeClass("disabled");
                     $("#btn-simpan").text("Submit");
-                    console.log(res);
+                    if(res.indication!=undefined){
+                        //$("input[name='["+res.indication+"]']").addClass('danger-input');
+                        $("#input_"+res.indication).addClass('danger-input');
+                        $("#input_"+res.indication).focus();
+                    }
                 }
             })
         });
