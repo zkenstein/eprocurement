@@ -121,7 +121,8 @@ class AuctionController extends Controller
 
 	public function internGetDataAuction(Request $request, $id)
 	{
-		$data = PengumumanUser::with('userInfo')->where('pengumuman_id',$id)->whereNotNull('waktu_register')->get();
+		$data = collect(PengumumanUser::with('userInfo')->where('pengumuman_id',$id)->whereNotNull('waktu_register')->where('total_auction','>',0)->orderBy('total_auction','asc')->get());
+        $data = $data->merge(PengumumanUser::with('userInfo')->where('pengumuman_id',$id)->whereNotNull('waktu_register')->where('total_auction',0)->get());
 		$recordsFiltered = count($data);
 		return response()->json([
         	'draw'=>$request->input('draw'),

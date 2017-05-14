@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('style')
-    <link rel="stylesheet" type="text/css" href="/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="/jquery-countdown/jquery.countdown.css">
     <style type="text/css">
         .mystyle-column > a{
             color: #2b609e !important;
@@ -48,14 +48,22 @@
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>
     <script type="text/javascript">
-        
-        $("#data-auction").DataTable({
+        var status = 1;
+        var rank = 1;
+        var recordsTotal = 0;
+        var table = $("#data-auction").DataTable({
             "ordering":false,
             "paging":false,
             "autoWidth": false,
-            "processing": true,
+            "processing": false,
             "serverSide": true,
-            "ajax": "{{route('intern.live_auction_data',['id'=>$pengumuman->id])}}",
+            "ajax": {
+                "url":"{{route('intern.live_auction_data',['id'=>$pengumuman->id])}}",
+                "dataSrc":function(json){
+                    recordsTotal = json.recordsTotal;
+                    return json.data;
+                }
+            },
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -84,7 +92,7 @@
                 {
                     "targets": 2,
                     "render": function(data, type, row, meta){
-                        return 1;
+                        return rank++;
                     }
                 },
                 {
@@ -92,12 +100,22 @@
                     "orderable":false,
                     "targets": 3,
                     "render": function(data, type, row, meta){
-                        return '<button class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>';
+                        return '<button class="btn btn-primary btn-sm" onclick="reloadTable();" type="button" title="lihat detail"><i class="icon-eye"></i></button>';
                     }
                 }
-            ],
-            "aaSorting": [ [0,'asc'] ]
+            ]
         });
-        
+
+        setInterval(reloadTable,1000);
+
+        function reloadTable () {
+            rank=recordsTotal+1;
+            if(status==1){
+                table.ajax.reload();
+            }
+            else{
+                return false;
+            }
+        }
     </script>
 @stop

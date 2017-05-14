@@ -1,0 +1,43 @@
+Desain
+- Desain Database
+- Desain Frontend
+- Desain Sistem/Alur Aplikasi
+
+Development
+- Migrate Database
+- Penerapan fontend + library
+- Pembuatan Fitur : 
+	- User Role (Admin, PIC, Subkon/vendor)
+	- Captcha Login
+	- Import CSV barang
+	- Manajemen barang, Subkon/vendor, cluster
+	- Pengumuman Tender ke Subkon/vendor
+	- Registrasi Subkon/vendor ke tender
+	- Live Auction vendor/subkon
+	- Monitoring live auction
+	- Pengumuman pemenang tender
+	- Rekap hasil auction
+	- Kontrak pemenang tender
+	- Arsip kontrak pemenang
+
+Deployment
+- Instalasi Linux Server
+- Instalasi Database + Apache
+- Instalasi Aplikasi + Cron(Untuk Penjadwalan Email & Background Task)
+- Instalasi dan pembuatan akun GIT PT.PAL untuk keperluan maintenance dan backup
+
+UAT
+- Percobaan hacking via browser
+- Percobaan hacking via sqlinjection
+- Percobaan hacking via VEGA
+- Testing Fontend aplikasi ke user
+
+Training
+- Pembuatan Dokumentasi Sistem (Buku)
+- Pembuatan Handbook User
+- Pembuatan video tutorial penggunaan aplikasi
+- Training langsung ke user(Admin, PIC, vendor/subkon)
+
+Maintenance
+- Maintenance berupa perubahan tampilan tanpa merubah database baik datang ke pal ataupun melalui remote(3 Bulan)
+- Maintenance perbaikan apabila ada error aplikasi baik datang ke pal ataupun melalui remote(3 Bulan)

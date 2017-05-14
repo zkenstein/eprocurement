@@ -5,20 +5,20 @@
 	<style type="text/css">
     #barang-data{
         width: 100% !important;
-        }
-        .total_auction_field{
-            font-size: 200%;
-            clear: both;
-            width: 100%;
-            padding: 0px 2px;
-            text-align: center;
-        }
-        #win-flag{
-            transition: 0.5s;
-        }
-        .danger-input,.danger-input:focus{
-            border: 1px solid red;
-        }
+    }
+    .total_auction_field{
+        font-size: 200%;
+        clear: both;
+        width: 100%;
+        padding: 0px 2px;
+        text-align: center;
+    }
+    #win-flag{
+        transition: 0.5s;
+    }
+    .danger-input,.danger-input:focus{
+        border: 1px solid red;
+    }
     </style>
 @stop
 
@@ -118,6 +118,7 @@
             </div>
         </div>
     </div>
+    
 @stop
 
 @section('script')
@@ -159,7 +160,6 @@
                     $("#btn-simpan").removeClass("disabled");
                     $("#btn-simpan").text("Submit");
                     if(res.indication!=undefined){
-                        //$("input[name='["+res.indication+"]']").addClass('danger-input');
                         $("#input_"+res.indication).addClass('danger-input');
                         $("#input_"+res.indication).focus();
                     }
