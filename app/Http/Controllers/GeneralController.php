@@ -164,4 +164,10 @@ class GeneralController extends Controller
         session()->put("error","Auction belum dimulai atau sudah selesai dilakukan");
         return redirect()->route("home");
     }
+
+    public function arsipPage(Request $request)
+    {
+        $data['TAG'] = 'arsip';
+        return view('pages.arsip',$data);
+    }
 }

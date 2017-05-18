@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'upload.kurniawan@gmail.com', 'name' => 'PT.PAL Indonesia (Persero)'],
 
     /*
     |--------------------------------------------------------------------------

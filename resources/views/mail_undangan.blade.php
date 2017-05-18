@@ -5,7 +5,7 @@
 </head>
 <body>
 	<h3 style="color: #5e9ca0;"><span style="color: #333333;">Kepada Yth. Direktur/Pimpinan {{$nama_perusahaan}}</span><br /><span style="color: #333333;">di Tempat</span></h3>
-	<p><span style="color: #333333;">Dengan ini PT.PAL Indonesia (Persero) mengumumkan pembukaan lelang untuk Proyek dengan kode <strong>{{$pengumuman->kode}}</strong>&nbsp;</span>
+	<p><span style="color: #333333;">Dengan ini PT.PAL Indonesia mengumumkan pembukaan lelang untuk Proyek dengan kode <strong>{{$pengumuman->kode}}</strong>&nbsp;</span>
 	</p>
 	<p><span style="color: #333333;">Kode registrasi anda untuk proyek ini adalah : {{$kode_registrasi}}</span>
 	</p>
@@ -55,8 +55,16 @@
 	        </tr>
 	    </tbody>
 	</table>
+	<p>
+		<strong>Syarat & Kondisi Penawaran :</strong><br>
+		<ol>
+			<li>Harga berlaku 1 (satu) minggu</li>
+			<li>Belum termasuk PPN 10%</li>
+			<li>Tempat Pengiriman PT. PAL Indonesia, Surabaya</li>
+		</ol>
+	</p>
 	<p><span style="color: #333333;"><br />Untuk melakukan pendaftaran silahkan klik menu register di halaman&nbsp;<a href="{{route('home')}}" target="_blank">Home E-Procurement PT. PAL</a>&nbsp;sesuai dengan kode proyek di atas dan masukkan email anda beserta kode_registrasi yang kami kirimkan di atas.&nbsp;</span>
 	</p>
-	<p>Terimakasih. Demikian undangan lelang ini agar kemudian ditanggapi.</p>
+	<p>Demikian surat penawaran ini. Atas perhatiannya kami sampaikan terimakasih.</p>
 </body>
 </html>

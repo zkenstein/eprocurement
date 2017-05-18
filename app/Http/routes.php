@@ -37,7 +37,6 @@ Route::get('auction_barang_data',[
 	'middleware'=>['verify_subkon_pengumuman']
 ]);
 Route::get('is_i_win','AuctionController@isIWin');
-Route::get('download_kontrak/{id?}','PengumumanController@downloadKontrak');
 
 Route::get('tentang',[
 	'uses'=>'PublickController@tentangPage',
@@ -63,10 +62,15 @@ Route::post('register_check',[
 	'uses'=>'PublickController@registerCheck',
 	'as'=>'register_check'
 ]);
+
+Route::get('download_kontrak/{id}/{token}',[
+	'uses'=>'PengumumanController@downloadKontrak',
+	'as'=>'download_kontak'
+]);
 // RENEW CAPTCHA
 Route::get('renew_captcha','PublickController@renewCaptcha');
 // Route::get('gc','PublickController@generateCluster');
- Route::get('gu','PublickController@generateUser');
+Route::get('gu','PublickController@generateUser');
 
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC

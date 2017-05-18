@@ -18,7 +18,7 @@
     <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
     <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-    <title>E-Procurement PT.PAL Surabaya</title>
+    <title>E-Procurement PT.PAL Indonesia</title>
 
     <!-- Icons -->
     <link href="/css/font-awesome.min.css" rel="stylesheet">

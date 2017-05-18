@@ -17,6 +17,11 @@ class Pengumuman extends Model
     	return $this->hasMany('App\PengumumanUser');
     }
 
+    public function listRegisteredUser()
+    {
+        return $this->hasMany('App\PengumumanUser')->whereNotNull('waktu_register');   
+    }
+
     public function listBarang()
     {
     	return $this->hasMany('App\PengumumanBarang');

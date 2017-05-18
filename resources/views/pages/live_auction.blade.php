@@ -32,7 +32,7 @@
                                         <th>Subkontraktor</th>
                                         <th>Total Auction</th>
                                         <th>Peringkat</th>
-                                        <th width="2%"></th>
+                                        {{--<th width="2%"></th>--}}
                                     </tr>
                                 </thead>
                             </table>
@@ -94,19 +94,19 @@
                     "render": function(data, type, row, meta){
                         return rank++;
                     }
-                },
-                {
+                }
+                /*, {
                     "className":"no-print",
                     "orderable":false,
                     "targets": 3,
                     "render": function(data, type, row, meta){
                         return '<button class="btn btn-primary btn-sm" onclick="reloadTable();" type="button" title="lihat detail"><i class="icon-eye"></i></button>';
                     }
-                }
+                }*/
             ]
         });
 
-        setInterval(reloadTable,1000);
+        setInterval(reloadTable,2000);
 
         function reloadTable () {
             rank=recordsTotal+1;

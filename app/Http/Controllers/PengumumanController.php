@@ -158,11 +158,20 @@ class PengumumanController extends Controller
         return response()->json(['result'=>false]);
     }
 
-    public function downloadKontrak(Request $request, $id)
+    public function downloadKontrak(Request $request, $id, $token)
     {
+        $pengumuman = Pengumuman::find($id);
+        if($pengumuman!=null){
+            if('1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0' == $token){
+                return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
+            }
+        }
+        return response('Anda tidak memiliki akses',403);
+        /*
         $pengumuman = Pengumuman::where('pemenang',session('id'))->where('id',$id)->first();
         if($pengumuman==null) return response("Anda tidak memiliki akses ke URL ini",401);
         else return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.session('id')));
+        */
     }
 
 }

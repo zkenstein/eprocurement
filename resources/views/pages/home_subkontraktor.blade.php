@@ -65,7 +65,8 @@
                                                 Pengumuman Pemenang Tender
                                             </div>
                                             <div class="card-block">
-                                                Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="/download_kontrak/{{session('pengumuman')}}">Download Kontrak</a>
+                                                Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="{{env('SERVER').'/'.
+        'download_kontrak/'.$pengumuman->id.'/1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0'}}">Download Kontrak</a>
                                             </div>
                                         </div>
                                         @else
