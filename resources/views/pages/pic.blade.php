@@ -61,11 +61,32 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 padding-side">
+                                    <div class="col-sm-6 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Telp</label>
                                             <input id="add-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,telp|min:11|numeric" placeholder="Telp PIC">
                                             <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Cluster</label>
+                                            <select required class="form-control input-sm" id="add-cluster" name="cluster">
+                                                <option value="1">Material</option>
+                                                <option value="2">Jasa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Divisi</label>
+                                            <select required class="form-control input-sm" id="add-divisi" name="divisi">
+                                                @foreach($list_divisi as $divisi)
+                                                    <option value="{{$divisi->id}}">{{$divisi->nama}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -93,6 +114,8 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Telp</th>
+                                        <th>Cluster</th>
+                                        <th>Divisi</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -104,6 +127,8 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Telp</th>
+                                        <th>Cluster</th>
+                                        <th>Divisi</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </tfoot>
@@ -157,11 +182,32 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 padding-side">
+                        <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label" for="inputSuccess1">Telp</label>
                                 <input id="edit-telp" type="text" required name="telp" class="form-control input-sm will-clear needvalidate" data-rule="" placeholder="Telp PIC">
                                 <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Cluster</label>
+                                <select required class="form-control input-sm" id="edit-cluster" name="cluster">
+                                    <option value="1">Material</option>
+                                    <option value="2">Jasa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Divisi</label>
+                                <select required class="form-control input-sm" id="edit-divisi" name="divisi">
+                                    @foreach($list_divisi as $divisi)
+                                        <option value="{{$divisi->id}}">{{$divisi->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -221,9 +267,24 @@
                     }
                 },
                 {
+                    "targets": 4,
+                    "render": function(data, type, row, meta){
+                        if(row.cluster=='1')
+                            return 'Material';
+                        else
+                            return 'Jasa';
+                    }
+                },
+                {
+                    "targets": 5,
+                    "render": function(data, type, row, meta){
+                        return row.divisi_info.nama;
+                    }
+                },
+                {
                 	"className":"no-print",
                     "orderable":false,
-                	"targets": 4,
+                	"targets": 6,
                     "render": function(data, type, row, meta){
                         return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getPic('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusPic('+row.id+')"><i class="icon-trash"></i></button></div>';
                     }
@@ -240,10 +301,11 @@
             var email = $("#add-email").val().trim();
             var telp = $("#add-telp").val().trim();
             var password = $("#add-password").val().trim();
+            var cluster = $("#add-cluster").val();
             $.ajax({
                 url:"",
                 method:"POST",
-                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,_token:csrf},
+                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,cluster:cluster,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');
@@ -301,6 +363,8 @@
                         $("#edit-email").data('rule','required|unique:user,email,'+data.id+',id|email');
                         $("#edit-telp").val(data.telp);
                         $("#edit-telp").data('rule','required|unique:user,telp,'+data.id+',id'+'|min:11|numeric');
+                        $("#edit-cluster").val(data.cluster);
+                        $("#edit-divisi").val(data.divisi_id);
                         $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
                         $("form#edit-modal").data('id',data.id);
                     }
@@ -316,11 +380,13 @@
             var email = $("#edit-email").val().trim();
             var telp = $("#edit-telp").val().trim();
             var password = $("#edit-password").val().trim();
+            var cluster = $("#edit-cluster").val();
+            var divisi = $("#edit-divisi").val();
             var id = $(this).data('id');
             $.ajax({
                 url:"{{route('intern.pic')}}/"+id,
                 method:"POST",
-                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,_token:csrf,_method:"patch"},
+                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,divisi_id:divisi,cluster:cluster,_token:csrf,_method:"patch"},
                 success:function(res){
                     $("#save-edit-button").prop('disabled', false);
                     $("form#edit-modal input").val('');

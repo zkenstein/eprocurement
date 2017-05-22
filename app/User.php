@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['kode', 'nama', 'email','password','telp','bidang_usaha','aktif','kadaluarsa','session_id','role'];
+    protected $fillable = ['kode', 'nama', 'email','password','telp','bidang_usaha','aktif','kadaluarsa','session_id','role','cluster','divisi_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -50,5 +50,10 @@ class User extends Model implements AuthenticatableContract,
     public function listAuction()
     {
         return $this->hasMany('App\Auction','user_id','id');
+    }
+
+    public function divisiInfo()
+    {
+        return $this->belongsTo('App\Divisi','divisi_id');
     }
 }

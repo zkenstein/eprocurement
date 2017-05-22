@@ -49,6 +49,6 @@ class Pengumuman extends Model
 
     public function pemenangInfo()
     {
-        return $this->hasOne('App\User','pemenang','id');
+        return $this->hasOne('App\User','id','pemenang');
     }
 }

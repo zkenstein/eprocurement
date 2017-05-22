@@ -125,7 +125,7 @@
     <script type="text/javascript" src="/jquery-countdown/jquery.plugin.min.js"></script>
     <script type="text/javascript" src="/jquery-countdown/jquery.countdown.min.js"></script>
 	<script type="text/javascript">
-        $('#timer').countdown({until: +{{$countdown}},compact: true, format: 'yowdHMS', onExpiry: function(){location.href="{{route('home')}}"}});
+        $('#timer').countdown({until: +{{$countdown}},compact: true, format: 'yowdHMS', onExpiry: function(){location.href="{{route('logout')}}"}});
 
 		var csrf = "{{csrf_token()}}";
         var total = 0;

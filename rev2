@@ -1,0 +1,53 @@
+subkon = jasa
+vendor = barang
+
+keterangan maks ukuran pdf dan gambar [v]
+
+master PIC ditambah "termasuk cluster jasaa tau barang"
+master PIC ditambah "termasuk organisasi apa"
+
+/////tambahkan tembusan ke PIC . tembusan ke PIC bisa dipilih hanya yang aktif
+/////admin bisa nonaktifkan tembusan ke salah satu atau banyak PIC
+
+di subject ditambahkan 
+
+Peringatan saat waktu auction dan cluster yang sama dilakukan pengumuman bersamaan
+
+di tambahkan deskripsi(nama barang) di pengumuman dijadikan subject email
+
+
+nomor pengumuman dijadikan generate otomatis dengan format tahunsequens ex.20170001
+nomor pengumuman sequence ter-reset tiap tahun kembali ke 0001
+
+ditambahkan field departemen
+
+tambah data master departemen 
+- kode
+- nama departemen
+- nama kadep
+
+saat di email dimasukkan tertanda kadep organisasi nama diambil dari PIC pengumuman
+
+ditambahkan syarat dan ketentuan 1 field ditampilkan di email saat pengumuman
+
+/////ditambahkan field input file penawaran saat vendor melakukan registrasi
+
+KONDITE
+
+
+
+
+
+--- flow penawaran
+ketika pic melakukan evaluasi dan hanya satu yang lolos, register yuang tidak lolos tidak mendapat pemberitahuan email extends auction karena sudah gagal. satu register yang sudah masuk tetap menjadi peserta e-auction.
+
+saat vendor melakukan registrasi, dikirimkan email pemberitahuan ke pic beserta attachment dan dikasih pilihan apakah diterima atau ditolak.
+
+vendor yang ditolak dikirim email pemberitahuan bahwa dia ditolak.
+
+dokumen berita acara
+auction bid history No SPPH
+
+
+
+

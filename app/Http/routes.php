@@ -63,7 +63,7 @@ Route::post('register_check',[
 	'as'=>'register_check'
 ]);
 
-Route::get('download_kontrak/{id}/{token}',[
+Route::get('download_kontrak/{id?}/{token?}',[
 	'uses'=>'PengumumanController@downloadKontrak',
 	'as'=>'download_kontak'
 ]);
@@ -97,6 +97,17 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 
 	// ADMIN ONLY CAN ACCESS
 	Route::group(['middleware'=>'admin_only'],function(){
+		// DIVISI
+		Route::get('/divisi',[
+			'uses'=>'GeneralController@divisiPage',
+			'as'=>'divisi'
+		]);
+		Route::post('/divisi','DivisiController@addData');
+		Route::get('/divisi_data',[
+			'uses'=>'DivisiController@getData',
+			'as'=>'divisi_data'
+		]);
+
 		// SUB KONTRAKTOR
 		Route::get('/subkontraktor',[
 			'uses'=>'GeneralController@subkontraktorPage',
@@ -195,6 +206,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'PengumumanController@getData',
 		'as'=>'pengumuman_data'
 	]);
+	Route::get('pengumuman_data2',[
+		'uses'=>'PengumumanController@getData2',
+		'as'=>'pengumuman_data2'
+	]);
 	// DOWNLOAD FILE EXCEL PENGUMUMAN
 	Route::get('get_file_excel/{file_excel?}',[
 		'uses'=>'PengumumanController@getFileExcel',
@@ -226,5 +241,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 	Route::get('/arsip',[
 		'uses'=>'GeneralController@arsipPage',
 		'as'=>'arsip'
+	]);
+	// DOWNLOAD BERITA ACARA
+	Route::get('download_berita_acara/{id?}',[
+		'uses'=>'PengumumanController@downloadBeritaAcara',
+		'as'=>'download_berita_acara'
 	]);
 });

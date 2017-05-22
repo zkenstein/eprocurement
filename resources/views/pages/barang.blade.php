@@ -66,14 +66,14 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">Gambar</label>
+                                            <label class="form-form-control-label">Gambar <small>Maks 20MB</small></label>
                                             <input id="add-gambar" type="file" name="gambar" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:2000" placeholder="Gambar Barang" accept="image/*">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">PDF</label>
+                                            <label class="form-form-control-label">PDF  <small>Maks 20MB</small></label>
                                             <input id="add-pdf" type="file" name="pdf" class="form-control input-sm will-clear needvalidate_file file-input" data-rule="max:2000" placeholder="Pdf Barang" accept="application/pdf">
                                             <span class="help-block"></span>
                                         </div>

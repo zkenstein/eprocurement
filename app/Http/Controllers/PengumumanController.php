@@ -49,7 +49,7 @@ class PengumumanController extends Controller
                 $orderBy = 'kode';
             break;
         }
-        $pengumuman = Pengumuman::with(['picInfo','listBarang.barangInfo','listCluster.clusterInfo']);
+        $pengumuman = Pengumuman::with(['picInfo','listBarang.barangInfo','listCluster.clusterInfo','pemenangInfo']);
 
         if($request->input('search.value')!=''){
             $pengumuman = $pengumuman
@@ -76,6 +76,63 @@ class PengumumanController extends Controller
         $pengumuman = $pengumuman->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
         return response()->json([
         	'draw'=>$request->input('draw'),
+            'recordsTotal'=>count($pengumuman)/$request->input('length'),
+            'recordsFiltered'=>$recordsFiltered,
+            'data'=>$pengumuman,
+            'request'=>$request->all(),
+        ],200);        
+    }
+
+    public function getData2(Request $request)
+    {   
+        
+        $orderBy = '';
+        switch($request->input('order.0.column')){
+            case "0":
+                $orderBy = 'kode';
+            break;
+            case "1":
+                $orderBy = 'batas_awal_waktu_penawaran';
+            break;
+            case "2":
+                $orderBy = 'max_register';
+            break;
+            /*
+            case "3":
+                $orderBy = 'harga_netto';
+            break;
+            */
+            default:
+                $orderBy = 'kode';
+            break;
+        }
+        $pengumuman = Pengumuman::with(['picInfo','listBarang.barangInfo','listCluster.clusterInfo','pemenangInfo'])->whereNotNull('pemenang');
+
+        if($request->input('search.value')!=''){
+            $pengumuman = $pengumuman
+                ->where('kode','like','%'.$request->input('search.value').'%')
+                ->orWhere('batas_awal_waktu_penawaran','like','%'.$request->input('search.value').'%')
+                ->orWhere('batas_akhir_waktu_penawaran','like','%'.$request->input('search.value').'%')
+                ->orWhere('validitas_harga','like','%'.$request->input('search.value').'%')
+                ->orWhere('waktu_pengiriman','like','%'.$request->input('search.value').'%')
+                ->orWhere('harga_netto','like','%'.$request->input('search.value').'%')
+                ->orWhere('mata_uang','like','%'.$request->input('search.value').'%')
+                ->orWhere('max_register','like','%'.$request->input('search.value').'%')
+                ->orWhereHas('picInfo',function($q) use($request){
+                    $q->where('kode','like','%'.$request->input('search.value').'%')
+                    ->orWhere('nama','like','%'.$request->input('search.value').'%')
+                    ->orWhere('email','like','%'.$request->input('search.value').'%')
+                    ->orWhere('telp','like','%'.$request->input('search.value').'%');
+                });
+        }
+
+        if(session('role')=='pic') $pengumuman = $pengumuman->where('pic',session('id'));
+
+        $recordsFiltered = $pengumuman->count();
+
+        $pengumuman = $pengumuman->skip($request->input('start'))->take($request->input('length'))->orderBy($orderBy,$request->input('order.0.dir'))->get();
+        return response()->json([
+            'draw'=>$request->input('draw'),
             'recordsTotal'=>count($pengumuman)/$request->input('length'),
             'recordsFiltered'=>$recordsFiltered,
             'data'=>$pengumuman,
@@ -160,18 +217,37 @@ class PengumumanController extends Controller
 
     public function downloadKontrak(Request $request, $id, $token)
     {
-        $pengumuman = Pengumuman::find($id);
-        if($pengumuman!=null){
-            if('1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0' == $token){
+        if(session('role')=='admin'){
+            $pengumuman = Pengumuman::find($id);
+            return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
+        }else if(session('role')=='pic'){
+            $pengumuman = Pengumuman::where('pic',session('id'))->where('id',$id)->first();
+            if($pengumuman!=null){
                 return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
             }
+            return response('Anda tidak memiliki akses',403);
+        }else{
+            $pengumuman = Pengumuman::find($id);
+            if($pengumuman!=null){
+                if('1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0' == $token){
+                    return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
+                }
+            }
+            return response('Anda tidak memiliki akses',403);
+        }
+    }
+
+    public function downloadBeritaAcara(Request $request, $id)
+    {
+        $pengumuman = Pengumuman::whereNotNull('pemenang');
+        if(session('role')=='pic'){
+            $pengumuman = $pengumuman->where('pic',session('id'));
+        }
+        $pengumuman = $pengumuman->where('id',$id)->first();
+        if($pengumuman!=null){
+            return response()->download(storage_path('app/berita_acara/berita_acara_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
         }
         return response('Anda tidak memiliki akses',403);
-        /*
-        $pengumuman = Pengumuman::where('pemenang',session('id'))->where('id',$id)->first();
-        if($pengumuman==null) return response("Anda tidak memiliki akses ke URL ini",401);
-        else return response()->download(storage_path('app/kontrak/kontrak_'.$pengumuman->id.'_'.session('id')));
-        */
     }
 
 }

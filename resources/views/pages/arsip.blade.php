@@ -22,34 +22,22 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Data Pengumuman
+                            <i class="fa fa-align-justify"></i> Data Arsip Lelang
                         </div>
                         <div class="card-block">
                             <table id="pengumuman-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:165px;">Kode / PIC</th>
-                                        <th style="min-width:165px;">Waktu</th>
-                                        <th>Max Pendaftar</th>
-                                        <?php /*
-                                        <th>Harga Netto</th>
-                                        */ ?>
-                                        <th>Cluster</th>
-                                        <th>Barang</th>
+                                        <th>Pengumuman</th>
+                                        <th>Arsip</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="min-width:165px;">Kode / PIC</th>
-                                        <th style="min-width:165px;">Waktu</th>
-                                        <th>Max Pendaftar</th>
-                                        <?php /*
-                                        <th>Harga Netto</th>
-                                        */ ?>
-                                        <th>Cluster</th>
-                                        <th>Barang</th>
+                                        <th>Pengumuman</th>
+                                        <th>Arsip</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -62,4 +50,41 @@
 @stop
 
 @section('script')
+<script type="text/javascript">
+    var table = $("#pengumuman-data").DataTable({
+        "autoWidth": false,
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{{route('intern.pengumuman_data2')}}",
+        info:false,
+        "language": {
+            "lengthMenu": "_MENU_",
+            "zeroRecords": "Maaf data tidak ditemukan",
+            "info": "_PAGE_ dari _PAGES_",
+            "infoEmpty": "Data Tidak Ditemukan",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Cari "
+        },
+        "columnDefs": [
+            {
+                "className": "mystyle-column",
+                "targets": 0,
+                "render": function(data, type, row, meta){
+                    if(row.pemenang_info!=null){
+                        var res = "<strong>Kode Pengumuman : </strong><a>"+row.kode+"</a><br><strong>Kode PIC : </strong><a>"+row.pic_info.kode+"</a><br><strong>Pemenang : </strong>"+row.pemenang_info.nama;
+                    }else{
+                        var res = "<strong>Kode Pengumuman : </strong><a>"+row.kode+"</a><br><strong>Kode PIC : </strong><a>"+row.pic_info.kode;
+                    }
+                    return res;
+                }
+            },
+            {
+                "targets": 1,
+                "render": function(data, type, row, meta){
+                    return "<a class='btn btn-primary' download href='{{route('download_kontak')}}/"+row.id+"/0'>Download Kontrak</a><br><br><a download class='btn btn-primary' href='{{route('intern.download_berita_acara')}}/"+row.id+"'>Download Berita Acara</a>";
+                }
+            }
+        ],
+    });
+</script>
 @stop

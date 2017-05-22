@@ -31,19 +31,37 @@ class PicController extends Controller
             case "3":
                 $orderBy = 'telp';
             break;
+            case "4":
+                $orderBy = 'cluster';
+            break;
+            case "5":
+                $orderBy = 'divisi_id';
+            break;
             default:
                 $orderBy = 'kode';
             break;
         }
 
-        $pic = User::where('id','<>',0);
+        $pic = User::with('divisiInfo')->where('id','<>',0);
 
         if($request->input('search.value')!=''){
-            $pic = $pic
-                ->where('nama','like','%'.$request->input('search.value').'%')
+            $cluster = "";
+            if($request->input('search.value')=='material'){
+                $cluster = "1";
+            }else if($request->input('search.value')=='jasa'){
+                $cluster = "2";
+            }
+            $searchRequest = $request->input('search.value');
+            $pic = $pic->where(function($query)use($request,$cluster,$searchRequest){
+                $query->where('nama','like','%'.$request->input('search.value').'%')
                 ->orWhere('email','like','%'.$request->input('search.value').'%')
                 ->orWhere('telp','like','%'.$request->input('search.value').'%')
+                ->orWhere('cluster','=',$cluster)
+                ->orWhereHas('divisiInfo',function($query)use($searchRequest){
+                    $query->where('nama','like','%'.$searchRequest.'%');
+                })
                 ->orWhere('kode','like','%'.$request->input('search.value').'%');
+            });
         }
 
         $pic = $pic->where('role','pic');

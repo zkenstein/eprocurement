@@ -70,12 +70,11 @@ class CreateKontrak extends Command
 
 
                     $this->info('mengirim email ke pemenang : '.$data['pemenang']->userInfo->email.' ['.\Carbon\Carbon::now().']');
-                    
+                    $p->save();
                     Mail::send('mail_pemenang', $data, function($message) use($data){
                         $message->to($data['pemenang']->userInfo->email, $data['pemenang']->userInfo->nama)->subject("Pengumuman Hasil Lelang Proyek ".$data['pengumuman']->kode);
                         $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
                     });
-                    $p->save();
                     $this->info("Email berhasil dikirim ".' ['.\Carbon\Carbon::now().']');
                     $this->info("Proses pengumuman pemenang selesai [".\Carbon\Carbon::now()."]");
                     echo "\n";

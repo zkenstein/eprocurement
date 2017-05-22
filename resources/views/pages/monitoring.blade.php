@@ -63,7 +63,7 @@
                                 	<td>
                                 		<div class="btn-group">
                                 			<button onclick="lihatDetailPengumuman({{$pengumuman->id}})" class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>
-                                			@if($pengumuman->count_register==0 && strtotime($pengumuman->batas_akhir_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()))
+                                			@if($pengumuman->count_register<2 && strtotime($pengumuman->batas_akhir_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()))
                                 				<button title="Extends" class="btn btn-danger btn-sm" onclick="getDataPengumuman({{$pengumuman->id}})">Extends Waktu</button>
                                 			@else
 	                                			@if(strtotime($pengumuman->start_auction) >= strtotime(\Carbon\Carbon::now()))
@@ -179,14 +179,14 @@
                     	<div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Batas Waktu Penawaran</label>
-                                <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" readonly name="batas_waktu_penawaran">
+                                <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" name="batas_waktu_penawaran">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Validitas Harga</label>
-                                <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" readonly name="validitas_harga">
+                                <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" name="validitas_harga">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Waktu Pengiriman</label>
-                                <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" readonly name="waktu_pengiriman">
+                                <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" name="waktu_pengiriman">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')" id="save-quantity-button">Batal</button>
+                    <!--<button type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')" id="save-quantity-button">Batal</button>-->
                     <button type="submit" class="btn btn-primary">Extends</button>
                 </div>
             </div>
@@ -245,6 +245,31 @@
                 "infoFiltered": "(filtered from _MAX_ total records)",
                 "search": "Cari "
             }
+        });
+
+        $("input.daterange").daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 15,
+            timePicker24Hour:true,
+            locale: {
+                format: 'YYYY-MM-DD h:mm A',
+                cancelLabel: 'Clear'
+            },
+            autoUpdateInput: false
+        });
+        $("input.singledate").daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 10,
+            timePicker24Hour:true,
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                cancelLabel: 'Clear'
+            },
+            singleDatePicker: true,
+            autoApply:true
+        });
+        $('input.daterange').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm'));
         });
 
         function lihatDetailPengumuman (id) {
@@ -287,6 +312,7 @@
         }
 
         function getDataPengumuman (id) {
+            // $("input").val("");
         	$("#modal-extends").modal("show");
         }
     </script>

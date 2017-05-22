@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>Subkontraktor</th>
                                         <th>Total Auction</th>
-                                        <th>Peringkat</th>
+                                        {{-- <th>Peringkat</th> --}}
                                         {{--<th width="2%"></th>--}}
                                     </tr>
                                 </thead>
@@ -89,12 +89,15 @@
                         return total_auction;
                     }
                 },
+                /*
                 {
                     "targets": 2,
                     "render": function(data, type, row, meta){
-                        return rank++;
+                        if(row.total_auction==0) return 0;
+                        else return rank++;
                     }
                 }
+                */
                 /*, {
                     "className":"no-print",
                     "orderable":false,

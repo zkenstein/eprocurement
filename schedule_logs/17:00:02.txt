@@ -1,0 +1,174 @@
+PHP Fatal error:  Interface 'Illuminate\Queue\Failed\FailedJobProviderInterface' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Queue/Failed/DatabaseFailedJobProvider.php on line 8
+PHP Fatal error:  Interface 'Illuminate\Contracts\Debug\ExceptionHandler' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php on line 14
+
+PHP Fatal error:  Uncaught ReflectionException: Class App\Exceptions\Handler does not exist in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container/Container.php:741
+Stack trace:
+#0 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container/Container.php(741): ReflectionClass->__construct('App\\Exceptions\\...')
+#1 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container/Container.php(631): Illuminate\Container\Container->build('App\\Exceptions\\...', Array)
+#2 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(674): Illuminate\Container\Container->make('App\\Exceptions\\...', Array)
+#3 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container/Container.php(220): Illuminate\Foundation\Application->make('App\\Exceptions\\...', Array)
+#4 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 741
+
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+                                                                                                                                                                                                                                                                                                                                                                      
+
+
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+
+
+
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                                                                                                                       
+
+                                                                                                                                                                                    
+  [ErrorException]                                                                                                                                                                  
+  include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Contracts/Debug/ExceptionHandler.php): failed to open stream: Interrupted system call  
+                                                                                                                                                                                    
+
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                        
+  [ErrorException]                                                                                                                                                                  
+  include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Contracts/Debug/ExceptionHandler.php): failed to open stream: Interrupted system call                                                                                                                                                                                                                                                                                                                                                                        
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+  [ErrorException]                                                                                                                                                                  
+  include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Contracts/Debug/ExceptionHandler.php): failed to open stream: Interrupted system call  
+                                                                                                                                                                                    
+
+
+                                                                                                                                                                                    
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [ErrorException]                                                                                                                                                                  
+  include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Contracts/Debug/ExceptionHandler.php): failed to open stream: Interrupted system call  
+                                                                                                                                                                                    
+
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+
+
+Fatal error: Uncaught Error: Class 'Illuminate\Routing\RoutingServiceProvider' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:187
+Stack trace:
+#0 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(145): Illuminate\Foundation\Application->registerBaseServiceProviders()
+#1 /media/kurniawan/DATA/PROJECT/eprocurement/bootstrap/app.php(15): Illuminate\Foundation\Application->__construct('/media/kurniawa...')
+#2 /media/kurniawan/DATA/PROJECT/eprocurement/artisan(18): require_once('/media/kurniawa...')
+#3 {main}
+  thrown in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php on line 187
+PHP Fatal error:  Uncaught Error: Class 'Illuminate\Routing\RoutingServiceProvider' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:187
+Stack trace:
+#0 /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(145): Illuminate\Foundation\Application->registerBaseServiceProviders()
+#1 /media/kurniawan/DATA/PROJECT/eprocurement/bootstrap/app.php(15): Illuminate\Foundation\Application->__construct('/media/kurniawa...')
+#2 /media/kurniawan/DATA/PROJECT/eprocurement/artisan(18): require_once('/media/kurniawa...')
+#3 {main}
+  thrown in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Foundation/Application.php on line 187
+
+Warning: include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/symfony/console/Output/ConsoleOutputInterface.php): failed to open stream: Interrupted system call in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/ClassLoader.php on line 444
+
+Warning: include(): Failed opening '/media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/../symfony/console/Output/ConsoleOutputInterface.php' for inclusion (include_path='.:/opt/lampp/lib/php') in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/ClassLoader.php on line 444
+
+Fatal error: Interface 'Symfony\Component\Console\Output\ConsoleOutputInterface' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/symfony/console/Output/ConsoleOutput.php on line 29
+PHP Warning:  include(/media/kurniawan/DATA/PROJECT/eprocurement/vendor/symfony/console/Output/ConsoleOutputInterface.php): failed to open stream: Interrupted system call in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/ClassLoader.php on line 444
+PHP Warning:  include(): Failed opening '/media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/../symfony/console/Output/ConsoleOutputInterface.php' for inclusion (include_path='.:/opt/lampp/lib/php') in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/composer/ClassLoader.php on line 444
+PHP Fatal error:  Interface 'Symfony\Component\Console\Output\ConsoleOutputInterface' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/symfony/console/Output/ConsoleOutput.php on line 29
+
+Fatal error: Trait 'Illuminate\Support\Traits\Macroable' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Support/Arr.php on line 9
+PHP Fatal error:  Trait 'Illuminate\Support\Traits\Macroable' not found in /media/kurniawan/DATA/PROJECT/eprocurement/vendor/laravel/framework/src/Illuminate/Support/Arr.php on line 9
+
+
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+

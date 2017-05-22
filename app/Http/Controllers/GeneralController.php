@@ -14,6 +14,7 @@ use App\Pengumuman;
 use App\PengumumanUser;
 use App\PengumumanBarang;
 use App\BarangEksternal;
+use App\Divisi;
 
 class GeneralController extends Controller
 {
@@ -46,6 +47,12 @@ class GeneralController extends Controller
     	return view('pages.beranda',$data);
     }
 
+    public function divisiPage(Request $request)
+    {
+        $data['TAG'] = 'divisi';
+        return view('pages.divisi',$data);   
+    }
+
     public function subkontraktorPage(Request $request)
     {
     	$data['TAG'] = 'subkontraktor';
@@ -67,6 +74,7 @@ class GeneralController extends Controller
     public function picPage(Request $request)
     {
         $data['TAG'] = 'pic';
+        $data['list_divisi'] = Divisi::all();
         return view('pages.pic',$data);
     }
 

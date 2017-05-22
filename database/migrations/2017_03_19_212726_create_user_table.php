@@ -24,6 +24,9 @@ class CreateUserTable extends Migration
             $table->enum('role',['admin','subkontraktor','pic']);
             $table->dateTime('aktif')->nullable();
             $table->dateTime('kadaluarsa')->nullable();
+            $table->integer('cluster')->nullable();
+            $table->integer('divisi_id')->unsigned();
+            $table->foreign('divisi_id')->references('id')->on('divisi')->onDelete('cascade');
             $table->timestamps();
         });
     }
