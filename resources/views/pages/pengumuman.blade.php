@@ -27,6 +27,14 @@
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
                                 <div class="row">
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Deskripsi</label>
+                                            <input id="add-deskripsi" type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
@@ -96,7 +104,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php /*
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
@@ -113,7 +120,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                */ ?>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="row">
@@ -130,7 +136,6 @@
                                                 <input type="file" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                             </div>
                                         </div>
-                                        	
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                     	<div class="form-group">
@@ -140,6 +145,16 @@
                                                 <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 padding-side">
+                                        <div class="form-group">
+                                            <label class="form-form-control-label">Syarat dan Ketentuan</label>
+                                            <textarea id="add-syarat_dan_ketentuan" required name="syarat_dan_ketentuan" class="form-control will-clear"  placeholder="Syarat dan Ketentuan" rows="3"></textarea>
+                                            <!--
+                                            <textarea rows="9" class="form-control input-sm will-clear" placeholder="Syarat dan Ketentuan" name="syarat_dan_ketentuan" id="add-syarat_dan_ketentuan"></textarea>-->
                                         </div>
                                     </div>
                                 </div>

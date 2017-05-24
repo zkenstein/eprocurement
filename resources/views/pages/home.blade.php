@@ -1,5 +1,17 @@
 @extends('master')
 
+@section('style')
+    <link rel="stylesheet" type="text/css" href="/bxslider/jquery.bxslider.min.css">
+    <style type="text/css">
+        .bx-wrapper{
+            margin-bottom: 10px;
+            padding: 0px;
+            box-shadow: 0px 0px white;
+            margin-top: -15px;
+        }
+    </style>
+@stop
+
 @section('content')
     <ol class="breadcrumb">
         @if(session('role')=='admin' || session('role')=='subkontraktor')
@@ -10,6 +22,9 @@
 
 	<div class="container-fluid">
         <div class="animated fadeIn">
+            <!-- <div class="row"> -->
+                
+            <!-- </div>   -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -18,6 +33,11 @@
                         </div>
                         <div class="card-block">
                             <div class="row">
+                                <ul class="bxslider">
+                                    <li><img src="/img/4.png" width="100%" /></li>
+                                    <li><img src="/img/5.png" width="100%" /></li>
+                                    <li><img src="/img/6.png" width="100%" /></li>
+                                </ul>
                                 <div class="col-sm-12 padding-side">
                                 	<p>E-Procurement PT.PAL memungkinkan Tender untuk mengunduh jadwal lelang bebas biaya dan mengajukan tawaran online melalui situs ini.</p>
                                 	<p>Syarat dan ketentuan : 
@@ -173,11 +193,17 @@
 @stop
 
 @section('script')
+    <script type="text/javascript" src="/bxslider/jquery.bxslider.min.js"></script>
     <script type="text/javascript">
         $(".btn-register").click(function(){
             $("#register-pengumuman-id").val($(this).data('id'));
         });
-
+        $('.bxslider').bxSlider({
+            controls:false,
+            auto:true,
+            speed:300,
+            pager:false
+        });
         $("#login-subkon-modal").submit(function(e){
             e.preventDefault();
             $("#button-login-register").addClass('disabled');

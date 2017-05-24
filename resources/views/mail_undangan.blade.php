@@ -29,12 +29,10 @@
 	            <td>Delivery Time</td>
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
-	        <?php /*
 	        <tr>
 	            <td>Harga Netto</td>
 	            <td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
 	        </tr>
-	        */ ?>
 	        <tr>
 	            <td>No SPPH</td>
 	            <td>: {{$pengumuman->kode}}</td>

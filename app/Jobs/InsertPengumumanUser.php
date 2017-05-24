@@ -50,9 +50,10 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
                 'kode_masuk' => $kode_masuk
             ]);
             $file = $this->pengumuman->file_excel;
-            $mailer->queue('mail_undangan',['nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk],function($message) use ($user, $file){
-                $message->to($user->email, $user->nama)->subject("PAL Tender Invitation");
-                $message->from(env('MAIL_USERNAME'),"PT.PAL");
+            $pengumuman = $this->pengumuman;
+            $mailer->queue('mail_undangan',['nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk],function($message) use ($user, $file, $pengumuman){
+                $message->to($user->email, $user->nama)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
+                $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
                 if($file!=null) $message->attach(storage_path('app/'.$file));
             });
         }

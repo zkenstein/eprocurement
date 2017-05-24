@@ -15,6 +15,7 @@ class CreatePengumumanTable extends Migration
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kode')->unique();
+            $table->string('deskripsi')->nullable();
             $table->dateTime('batas_awal_waktu_penawaran');
             $table->dateTime('batas_akhir_waktu_penawaran');
             $table->dateTime('validitas_harga');
@@ -30,6 +31,7 @@ class CreatePengumumanTable extends Migration
             $table->string('file_excel')->nullable();
             $table->dateTime('start_auction');
             $table->integer('durasi')->default(0);
+            $table->text('syarat_dan_ketentuan');
             $table->timestamps();
         });
     }
