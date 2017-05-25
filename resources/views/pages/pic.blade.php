@@ -369,7 +369,7 @@
                         $("form#edit-modal").data('id',data.id);
                     }
                 }
-            })
+            });
         }
 
         $("form#edit-modal").submit(function(e){

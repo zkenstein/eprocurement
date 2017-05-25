@@ -104,6 +104,56 @@
             </div>
 	    </div>
     </div>
+
+    <form class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true" data-id="">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Data Divisi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Kode</label>
+                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear" placeholder="Kode Divisi">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label">Nama</label>
+                                <input id="edit-nama" type="text" name="nama" class="form-control input-sm will-clear" placeholder="Nama Divisi">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label" for="inputSuccess1">Direktur</label>
+                                <input id="edit-direktur" type="text" required name="direktur" class="form-control input-sm will-clear" placeholder="Nama Direktur">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
+                                <label class="form-form-control-label" for="inputSuccess1">Email</label>
+                                <input id="edit-email" type="email" required name="email_direktur" class="form-control input-sm will-clear" placeholder="Email Divisi/Direktur">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" id="save-edit-button">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>
 @stop
 
 @section('script')
@@ -155,7 +205,7 @@
                     "orderable":false,
                     "targets": 4,
                     "render": function(data, type, row, meta){
-                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getCluster('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusCluster('+row.id+')"><i class="icon-trash"></i></button></div>';
+                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getDivisi('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusDivisi('+row.id+')"><i class="icon-trash"></i></button></div>';
                     }
                 }
             ],
@@ -190,5 +240,79 @@
                 }
             });
         });
+
+        function getDivisi(id) {
+            $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
+            $.ajax({
+                url:"{{route('intern.divisi_single_data')}}/"+id,
+                method:"GET",
+                success:function(res){
+                    var data = res.data;
+                    if(res.result===true){
+                        $("#edit-modal").modal('show').on('hidden.bs.modal', function () {
+                            $("#edit-modal input:not([name='_token'], [name='_method'])").val('');
+                            $("#edit-modal textarea").val('');
+                            $('#edit-modal .selectpicker').selectpicker('deselectAll');
+                        });
+                        $("#edit-kode").val(data.kode);
+                        $("#edit-kode").data('rule','required|unique:user,kode,'+data.id+',id|alpha_num');
+                        $("#edit-nama").val(data.nama);
+                        $("#edit-email").val(data.email_direktur);
+                        $("#edit-direktur").val(data.direktur);
+                        $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
+                        $("form#edit-modal").data('id',data.id);
+                    }
+                }
+            });
+        }
+
+        $("form#edit-modal").submit(function(e){
+            $("#save-edit-button").prop('disabled', true);
+            e.preventDefault();
+            var kode = $("#edit-kode").val().trim();
+            var nama = $("#edit-nama").val().trim();
+            var email_direktur = $("#edit-email").val().trim();
+            var direktur = $("#edit-direktur").val().trim();
+            var id = $(this).data('id');
+            $.ajax({
+                url:"{{route('intern.divisi')}}/"+id,
+                method:"POST",
+                data:{kode:kode,nama:nama,email_direktur:email_direktur,direktur:direktur,_token:csrf,_method:"patch"},
+                success:function(res){
+                    $("#save-edit-button").prop('disabled', false);
+                    $("form#edit-modal input").val('');
+                    $("form#edit-modal textarea").val('');
+                    $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-success');
+                    $("form#edit-modal input.needvalidate").parent(".form-group").removeClass('has-danger');
+                    $("form#edit-modal input.needvalidate").removeClass('form-control-danger');
+                    $("form#edit-modal input.needvalidate").removeClass('form-control-success');
+                    $("form#edit-modal input.needvalidate").next().removeClass('text-danger');
+                    $("form#edit-modal input.needvalidate").next().text('');
+                    $('form#edit-modal .selectpicker').selectpicker('deselectAll');
+                    csrf = res.token;
+                    table.ajax.reload();
+                    $('form#edit-modal').modal('hide');
+                }
+            });
+        });
+
+        function hapusDivisi(id) {
+            $("button.delete-button[data-id='"+id+"']").prop('disabled', true);
+            var _c = confirm("Anda yakin akan menghapus Divisi ini ?");
+            if(_c===true){
+                $.ajax({
+                    url:"{{route('intern.divisi')}}/"+id,
+                    method:"POST",
+                    data:{_method:"delete",_token:csrf},
+                    success:function (res) {
+                        $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
+                        table.ajax.reload();
+                        csrf = res.token;
+                    }
+                });
+            }else{
+                $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
+            }
+        }
 	</script>
 @stop

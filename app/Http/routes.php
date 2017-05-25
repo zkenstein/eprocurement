@@ -103,9 +103,15 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 			'as'=>'divisi'
 		]);
 		Route::post('/divisi','DivisiController@addData');
+		Route::patch('/divisi/{id?}','DivisiController@editData');
+		Route::delete('/divisi/{id?}','DivisiController@deleteData');
 		Route::get('/divisi_data',[
 			'uses'=>'DivisiController@getData',
 			'as'=>'divisi_data'
+		]);
+		Route::get('/divisi_data_single/{id?}',[
+			'uses'=>'DivisiController@getSingleData',
+			'as'=>'divisi_single_data'
 		]);
 
 		// SUB KONTRAKTOR
