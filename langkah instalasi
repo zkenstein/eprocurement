@@ -1,0 +1,10 @@
+langkah instalasi
+
+migrate
+set user.divisi_id => nullable
+import cluster
+import divisi
+import user
+
+cron
+install mail 3rd party

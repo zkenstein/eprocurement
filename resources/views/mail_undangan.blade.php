@@ -55,14 +55,25 @@
 	</table>
 	<p>
 		<strong>Syarat & Kondisi Penawaran :</strong><br>
+		{!!nl2br($pengumuman->syarat_dan_ketentuan)!!}
+		<!--
 		<ol>
 			<li>Harga berlaku 1 (satu) minggu</li>
 			<li>Belum termasuk PPN 10%</li>
 			<li>Tempat Pengiriman PT. PAL Indonesia, Surabaya</li>
 		</ol>
+		-->
 	</p>
 	<p><span style="color: #333333;"><br />Untuk melakukan pendaftaran silahkan klik menu register di halaman&nbsp;<a href="{{route('home')}}" target="_blank">Home E-Procurement PT. PAL</a>&nbsp;sesuai dengan kode proyek di atas dan masukkan email anda beserta kode_registrasi yang kami kirimkan di atas.&nbsp;</span>
 	</p>
 	<p>Demikian surat penawaran ini. Atas perhatiannya kami sampaikan terimakasih.</p>
+	<br>
+	@if($divisi!=null)
+	<p>Tertanda <strong>Kepala Departemen {{$divisi->nama}}</strong></p><br><br>
+	<p>{{$divisi->direktur}}</p>
+	@else
+	<p>Tertanda <strong>Kepala Departemen {{$divisi_id}}</strong></p><br><br>
+	<p>{{$divisi_id}}</p>
+	@endif
 </body>
 </html>

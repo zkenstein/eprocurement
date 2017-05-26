@@ -17,6 +17,12 @@
                                                                                                                                                                                    
 
 
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
                                                                                                                                                                                    
   [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
@@ -49,129 +55,272 @@
 
 
                                                                                                                                                                                    
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
 
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+
+                                                                                                                                                                                   
+
+
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+
+
+
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                                                                                                                                                                                                      
+                                                                                                                                                                                   
+
+
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                      
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                        [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                      
+
+                                                                                                                                                                                                                                                                                                                                                                      
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                      
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                                                                                                                                                                                                        [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                       The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                      
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+                                                                                                                                                                                                                                                                                                                                                                      
+
+
+
+
+                                                                                                                                                                                   
+
+
+
+                                                                                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                     
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+
+
+                                                                                                                                                                                   
+
+
+
+
+                                                                                                                                                                                   
+
+
+
+
+                                                                                                                                                                                   
+                                                                                                                                                                                   
+
+
+
+
+
+                                                                                                                                                                                   
+
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+
+
+
+                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                        [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+                                                                                                                                                                                   
+
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+
+
+
+                                                                                                                                                                                   
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+                                                                                                                                                                                                                                                                                                                                                                        The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                      
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+
+
+
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+
+
+
+                                                                                                                                                                                   
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                     
 
 
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
   [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
                                                                                                                                                                                    
 
-
-                                                                                                                                                                                   
   [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-Processed: Illuminate\Queue\CallQueuedHandler@call
-
-
-
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                        [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                      
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-
-
-
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                     
 
                                                                                                                                                                                    
 
 
 
-
                                                                                                                                                                                    
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                      
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-
-
-
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-                                                                                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
-
-
-
-
-
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
 
 
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
                                                                                                                                                                                    
 
 
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-                                                                                                                                                                                                                                                                                                                                                                      
-                                                                                                                                                                                   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-
-                                                                                                                                                                                                                                                                                                                                                                      
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-                                                                                                                                                                                                                                                                                                                                                                      
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
                                                                                                                                                                                    
 
   [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
@@ -187,136 +336,15 @@ Processed: Illuminate\Queue\CallQueuedHandler@call
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
                                                                                                                                                                                    
 
+                                                                                                                                                                                   
+  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
+  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                     
   [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
   The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
-
-
-
-
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                                                                                                                                                                                                        [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                     The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-                                                                                                                                                                                   
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-
-
-
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-
-                                                                                                                                                                                   
-                                                                                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.    The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                       The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                       The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.                                                                                                                                                                                     
-
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
-
 
                                                                                                                                                                                                                                                                                                                                                                       
 
 
-
-
-                                                                                                                                                                                   
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                                   
-                                                                                                                                                                                                                                                                                                                                                                      
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
-                                                                                                                                                                                   
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
-
-Processed: Illuminate\Queue\CallQueuedHandler@call
-
-                                                                                                                                                                                   
-  [Symfony\Component\Process\Exception\ProcessTimedOutException]                                                                                                                   
-  The process "'/opt/lampp/bin/php-7.1.1' 'artisan' queue:work '' --queue='default' --delay=0 --memory=128 --sleep=3 --tries=0 --env='local'" exceeded the timeout of 10 seconds.  
-                                                                                                                                                                                   
 
 
                                                                                                                                                                                    

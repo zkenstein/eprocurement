@@ -65,7 +65,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Cluster</label>
-                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker" multiple name="cluster">
+                                            <select required title="Pilih Cluster" data-live-search="true" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker dropdown" multiple name="cluster">
                                                 @foreach($list_cluster as $cluster)
                                                 <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                                 @endforeach

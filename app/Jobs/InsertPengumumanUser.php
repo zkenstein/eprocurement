@@ -39,7 +39,7 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
     public function handle(Mailer $mailer)
     {
         $listIdCluster = $this->listIdCluster;
-        $listUser = User::whereHas('listCluster',function($q) use ($listIdCluster){
+        $listUser = User::with('divisiInfo')->whereHas('listCluster',function($q) use ($listIdCluster){
             $q->whereIn('cluster_id',$listIdCluster);
         })->distinct()->get();
         foreach($listUser as $user){
@@ -51,7 +51,8 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
             ]);
             $file = $this->pengumuman->file_excel;
             $pengumuman = $this->pengumuman;
-            $mailer->queue('mail_undangan',['nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk],function($message) use ($user, $file, $pengumuman){
+            $mailer->send('mail_undangan',['divisi_id'=>$user->divisi_id,'nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk,'divisi'=>$pengumuman->picInfo->divisiInfo],function($message) use ($user, $file, $pengumuman){
+
                 $message->to($user->email, $user->nama)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
                 $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
                 if($file!=null) $message->attach(storage_path('app/'.$file));

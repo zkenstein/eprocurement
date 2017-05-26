@@ -33,7 +33,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,kode|alpha_num" placeholder="Kode PIC">
+                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:user,kode" placeholder="Kode PIC">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Divisi</label>
-                                            <select required class="form-control input-sm" id="add-divisi" name="divisi">
+                                            <select required class="form-control input-sm" id="add-divisi" name="divisi_id">
                                                 @foreach($list_divisi as $divisi)
                                                     <option value="{{$divisi->id}}">{{$divisi->nama}}</option>
                                                 @endforeach
@@ -302,10 +302,12 @@
             var telp = $("#add-telp").val().trim();
             var password = $("#add-password").val().trim();
             var cluster = $("#add-cluster").val();
+            var divisi_id = $("#add-divisi").val();
+
             $.ajax({
                 url:"",
                 method:"POST",
-                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,cluster:cluster,_token:csrf},
+                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,cluster:cluster,divisi_id:divisi_id,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');

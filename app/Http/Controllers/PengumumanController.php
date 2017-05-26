@@ -142,7 +142,32 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
-        // return response()->json($request->all(),500);
+        $clusterInput = $request->input('cluster');
+        $checkPengumuman = Pengumuman::where('start_auction',$request->input('start_auction'))->whereHas('listCluster',function($q)use($clusterInput){
+            $q->whereIn('cluster_id',$clusterInput);
+        })->first();
+        if($checkPengumuman!=null){
+            return response()->json(['result'=>false,'message'=>'Ada pengumuman lelang yang sama dengan waktu auction dan cluster yang sama pada waktu tersebut, silahkan ganti ke jam atau tanggal lain']);
+        }
+        // return response()->json($request->all());
+        // return response()->json($checkPengumuman);
+        $lastPengumuman = Pengumuman::orderBy('kode', 'desc')->first();
+        $kode = "";
+        if($lastPengumuman==null){
+            // if(substr($lastPengumuman, 0,4)==\Carbon\Carbon::now()->year){
+                // $kode = (int)$lastPengumuman->kode + 1;
+            // }else{
+                $kode = \Carbon\Carbon::now()->year."0001";
+            // }
+        }else{
+            if(substr($lastPengumuman->kode, 0,4)==\Carbon\Carbon::now()->year){
+                $kode = (int)$lastPengumuman->kode + 1;
+            }else{
+                $kode = \Carbon\Carbon::now()->year."0001";
+            }
+        }
+        $request->merge(array('kode' => $kode));
+        
         $date = date_format(date_create(),'U');
         // Edit Request batas waktu penawaran agar bisa masuk database
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));

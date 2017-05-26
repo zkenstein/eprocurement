@@ -26,6 +26,7 @@
                         </div>
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
+                                <!--
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <div class="form-group">
@@ -34,11 +35,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
+                                            <!--
                                             <label class="form-form-control-label">Kode</label>
                                             <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:pengumuman,kode|alpha_num" placeholder="Kode Pengumuman">
+                                            -->
+                                            <div class="form-group">
+                                            <label class="form-form-control-label">Deskripsi</label>
+                                            <input id="add-deskripsi" type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
+                                        </div>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -48,9 +56,9 @@
                                             @if(session('role')=='pic')
                                             <input type="text" name="pic" value="Anda" class="form-control" readonly placeholder="Anda">
                                             @else
-                                            <select class="form-control input-sm" name="pic">
+                                            <select onchange="refreshCluster()" class="form-control input-sm" name="pic" id="add-pic">
                                                 @foreach($list_pic as $pic)
-                                                <option value="{{$pic->id}}">{{$pic->nama}}</option>
+                                                <option data-jenis="{{$pic->cluster}}" value="{{$pic->id}}">{{$pic->nama}}</option>
                                                 @endforeach
                                             </select>
                                             <span class="help-block"></span>
@@ -233,6 +241,11 @@
 @section('script')
 	<script type="text/javascript">
         var resetNow = false;
+        function refreshCluster() {
+            var data = $("#add-pic").find(":selected").data('jenis');
+            
+        }
+
         $(document).ready(function(){
             $("#form-add input:not([name='_token'], [name='_method'])").val('');
         });
@@ -293,7 +306,7 @@
                 {
                     "targets": 1,
                     "render": function(data, type, row, meta){
-                        return "<strong>Batas waktu penawaran</strong> :<br><small>"+moment(row.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - <br>"+moment(row.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Validitas Harga</strong> :<br><small>"+moment(row.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Waktu pengriman</strong> :<br><small>"+moment(row.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small>";
+                        return "<strong>Batas waktu penawaran</strong> :<br><small>"+moment(row.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - <br>"+moment(row.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Waktu Auction</strong> :<br><small>"+moment(row.start_auction,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"<br><strong>Validitas Harga</strong> :<br><small>"+moment(row.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small><br><strong>Waktu pengriman</strong> :<br><small>"+moment(row.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL')+"</small>";
                     }
                 },
                 {
@@ -365,18 +378,22 @@
                                 type:"POST",
                                 success:function(res,status,xhr,$form){
                                     $("#add-submit").prop('disabled', false);
-                                    $("#form-add input:not([name='_token'], [name='_method'])").val('');
-                                    $("#form-add textarea").val('');
-                                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
-                                    $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
-                                    $("#form-add input.needvalidate").removeClass('form-control-danger');
-                                    $("#form-add input.needvalidate").removeClass('form-control-success');
-                                    $("#form-add input.needvalidate").next().removeClass('text-danger');
-                                    $("#form-add input.needvalidate").next().text('');
-                                    $('#form-add .selectpicker').selectpicker('deselectAll');
-                                    $("input[name='_token']").val(res.token);
-                                    csrf = res.token;
-                                    location.reload();
+                                    if(res.result==true){
+                                        $("#form-add input:not([name='_token'], [name='_method'])").val('');
+                                        $("#form-add textarea").val('');
+                                        $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
+                                        $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
+                                        $("#form-add input.needvalidate").removeClass('form-control-danger');
+                                        $("#form-add input.needvalidate").removeClass('form-control-success');
+                                        $("#form-add input.needvalidate").next().removeClass('text-danger');
+                                        $("#form-add input.needvalidate").next().text('');
+                                        $('#form-add .selectpicker').selectpicker('deselectAll');
+                                        $("input[name='_token']").val(res.token);
+                                        csrf = res.token;
+                                        location.reload();
+                                    }else{
+                                        alert(res.message);
+                                    }
                                 }
                             });
                         }
@@ -386,18 +403,22 @@
                         type:"POST",
                         success:function(res,status,xhr,$form){
                             $("#add-submit").prop('disabled', false);
-                            $("#form-add input:not([name='_token'], [name='_method'])").val('');
-                            $("#form-add textarea").val('');
-                            $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
-                            $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
-                            $("#form-add input.needvalidate").removeClass('form-control-danger');
-                            $("#form-add input.needvalidate").removeClass('form-control-success');
-                            $("#form-add input.needvalidate").next().removeClass('text-danger');
-                            $("#form-add input.needvalidate").next().text('');
-                            $('#form-add .selectpicker').selectpicker('deselectAll');
-                            $("input[name='_token']").val(res.token);
-                            csrf = res.token;
-                            location.reload();
+                            if(res.result==true){
+                                $("#form-add input:not([name='_token'], [name='_method'])").val('');
+                                $("#form-add textarea").val('');
+                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
+                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
+                                $("#form-add input.needvalidate").removeClass('form-control-danger');
+                                $("#form-add input.needvalidate").removeClass('form-control-success');
+                                $("#form-add input.needvalidate").next().removeClass('text-danger');
+                                $("#form-add input.needvalidate").next().text('');
+                                $('#form-add .selectpicker').selectpicker('deselectAll');
+                                $("input[name='_token']").val(res.token);
+                                csrf = res.token;
+                                location.reload();
+                            }else{
+                                alert(res.message);
+                            }
                         }
                     });
                 }
