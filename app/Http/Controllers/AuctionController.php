@@ -15,6 +15,65 @@ use App\PengumumanBarangUser;
 
 class AuctionController extends Controller
 {
+    public function pengajuan(Request $request)
+    {
+        // INISIALISASI VARIABEL
+        $total = 0;
+        $hargaBarang = [];
+        $hargaBarangEksternal = [];
+        
+        // MANIPULASI INPUTAN, MENGHAPUS . , 
+        $request->merge(array('harga_barang'=>str_replace(["Rp","."," "], "", $request->input('harga_barang'))));
+        $request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
+
+        // PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
+        if($request->input('harga_barang')!=""){
+            foreach ($request->input('harga_barang') as $key => $value) {
+                if($value>0){
+                    $hargaBarang[$key] = new PengumumanBarangUser([
+                        'pengumuman_barang_id'=>$key,
+                        'user_id'=>session('id'),
+                        'harga'=>$value
+                    ]);
+                    $total+=$value;
+                }else{
+                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
+                }
+            }
+        }
+
+        foreach ($request->input('harga_barang_eksternal') as $key => $value) {
+            if($value>0){
+                $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                    'barang_eksternal_id'=>$key,
+                    'user_id'=>session('id'),
+                    'harga'=>$value
+                ]);
+                $total+=$value;
+            }else{
+                return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
+            }
+        }
+
+        foreach ($hargaBarang as $key => $obj) {
+            PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->delete();
+            $obj->save();
+        }
+        foreach ($hargaBarangEksternal as $key => $obj) {
+            BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->delete();
+            $obj->save();
+        }
+        Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->delete();
+        Auction::create([
+            'pengumuman_id'=>session('pengumuman'),
+            'user_id'=>session('id'),
+            'total'=>$total
+        ]);
+        PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->update(['total_auction'=>$total]);
+        return response()->json(['result'=>true,'message'=>'Tawaran anda berhasil disimpan']);
+    }
+
+
 	// FUNGSI INI MENGGUNAKAN MIDDELWARE VERIFYAUCTION UNTUK CEK APAKAH AUCTION SUDAH DIMLAI ATAU BELUM DAN APAKAH AUCTION SUDAH SELESAI ATAU BELUM
 	public function addAuction(Request $request)
 	{

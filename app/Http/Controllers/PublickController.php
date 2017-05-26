@@ -11,6 +11,8 @@ use App\Cluster;
 use App\UserCluster;
 use App\Pengumuman;
 use App\PengumumanUser;
+use App\PengumumanBarang;
+use App\BarangEksternal;
 use Mail;
 
 class PublickController extends Controller
@@ -191,6 +193,16 @@ class PublickController extends Controller
         $data['captcha_src'] = captcha_src();
         // CEK APAKAH USER SUDAH MASUK SEBAGAI SUBKONTRAKTOR DALAM SEBUAH TENDER ATAU BELUM
         if(session()->has('pengumuman')){#JIKA SUDAH,  MASUK KE TENDER LOAD HALAMAN HOME TENDER
+
+            $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
+            // MENGAMBIL DATA LIST BARANG INTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
+            $data['list_barang'] = PengumumanBarang::with(['barangInfo','inUserAuction'])->where('pengumuman_id',session('pengumuman'))->get();
+            // MENGAMBIL DATA LIST BARANG EKSTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
+            $data['list_barang_eksternal'] = BarangEksternal::with('inUserAuction')->where('pengumuman_id',session('pengumuman'))->get();
+
+
+
+
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo'])->find(session('pengumuman'));
             if(  $data['pengumuman']->pemenang!=null  ){
                 if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;

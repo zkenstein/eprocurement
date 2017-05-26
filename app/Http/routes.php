@@ -22,6 +22,11 @@ Route::get('/',[
 	'uses'=>'PublickController@homePage',
 	'as'=>'home'
 ]);
+Route::post('/pengajuan',[
+	'uses'=>'AuctionController@pengajuan',
+	'as'=>'pengajuan',
+	'middleware'=>'verify_subkon_pengumuman'
+]);
 
 Route::get('auction',[
 	'uses'=>'GeneralController@auctionPage',

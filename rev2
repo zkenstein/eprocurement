@@ -3,32 +3,32 @@ vendor = barang
 
 keterangan maks ukuran pdf dan gambar [v]
 
-master PIC ditambah "termasuk cluster jasaa tau barang"
-master PIC ditambah "termasuk organisasi apa"
+master PIC ditambah "termasuk cluster jasaa tau barang"[v]
+master PIC ditambah "termasuk organisasi apa"[v]
 
 /////tambahkan tembusan ke PIC . tembusan ke PIC bisa dipilih hanya yang aktif
 /////admin bisa nonaktifkan tembusan ke salah satu atau banyak PIC
 
 di subject ditambahkan 
 
-Peringatan saat waktu auction dan cluster yang sama dilakukan pengumuman bersamaan
+Peringatan saat waktu auction dan cluster yang sama dilakukan pengumuman bersamaan[v]
 
-di tambahkan deskripsi(nama barang) di pengumuman dijadikan subject email
+di tambahkan deskripsi(nama barang) di pengumuman dijadikan subject email[v]
 
 
-nomor pengumuman dijadikan generate otomatis dengan format tahunsequens ex.20170001
-nomor pengumuman sequence ter-reset tiap tahun kembali ke 0001
+nomor pengumuman dijadikan generate otomatis dengan format tahunsequens ex.20170001[v]
+nomor pengumuman sequence ter-reset tiap tahun kembali ke 0001[v]
 
-ditambahkan field departemen
+ditambahkan field departemen[v]
 
-tambah data master departemen 
+tambah data master departemen [v]
 - kode
 - nama departemen
 - nama kadep
 
-saat di email dimasukkan tertanda kadep organisasi nama diambil dari PIC pengumuman
+saat di email dimasukkan tertanda kadep organisasi nama diambil dari PIC pengumuman[v]
 
-ditambahkan syarat dan ketentuan 1 field ditampilkan di email saat pengumuman
+ditambahkan syarat dan ketentuan 1 field ditampilkan di email saat pengumuman[v]
 
 /////ditambahkan field input file penawaran saat vendor melakukan registrasi
 
