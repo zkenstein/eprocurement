@@ -81,10 +81,10 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">Divisi</label>
-                                            <select required class="form-control input-sm" id="add-divisi" name="divisi_id">
-                                                @foreach($list_divisi as $divisi)
-                                                    <option value="{{$divisi->id}}">{{$divisi->nama}}</option>
+                                            <label class="form-form-control-label">Departemen</label>
+                                            <select required class="form-control input-sm" id="add-departemen" name="departemen_id">
+                                                @foreach($list_departemen as $departemen)
+                                                    <option value="{{$departemen->id}}">{{$departemen->nama}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -115,7 +115,7 @@
                                         <th>Email</th>
                                         <th>Telp</th>
                                         <th>Cluster</th>
-                                        <th>Divisi</th>
+                                        <th>Departemen</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -128,7 +128,7 @@
                                         <th>Email</th>
                                         <th>Telp</th>
                                         <th>Cluster</th>
-                                        <th>Divisi</th>
+                                        <th>Departemen</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </tfoot>
@@ -202,10 +202,10 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 padding-side">
                             <div class="form-group">
-                                <label class="form-form-control-label">Divisi</label>
-                                <select required class="form-control input-sm" id="edit-divisi" name="divisi">
-                                    @foreach($list_divisi as $divisi)
-                                        <option value="{{$divisi->id}}">{{$divisi->nama}}</option>
+                                <label class="form-form-control-label">Departemen</label>
+                                <select required class="form-control input-sm" id="edit-departemen" name="departemen">
+                                    @foreach($list_departemen as $departemen)
+                                        <option value="{{$departemen->id}}">{{$departemen->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -278,7 +278,7 @@
                 {
                     "targets": 5,
                     "render": function(data, type, row, meta){
-                        return row.divisi_info.nama;
+                        return row.departemen_info.nama;
                     }
                 },
                 {
@@ -302,12 +302,12 @@
             var telp = $("#add-telp").val().trim();
             var password = $("#add-password").val().trim();
             var cluster = $("#add-cluster").val();
-            var divisi_id = $("#add-divisi").val();
+            var departemen_id = $("#add-departemen").val();
 
             $.ajax({
                 url:"",
                 method:"POST",
-                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,cluster:cluster,divisi_id:divisi_id,_token:csrf},
+                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,cluster:cluster,departemen_id:departemen_id,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');
@@ -366,7 +366,7 @@
                         $("#edit-telp").val(data.telp);
                         $("#edit-telp").data('rule','required|unique:user,telp,'+data.id+',id'+'|min:11|numeric');
                         $("#edit-cluster").val(data.cluster);
-                        $("#edit-divisi").val(data.divisi_id);
+                        $("#edit-departemen").val(data.departemen_id);
                         $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
                         $("form#edit-modal").data('id',data.id);
                     }
@@ -383,12 +383,12 @@
             var telp = $("#edit-telp").val().trim();
             var password = $("#edit-password").val().trim();
             var cluster = $("#edit-cluster").val();
-            var divisi = $("#edit-divisi").val();
+            var departemen = $("#edit-departemen").val();
             var id = $(this).data('id');
             $.ajax({
                 url:"{{route('intern.pic')}}/"+id,
                 method:"POST",
-                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,divisi_id:divisi,cluster:cluster,_token:csrf,_method:"patch"},
+                data:{kode:kode,password:password,nama:nama,email:email,telp:telp,role:3,departemen_id:departemen,cluster:cluster,_token:csrf,_method:"patch"},
                 success:function(res){
                     $("#save-edit-button").prop('disabled', false);
                     $("form#edit-modal input").val('');

@@ -30,7 +30,6 @@ class DepartemenController extends Controller
                 $orderBy = 'kode';
             break;
         }
-
         $departemen = Departemen::where('id','>',0);
         if($request->input('search.value')!=''){
             $departemen = $departemen

@@ -107,6 +107,9 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 			'uses'=>'GeneralController@departemenPage',
 			'as'=>'departemen'
 		]);
+		// Route::get('/departemen',function(){
+		// 	return "ANJAY";
+		// });
 		Route::post('/departemen','DepartemenController@addData');
 		Route::patch('/departemen/{id?}','DepartemenController@editData');
 		Route::delete('/departemen/{id?}','DepartemenController@deleteData');

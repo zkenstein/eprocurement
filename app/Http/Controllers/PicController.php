@@ -35,14 +35,14 @@ class PicController extends Controller
                 $orderBy = 'cluster';
             break;
             case "5":
-                $orderBy = 'divisi_id';
+                $orderBy = 'departemen_id';
             break;
             default:
                 $orderBy = 'kode';
             break;
         }
 
-        $pic = User::with('divisiInfo')->where('id','<>',0);
+        $pic = User::with('departemenInfo')->where('id','<>',0);
 
         if($request->input('search.value')!=''){
             $cluster = "";
@@ -57,7 +57,7 @@ class PicController extends Controller
                 ->orWhere('email','like','%'.$request->input('search.value').'%')
                 ->orWhere('telp','like','%'.$request->input('search.value').'%')
                 ->orWhere('cluster','=',$cluster)
-                ->orWhereHas('divisiInfo',function($query)use($searchRequest){
+                ->orWhereHas('departemenInfo',function($query)use($searchRequest){
                     $query->where('nama','like','%'.$searchRequest.'%');
                 })
                 ->orWhere('kode','like','%'.$request->input('search.value').'%');

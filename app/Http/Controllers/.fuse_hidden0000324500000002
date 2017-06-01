@@ -40,6 +40,7 @@ class GeneralController extends Controller
     {
         // dd(PHP_OS);
     	$data['TAG'] = 'beranda';
+//    	dd($data);
         $data['count_subkontraktor'] = User::where('role','subkontraktor')->count();
         $data['count_cluster'] = Cluster::count();
         $data['count_barang'] = Barang::count();
@@ -74,7 +75,7 @@ class GeneralController extends Controller
     public function picPage(Request $request)
     {
         $data['TAG'] = 'pic';
-        $data['list_departemen'] = Departemen::where('id','<>',0)->get();
+        $data['list_departemen'] = Departemen::all();
         return view('pages.pic',$data);
     }
 

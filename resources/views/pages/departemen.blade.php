@@ -223,7 +223,7 @@
             $.ajax({
                 url:"/intern/departemen",
                 method:"POST",
-                data:{kode:kode,nama:nama,kadep:kdep,email_kadep:email_kadep,_token:csrf},
+                data:{kode:kode,nama:nama,kadep:kadep,email_kadep:email_kadep,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');
