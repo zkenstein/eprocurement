@@ -214,8 +214,8 @@
                     <li class="nav-title">
                         Data Master
                     </li>
-                    <li class="nav-item <?=$TAG=='divisi'?'active':''?>">
-                        <a class="nav-link" href="{{route('intern.divisi')}}"><i class="icon-user-follow"></i> Divisi</a>
+                    <li class="nav-item <?=$TAG=='departemen'?'active':''?>">
+                        <a class="nav-link" href="{{route('intern.departemen')}}"><i class="icon-user-follow"></i> Departemen</a>
                     </li>
                     <li class="nav-item <?=$TAG=='subkontraktor'?'active':''?>">
                         <a class="nav-link" href="{{route('intern.subkontraktor')}}"><i class="icon-user-follow"></i> Sub Kontraktor</a>

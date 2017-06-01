@@ -115,8 +115,8 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">Harga Netto</label>
-                                            <input id="add-harga-netto" type="text" required class="form-control input-sm will-clear maskmoney" data-rule="required|numeric|min:1" placeholder="Harga Netto" name="harga_netto">
+                                            <label class="form-form-control-label">HPS</label>
+                                            <input id="add-harga-netto" type="text" class="form-control input-sm will-clear maskmoney" placeholder="HPS" name="harga_netto">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>

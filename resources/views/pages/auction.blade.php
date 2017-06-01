@@ -50,7 +50,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($list_barang as $barang)
+                                    @foreach ($list_barang as $barang)
                                     <tr>
                                         <td>{{$barang->barangInfo->kode}}</td>
                                         <td>{{$barang->barangInfo->deskripsi}}</td>

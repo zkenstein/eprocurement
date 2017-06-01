@@ -14,7 +14,7 @@ use App\Pengumuman;
 use App\PengumumanUser;
 use App\PengumumanBarang;
 use App\BarangEksternal;
-use App\Divisi;
+use App\Departemen;
 
 class GeneralController extends Controller
 {
@@ -40,6 +40,7 @@ class GeneralController extends Controller
     {
         // dd(PHP_OS);
     	$data['TAG'] = 'beranda';
+//    	dd($data);
         $data['count_subkontraktor'] = User::where('role','subkontraktor')->count();
         $data['count_cluster'] = Cluster::count();
         $data['count_barang'] = Barang::count();
@@ -47,10 +48,10 @@ class GeneralController extends Controller
     	return view('pages.beranda',$data);
     }
 
-    public function divisiPage(Request $request)
+    public function departemenPage(Request $request)
     {
-        $data['TAG'] = 'divisi';
-        return view('pages.divisi',$data);   
+        $data['TAG'] = 'departemen';
+        return view('pages.departemen',$data);
     }
 
     public function subkontraktorPage(Request $request)
@@ -74,7 +75,7 @@ class GeneralController extends Controller
     public function picPage(Request $request)
     {
         $data['TAG'] = 'pic';
-        $data['list_divisi'] = Divisi::all();
+        $data['list_departemen'] = Departemen::all();
         return view('pages.pic',$data);
     }
 

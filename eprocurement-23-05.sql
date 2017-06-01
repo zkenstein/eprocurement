@@ -232,8 +232,8 @@ INSERT INTO `cluster` (`id`, `kode`, `nama`, `jenis`, `created_at`, `updated_at`
 (10,	'10',	'GENERAL SERVICE',	'jasa',	'2017-04-12 21:27:05',	'2017-04-12 21:27:05');
 
 INSERT INTO `divisi` (`id`, `kode`, `nama`, `direktur`, `email_direktur`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1,	'ABC',	'Divisi Satu',	'Direktur Divisi 1',	'divisi1@pal.co.id',	'',	'2017-05-22 18:14:52',	'2017-05-22 18:14:52'),
-(2,	'ABE',	'Divisi dua',	'Direktur Divisi 2',	'divisi2@pal.co.id',	'',	'2017-05-22 18:22:04',	'2017-05-22 18:22:04');
+(1,	'ABC',	'Departemen Satu',	'Direktur Departemen 1',	'divisi1@pal.co.id',	'',	'2017-05-22 18:14:52',	'2017-05-22 18:14:52'),
+(2,	'ABE',	'Departemen dua',	'Direktur Departemen 2',	'divisi2@pal.co.id',	'',	'2017-05-22 18:22:04',	'2017-05-22 18:22:04');
 
 
 

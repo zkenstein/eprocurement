@@ -173,7 +173,12 @@ class PengumumanController extends Controller
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
-        $request->merge(array('harga_netto'=>str_replace(["Rp","."," "], "", $request->input('harga_netto'))));
+
+
+        // SETTING HPS YANG SEBELUMNYA DI SET HARGA NETTO
+        if($request->input('harga_netto')=='' || $request->input('harga_netto')=='Rp. 0') $request->merge(array('harga_netto'=>'0'));
+        else $request->merge(array('harga_netto'=>str_replace(["Rp","."," "], "", $request->input('harga_netto'))));
+
         // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));

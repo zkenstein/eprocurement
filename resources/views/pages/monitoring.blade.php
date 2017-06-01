@@ -201,25 +201,30 @@
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
+                                <label class="form-form-control-label">Waktu Auction</label>
+                                <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
+                            </div>
+                        </div>
+                        <?php /*
+                        <div class="col-sm-12 col-md-6 padding-side">
+                            <div class="form-group">
                                 <label class="form-form-control-label">Maksimal Pendaftar</label>
                                 <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Kosongkan jika tidak dibatasi" name="max_register">
                                 <span class="help-block"></span>
                             </div>
                         </div>
+                        */ ?>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-6 padding-side">
-                            <div class="form-group">
-                                <label class="form-form-control-label">Waktu Auction</label>
-                                <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
-                            </div>
-                        </div>
+                        <!-- HARUSNYA INI FIELD WAKTU AUCTION -->
+                        <?php /*
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Durasi (Menit)</label>
                                 <input id="add-durasi" type="number" required class="form-control input-sm will-clear" placeholder="Durasi" name="durasi">
                             </div>
                         </div>
+                        */ ?>
                     </div>
                 </div>
                 <div class="modal-footer">

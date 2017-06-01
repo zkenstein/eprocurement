@@ -20,6 +20,7 @@ class CreateBarangEksternalUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->double('harga');
             $table->tinyInteger('status')->default(1);
+            $table->string('grup')->nullable();
             $table->timestamps();
         });
     }

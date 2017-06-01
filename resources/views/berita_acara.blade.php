@@ -133,6 +133,9 @@
 	</tr>
 	@endforeach
 </table>
+<div>
+	<p>catatan : Dokumen berita acara e-auction ini tidak dibutuhkan tanda tangan para pihak karena sudah dalam bentuk elektronik file</p>
+</div>
 <?php /*
 <div class="page-break"></div>
 <div style="font-family:sans-serif;background: #65a7d7;padding: 8px;display: inline-block;">Auction Bid Summary</div>

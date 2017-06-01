@@ -1,11 +1,11 @@
-- cluster dibedakan barang + jasa
-- Yth. Direktur/Pimpinan ......
-- PT.PAL Indonesia (Persero)
-- kode 6 digit
-- harga netto dikosongkan dan tidak ditampilkan ke vendor/subkon
+- cluster dibedakan barang + jasa[v]
+- Yth. Direktur/Pimpinan ......[v]
+- PT.PAL Indonesia (Persero)[v]
+- kode 6 digit[v]
+- harga netto dikosongkan dan tidak ditampilkan ke vendor/subkon[v]
 
-- follow up Yth. Direktur/Pimpinan . 
-- email ke subkon/vendor sesuai dengan cluster
+- follow up Yth. Direktur/Pimpinan . [v]
+- email ke subkon/vendor sesuai dengan cluster[v]
 
 -- subkon = jasa
 -- vendor = material

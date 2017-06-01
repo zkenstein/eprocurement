@@ -30,7 +30,7 @@
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
 	        <tr>
-	            <td>Harga Netto</td>
+	            <td>HPS</td>
 	            <td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
 	        </tr>
 	        <tr>
@@ -68,12 +68,12 @@
 	</p>
 	<p>Demikian surat penawaran ini. Atas perhatiannya kami sampaikan terimakasih.</p>
 	<br>
-	@if($divisi!=null)
-	<p>Tertanda <strong>Kepala Departemen {{$divisi->nama}}</strong></p><br><br>
-	<p>{{$divisi->direktur}}</p>
+	@if($departemen!=null)
+	<p>Tertanda <strong>Kepala Departemen {{$departemen->nama}}</strong></p><br><br>
+	<p>{{$departemen->kadep}}</p>
 	@else
-	<p>Tertanda <strong>Kepala Departemen {{$divisi_id}}</strong></p><br><br>
-	<p>{{$divisi_id}}</p>
+	<p>Tertanda <strong>Kepala Departemen {{$departemen_id}}</strong></p><br><br>
+	<p>{{$departemen_id}}</p>
 	@endif
 </body>
 </html>

@@ -52,8 +52,8 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Auction','user_id','id');
     }
 
-    public function divisiInfo()
+    public function departemenInfo()
     {
-        return $this->belongsTo('App\Divisi','divisi_id');
+        return $this->belongsTo('App\Departemen','departemen_id');
     }
 }

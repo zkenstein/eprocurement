@@ -102,21 +102,21 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 
 	// ADMIN ONLY CAN ACCESS
 	Route::group(['middleware'=>'admin_only'],function(){
-		// DIVISI
-		Route::get('/divisi',[
-			'uses'=>'GeneralController@divisiPage',
-			'as'=>'divisi'
+		// DEPARTEMEN
+		Route::get('/departemen',[
+			'uses'=>'GeneralController@departemenPage',
+			'as'=>'departemen'
 		]);
-		Route::post('/divisi','DivisiController@addData');
-		Route::patch('/divisi/{id?}','DivisiController@editData');
-		Route::delete('/divisi/{id?}','DivisiController@deleteData');
-		Route::get('/divisi_data',[
-			'uses'=>'DivisiController@getData',
-			'as'=>'divisi_data'
+		Route::post('/departemen','DepartemenController@addData');
+		Route::patch('/departemen/{id?}','DepartemenController@editData');
+		Route::delete('/departemen/{id?}','DepartemenController@deleteData');
+		Route::get('/departemen',[
+			'uses'=>'DepartemenController@getData',
+			'as'=>'departemen_data'
 		]);
-		Route::get('/divisi_data_single/{id?}',[
-			'uses'=>'DivisiController@getSingleData',
-			'as'=>'divisi_single_data'
+		Route::get('/departemen_data_single/{id?}',[
+			'uses'=>'DepartemenController@getSingleData',
+			'as'=>'departemen_single_data'
 		]);
 
 		// SUB KONTRAKTOR
@@ -156,7 +156,7 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		]);
 		Route::post('/pic','PicController@addData');
 		Route::patch('/pic/{id?}','PicController@editData');
-		Route::delete('/pic/{id?}','PicController@deleteData');	
+		Route::delete('/pic/{id?}','PicController@deleteData');
 
 
 		// CLUSTER

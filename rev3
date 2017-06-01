@@ -17,15 +17,34 @@ ditampilkan nominal pemenang saat pengumuman pada semua vendor
 
 pengecekan nilai sebelumnya dicek di server dan client
 
+ganti slider[v]
+
 enigma1415
 
+waktu pengiriman = batas waktu pengiriman barang
+
+yg dirubah saat extends
+- batas waktu penawaran
+- waktu auction
+- validitas harga
+- waktu pengiriman / opsional bisa berubah bisa tetap
+
+
+Kontrak header
+format Number : PC. tahun(2 digit) kode PIC sequence
+project Name : Nama Project (bukan deskripsi)
+project Code : inputan
+Quotation : inputan vendor saat penawaran
+
+
+Place and date of order : dikosongi. diisi pada saat disetujui
 
 
 
 
+catatan di dokumen berita acara
 
-
-
+catatan : Dokumen berita acara e-auction ini tidak dibutuhkan tanda tangan para pihak karena sudah dalam bentuk elektronik file 
 
 
 

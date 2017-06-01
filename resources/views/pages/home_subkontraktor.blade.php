@@ -191,7 +191,7 @@ $(document).ready(function(){
 });
 $("#form-auction").submit(function(e){
     e.preventDefault();
-    if(total<{{$pengumuman->harga_netto}}){
+    if(total>{{$pengumuman->harga_netto}}){
         alert("Jumlah total kurang dari harga netto");
     }else{
         $("input").removeClass('danger-input');

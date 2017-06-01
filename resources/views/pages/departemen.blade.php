@@ -2,7 +2,7 @@
 
 @section('style')
 	<style type="text/css">
-		#divisi-data{
+		#departemen-data{
 			width: 100% !important;
 		}
         .table-responsive{
@@ -16,7 +16,7 @@
 	<ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('intern.beranda')}}">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Divisi</li>
+        <li class="breadcrumb-item active">Departemen</li>
     </ol>
 
     <div class="container-fluid">
@@ -25,7 +25,7 @@
                 <div class="col-sm-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Tambah Data Divisi
+                            <i class="fa fa-align-justify"></i> Tambah Data Departemen
                         </div>
                         <div class="card-block">
                         	<form id="form-add" action="" method="post" enctype="multipart/form-data">
@@ -33,14 +33,14 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:divisi,kode" placeholder="Kode Divisi">
+                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:departemen,kode" placeholder="Kode Departemen">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Nama</label>
-                                            <input id="add-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:divisi,nama" placeholder="Nama Divisi">
+                                            <input id="add-nama" type="text" required name="nama" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:departemen,nama" placeholder="Nama Departemen">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -48,14 +48,14 @@
                                 <div class="row">
                                 	<div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">Direktur</label>
-                                            <input id="add-direktur" type="text" required name="direktur" class="form-control input-sm will-clear" placeholder="Nama Direktur">
+                                            <label class="form-form-control-label">Kadep</label>
+                                            <input id="add-kadep" type="text" required name="kadep" class="form-control input-sm will-clear" placeholder="Nama Kadep">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <label class="form-form-control-label">Email Direktur</label>
-                                            <input id="add-email-direktur" type="email" required name="email_direktur" class="form-control input-sm will-clear" placeholder="Email Direktur">
+                                            <label class="form-form-control-label">Email Kadep</label>
+                                            <input id="add-email-kadep" type="email" required name="email_kadep" class="form-control input-sm will-clear" placeholder="Email Kadep">
                                         </div>
                                     </div>
                                 </div>
@@ -73,15 +73,15 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Data Divisi
+                            <i class="fa fa-align-justify"></i> Data Departemen
                         </div>
                         <div class="card-block">
-                            <table id="divisi-data" class="table table-bordered table-striped">
+                            <table id="departemen-data" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Kode</th>
                                         <th>Nama</th>
-                                        <th>Direktur</th>
+                                        <th>Kadep</th>
                                         <th>Email</th>
                                         <th style="width:3%;"></th>
                                     </tr>
@@ -92,7 +92,7 @@
                                     <tr>
                                         <th>Kode</th>
                                         <th>Nama</th>
-                                        <th>Direktur</th>
+                                        <th>Kadep</th>
                                         <th>Email</th>
                                         <th style="width:3%;"></th>
                                     </tr>
@@ -109,7 +109,7 @@
         <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Data Divisi</h4>
+                    <h4 class="modal-title">Edit Data Departemen</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -119,29 +119,29 @@
                         <div class="col-sm-6 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Kode</label>
-                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear" placeholder="Kode Divisi">
+                                <input id="edit-kode" type="text" required name="kode" class="form-control input-sm will-clear" placeholder="Kode Departemen">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Nama</label>
-                                <input id="edit-nama" type="text" name="nama" class="form-control input-sm will-clear" placeholder="Nama Divisi">
+                                <input id="edit-nama" type="text" name="nama" class="form-control input-sm will-clear" placeholder="Nama Departemen">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
-                                <label class="form-form-control-label" for="inputSuccess1">Direktur</label>
-                                <input id="edit-direktur" type="text" required name="direktur" class="form-control input-sm will-clear" placeholder="Nama Direktur">
+                                <label class="form-form-control-label" for="inputSuccess1">Kadep</label>
+                                <input id="edit-kadep" type="text" required name="kadep" class="form-control input-sm will-clear" placeholder="Nama Kadep">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label" for="inputSuccess1">Email</label>
-                                <input id="edit-email" type="email" required name="email_direktur" class="form-control input-sm will-clear" placeholder="Email Divisi/Direktur">
+                                <input id="edit-email" type="email" required name="email_kadep" class="form-control input-sm will-clear" placeholder="Email Kadep">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -159,11 +159,11 @@
 @section('script')
 	<script type="text/javascript">
 		var csrf = "{{csrf_token()}}";
-		var table = $("#divisi-data").DataTable({
+		var table = $("#departemen-data").DataTable({
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('intern.divisi_data')}}",
+            "ajax": "{{route('intern.departemen_data')}}",
             info:false,
             "language": {
                 "lengthMenu": "_MENU_",
@@ -191,13 +191,13 @@
                 {
                     "targets": 2,
                     "render": function(data, type, row, meta){
-                        return row.direktur;
+                        return row.kadep;
                     }
                 },
                 {
                     "targets": 3,
                     "render": function(data, type, row, meta){
-                        return row.email_direktur;
+                        return row.email_kadep;
                     }
                 },
                 {
@@ -205,7 +205,7 @@
                     "orderable":false,
                     "targets": 4,
                     "render": function(data, type, row, meta){
-                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getDivisi('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusDivisi('+row.id+')"><i class="icon-trash"></i></button></div>';
+                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getDepartemen('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusDepartemen('+row.id+')"><i class="icon-trash"></i></button></div>';
                     }
                 }
             ],
@@ -217,13 +217,13 @@
             e.preventDefault();
             var kode = $("#add-kode").val();
             var nama = $("#add-nama").val();
-            var direktur = $("#add-direktur").val();
-            var email_direktur = $("#add-email-direktur").val();
+            var kadep = $("#add-kadep").val();
+            var email_kadep = $("#add-email-kadep").val();
             
             $.ajax({
-                url:"/intern/divisi",
+                url:"/intern/departemen",
                 method:"POST",
-                data:{kode:kode,nama:nama,direktur:direktur,email_direktur:email_direktur,_token:csrf},
+                data:{kode:kode,nama:nama,kadep:kdep,email_kadep:email_kadep,_token:csrf},
                 success:function(res){
                     $("#add-submit").prop('disabled', false);
                     $("#form-add input").val('');
@@ -241,10 +241,10 @@
             });
         });
 
-        function getDivisi(id) {
+        function getDepartemen(id) {
             $("button.edit-button[data-id='"+id+"']").prop('disabled', true);
             $.ajax({
-                url:"{{route('intern.divisi_single_data')}}/"+id,
+                url:"{{route('intern.departemen_single_data')}}/"+id,
                 method:"GET",
                 success:function(res){
                     var data = res.data;
@@ -257,8 +257,8 @@
                         $("#edit-kode").val(data.kode);
                         $("#edit-kode").data('rule','required|unique:user,kode,'+data.id+',id|alpha_num');
                         $("#edit-nama").val(data.nama);
-                        $("#edit-email").val(data.email_direktur);
-                        $("#edit-direktur").val(data.direktur);
+                        $("#edit-email").val(data.email_kadep);
+                        $("#edit-kadep").val(data.kadep);
                         $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
                         $("form#edit-modal").data('id',data.id);
                     }
@@ -271,13 +271,13 @@
             e.preventDefault();
             var kode = $("#edit-kode").val().trim();
             var nama = $("#edit-nama").val().trim();
-            var email_direktur = $("#edit-email").val().trim();
-            var direktur = $("#edit-direktur").val().trim();
+            var email_kadep = $("#edit-email").val().trim();
+            var kadep = $("#edit-kadep").val().trim();
             var id = $(this).data('id');
             $.ajax({
-                url:"{{route('intern.divisi')}}/"+id,
+                url:"{{route('intern.departemen')}}/"+id,
                 method:"POST",
-                data:{kode:kode,nama:nama,email_direktur:email_direktur,direktur:direktur,_token:csrf,_method:"patch"},
+                data:{kode:kode,nama:nama,email_kadep:email_kadep,kadep:kadep,_token:csrf,_method:"patch"},
                 success:function(res){
                     $("#save-edit-button").prop('disabled', false);
                     $("form#edit-modal input").val('');
@@ -296,12 +296,12 @@
             });
         });
 
-        function hapusDivisi(id) {
+        function hapusDepartemen(id) {
             $("button.delete-button[data-id='"+id+"']").prop('disabled', true);
-            var _c = confirm("Anda yakin akan menghapus Divisi ini ?");
+            var _c = confirm("Anda yakin akan menghapus Departemen ini ?");
             if(_c===true){
                 $.ajax({
-                    url:"{{route('intern.divisi')}}/"+id,
+                    url:"{{route('intern.departemen')}}/"+id,
                     method:"POST",
                     data:{_method:"delete",_token:csrf},
                     success:function (res) {

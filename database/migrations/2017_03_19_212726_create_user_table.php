@@ -45,8 +45,8 @@ class CreateUserTable extends Migration
             // $table->string('siup')->nullable();
             // $table->date('tanggal_siup')->nullable();
             $table->string('cluster')->nullable();
-            $table->integer('divisi_id')->unsigned();
-            $table->foreign('divisi_id')->references('id')->on('divisi')->onDelete('cascade');
+            $table->integer('departemen_id')->unsigned();
+            $table->foreign('departemen_id')->references('id')->on('departemen')->onDelete('cascade');
             $table->timestamps();
         });
     }

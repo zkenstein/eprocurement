@@ -35,8 +35,8 @@
                             <div class="row">
                                 <ul class="bxslider">
                                     <li><img src="/img/4.png" width="100%" /></li>
-                                    <li><img src="/img/5.png" width="100%" /></li>
-                                    <li><img src="/img/6.png" width="100%" /></li>
+                                    <li><img src="/img/7.png" width="100%" /></li>
+                                    <li><img src="/img/8.png" width="100%" /></li>
                                 </ul>
                                 <div class="col-sm-12 padding-side">
                                 	<p>E-Procurement PT.PAL memungkinkan Tender untuk mengunduh jadwal lelang bebas biaya dan mengajukan tawaran online melalui situs ini.</p>
