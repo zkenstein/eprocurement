@@ -72,4 +72,13 @@ class ClusterController extends Controller
         Cluster::where('id',$id)->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
+
+    public function getDataSelect2(Request $request){
+//        dd($request->all());
+        if($request->input('q')!=''){
+            return response()->json(['items'=>Cluster::where('nama','like','%'.$request->input('q').'%')->get()]);
+        }else{
+            return response()->json(null);
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 @section('style')
     <link rel="stylesheet" type="text/css" href="/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/select2/css/select2.min.css">
     <style type="text/css">
         .mystyle-column > a{
             color: #2b609e !important;
@@ -116,7 +117,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">HPS</label>
-                                            <input id="add-harga-netto" type="text" class="form-control input-sm will-clear maskmoney" placeholder="HPS" name="harga_netto">
+                                            <input id="add-hps" type="text" class="form-control input-sm will-clear maskmoney" placeholder="HPS" name="hps">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -148,7 +149,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                     	<div class="form-group">
                                             <label class="form-form-control-label">Cluster</label>
-                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker" multiple name="cluster[]">
+                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear select2" multiple name="cluster[]">
                                                 @foreach($list_cluster as $cluster)
                                                 <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                                 @endforeach
@@ -239,6 +240,8 @@
 @stop
 
 @section('script')
+    {{--<script type="text/javascript" src="/js/bootstrap-typeahead.min.js"></script>--}}
+    <script src="/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
         var resetNow = false;
         function refreshCluster() {
@@ -473,5 +476,6 @@
             resetNow = false;
             $('.modal').modal('hide')
         }
+        $("#add-cluster").select2();
     </script>
 @stop

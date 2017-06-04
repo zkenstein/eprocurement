@@ -16,7 +16,6 @@
     <!-- Icons -->
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/simple-line-icons.css" rel="stylesheet">
-
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="/bower_components/datatables/media/css/dataTables.bootstrap4.min.css">
     <!-- Main styles for this application -->
@@ -89,7 +88,6 @@
         .text-normal{
             color: #263238;
         }
-        
         .bootstrap-select.btn-group .dropdown-menu li{
             padding: 5px 15px;
         }
@@ -119,7 +117,6 @@
             cursor: pointer;
         }
     </style>
-
     @yield('style')
 
 </head>
@@ -598,14 +595,15 @@
     <!-- Bootstrap and necessary plugins -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/tether/dist/js/tether.min.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/bower_components/pace/pace.min.js"></script>
+    <!-- <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript" src="/original-bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="/bower_components/pace/pace.min.js"></script> -->
     <script src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="/bower_components/datatables/media/js/DataTablesBS4.js"></script>
 
 
     <!-- Plugins and scripts required by all views -->
-    <script src="/bower_components/chart.js/dist/Chart.min.js"></script>
+    <!-- <script src="/bower_components/chart.js/dist/Chart.min.js"></script> -->
 
     <!-- Accounting -->
     <script type="text/javascript" src="/js/accounting.min.js"></script>
@@ -715,8 +713,9 @@
         }
 
         function init(url) {
+
             /* ---------- Tooltip ---------- */
-            $('[rel="tooltip"],[data-rel="tooltip"]').tooltip({"placement":"bottom",delay: { show: 400, hide: 200 }});
+            // $('[rel="tooltip"],[data-rel="tooltip"]').tooltip({"placement":"bottom",delay: { show: 400, hide: 200 }});
             /* ---------- Popover ---------- */
             $('[rel="popover"],[data-rel="popover"],[data-toggle="popover"]').popover();
         }

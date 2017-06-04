@@ -1,7 +1,7 @@
-divisi -> departemen
+divisi -> departemen[v]
 
-nama kepala departemen (bukan direktur)
-email kepala departemen
+nama kepala departemen (bukan direktur)[v]
+email kepala departemen[v]
 
 harga netto -> nilai HPS boleh diisi, bila kosonog -
 

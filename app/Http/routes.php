@@ -90,6 +90,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'GeneralController@validateInput',
 		'as'=>'validate'
 	]);
+    Route::get('/list_cluster',[
+        'uses'=>'ClusterController@getDataSelect2',
+        'as'=>'dataSelect2'
+    ]);
 
 	// HALAMAN BERANDA
 	Route::get('/',function(){

@@ -58,7 +58,7 @@ class PengumumanController extends Controller
                 ->orWhere('batas_akhir_waktu_penawaran','like','%'.$request->input('search.value').'%')
                 ->orWhere('validitas_harga','like','%'.$request->input('search.value').'%')
                 ->orWhere('waktu_pengiriman','like','%'.$request->input('search.value').'%')
-                ->orWhere('harga_netto','like','%'.$request->input('search.value').'%')
+                ->orWhere('nilai_hps','like','%'.$request->input('search.value').'%')
                 ->orWhere('mata_uang','like','%'.$request->input('search.value').'%')
                 ->orWhere('max_register','like','%'.$request->input('search.value').'%')
                 ->orWhereHas('picInfo',function($q) use($request){
@@ -99,7 +99,7 @@ class PengumumanController extends Controller
             break;
             /*
             case "3":
-                $orderBy = 'harga_netto';
+                $orderBy = 'nilai_hps';
             break;
             */
             default:
@@ -115,7 +115,7 @@ class PengumumanController extends Controller
                 ->orWhere('batas_akhir_waktu_penawaran','like','%'.$request->input('search.value').'%')
                 ->orWhere('validitas_harga','like','%'.$request->input('search.value').'%')
                 ->orWhere('waktu_pengiriman','like','%'.$request->input('search.value').'%')
-                ->orWhere('harga_netto','like','%'.$request->input('search.value').'%')
+                ->orWhere('nilai_hps','like','%'.$request->input('search.value').'%')
                 ->orWhere('mata_uang','like','%'.$request->input('search.value').'%')
                 ->orWhere('max_register','like','%'.$request->input('search.value').'%')
                 ->orWhereHas('picInfo',function($q) use($request){
@@ -149,16 +149,10 @@ class PengumumanController extends Controller
         if($checkPengumuman!=null){
             return response()->json(['result'=>false,'message'=>'Ada pengumuman lelang yang sama dengan waktu auction dan cluster yang sama pada waktu tersebut, silahkan ganti ke jam atau tanggal lain']);
         }
-        // return response()->json($request->all());
-        // return response()->json($checkPengumuman);
         $lastPengumuman = Pengumuman::orderBy('kode', 'desc')->first();
         $kode = "";
         if($lastPengumuman==null){
-            // if(substr($lastPengumuman, 0,4)==\Carbon\Carbon::now()->year){
-                // $kode = (int)$lastPengumuman->kode + 1;
-            // }else{
                 $kode = \Carbon\Carbon::now()->year."0001";
-            // }
         }else{
             if(substr($lastPengumuman->kode, 0,4)==\Carbon\Carbon::now()->year){
                 $kode = (int)$lastPengumuman->kode + 1;
@@ -175,14 +169,13 @@ class PengumumanController extends Controller
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
 
 
-        // SETTING HPS YANG SEBELUMNYA DI SET HARGA NETTO
-        if($request->input('harga_netto')=='' || $request->input('harga_netto')=='Rp. 0') $request->merge(array('harga_netto'=>'0'));
-        else $request->merge(array('harga_netto'=>str_replace(["Rp","."," "], "", $request->input('harga_netto'))));
+        // SETTING HPS
+        if($request->input('nilai_hps')=='' || $request->input('nilai_hps')=='Rp. 0') $request->merge(array('nilai_hps'=>'0'));
+        else $request->merge(array('nilai_hps'=>str_replace(["Rp","."," "], "", $request->input('nilai_hps'))));
 
         // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
-
         // Jika ada sumber data excel
         $excel = null;
         if($request->hasFile('barang_csv')){
@@ -198,7 +191,8 @@ class PengumumanController extends Controller
         }
 
         // Mulai backgroundprocess insert user + kirim email
-        $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
+        $pic = User::with('departemenInfo')->where('role','pic')->where('id',$pengumuman->pic)->first();
+        $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'),$pic);
         $this->dispatch($job2);
 
         // cek jika ada inputan barang

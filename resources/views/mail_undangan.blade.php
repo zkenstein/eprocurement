@@ -29,9 +29,14 @@
 	            <td>Delivery Time</td>
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
+
 	        <tr>
-	            <td>HPS</td>
-	            <td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
+	            <td>Nilai HPS</td>
+				@if($pengumuman->nilai_hps > 0)
+	            	<td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
+				@else
+					<td>: -</td>
+				@endif
 	        </tr>
 	        <tr>
 	            <td>No SPPH</td>
