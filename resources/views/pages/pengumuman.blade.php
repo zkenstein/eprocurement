@@ -7,6 +7,10 @@
         .mystyle-column > a{
             color: #2b609e !important;
         }
+        .select2-selection.select2-selection--multiple{
+            border-radius: 0;
+            border-color: #d9d9d9 !important;
+        }
     </style>
 @stop
 
@@ -27,7 +31,7 @@
                         </div>
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
-                                <!--
+                                <?php /*
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 padding-side">
                                         <div class="form-group">
@@ -36,14 +40,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                -->
+                                */ ?>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <!--
+                                            <?php /*
                                             <label class="form-form-control-label">Kode</label>
                                             <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:pengumuman,kode|alpha_num" placeholder="Kode Pengumuman">
-                                            -->
+                                            */ ?>
                                             <div class="form-group">
                                             <label class="form-form-control-label">Deskripsi</label>
                                             <input id="add-deskripsi" type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
@@ -150,9 +154,19 @@
                                     	<div class="form-group">
                                             <label class="form-form-control-label">Cluster</label>
                                             <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear select2" multiple name="cluster[]">
-                                                @foreach($list_cluster as $cluster)
-                                                <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
-                                                @endforeach
+                                                @if($list_pic[0]->cluster==1)
+                                                    @if(isset($list_cluster['barang']))
+                                                        @foreach($list_cluster['barang'] as $cluster)
+                                                        <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                @else
+                                                    @if(isset($list_cluster['jasa']))
+                                                        @foreach($list_cluster['jasa'] as $cluster)
+                                                        <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -168,7 +182,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 padding-side">
+                                    <div class="col-sm-6 col-md-4 padding-side">
+                                        <div class="checkbox">
+                                            <label for="checkbox3">
+                                                <input type="checkbox" name="cc_kadep" value="1"> Kirim email ke Kadep
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-8 padding-side">
                                         <button id="add-submit" class="btn btn-primary pull-right" type="submit">Umumkan <i class="fa fa-bullhorn"></i></button>
                                     </div>
                                 </div>
@@ -210,7 +231,7 @@
                                         <th>Cluster</th>
                                         <th>Barang</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> 
                             </table>
                         </div>
                     </div>
@@ -248,9 +269,43 @@
             var data = $("#add-pic").find(":selected").data('jenis');
             
         }
+        var cluster_barang = null, cluster_jasa = null;
+        @if(isset($list_cluster['barang']))
+        var cluster_barang = [
+            @foreach($list_cluster['barang'] as $cluster)
+                {id:{{$cluster->id}} , text:"{{$cluster->kode.' - '.$cluster->nama}}"},
+            @endforeach
+        ];
+        @endif
+        @if(isset($list_cluster['jasa']))
+            var cluster_barang = [
+                @foreach($list_cluster['jasa'] as $cluster)
+                    {id:{{$cluster->id}} , text:"{{$cluster->kode.' - '.$cluster->nama}}"},
+                @endforeach
+            ];
+        @endif
 
         $(document).ready(function(){
             $("#form-add input:not([name='_token'], [name='_method'])").val('');
+            $("#add-pic").change(function(){
+                var s = $(this);
+                var jenis = $("option:selected", this).data('jenis');
+                $("#add-cluster").children().remove();
+                if(jenis==1){
+                    if(cluster_barang!=null){
+                        $.each(cluster_barang,function(key,obj){
+                            $("#add-cluster").append("<option value='"+obj.id+"'>"+obj.text+"</option>");
+                        });
+                    }
+                }else{
+                    if(cluster_jasa!=null){
+                        $.each(cluster_jasa,function(key,obj){
+                            $("#add-cluster").append("<option value='"+obj.id+"'>"+obj.text+"</option>");
+                        });
+                    }
+                }
+                $("#add-cluster").select2().trigger("change");
+            });
         });
 
         var barang = [];

@@ -175,6 +175,11 @@ class PengumumanController extends Controller
 
         // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
+
+        // SET CHECKBOX CC KE KADEP ATAU TIDAK
+        if($request->exists('cc_kadep')) $request->merge(array('cc_kadep' => 1));
+        else $request->merge(array('cc_kadep' => 0));
+
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
         // Jika ada sumber data excel
         $excel = null;
@@ -191,8 +196,7 @@ class PengumumanController extends Controller
         }
 
         // Mulai backgroundprocess insert user + kirim email
-        $pic = User::with('departemenInfo')->where('role','pic')->where('id',$pengumuman->pic)->first();
-        $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'),$pic);
+        $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
         $this->dispatch($job2);
 
         // cek jika ada inputan barang

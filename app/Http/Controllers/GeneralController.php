@@ -100,7 +100,7 @@ class GeneralController extends Controller
     public function pengumumanPage(Request $request)
     {
     	$data['TAG'] = 'pengumuman';
-        $data['list_cluster'] = Cluster::all();
+        $data['list_cluster'] = collect(Cluster::all())->groupBy('jenis');
         $data['list_barang'] = Barang::all();
         $data['list_pic'] = User::where('role','pic')->get();
     	return view('pages.pengumuman',$data);
