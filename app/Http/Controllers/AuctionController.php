@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Auction;
+use App\Pengumuman;
 use App\PengumumanUser;
 use App\BarangEksternal;
 use App\BarangEksternalUser;
@@ -17,51 +18,90 @@ class AuctionController extends Controller
 {
     public function pengajuan(Request $request)
     {
-        // INISIALISASI VARIABEL
+        $pengumuman = Pengumuman::find(session('pengumuman'));
         $total = 0;
-        $hargaBarang = [];
-        $hargaBarangEksternal = [];
-        
-        // MANIPULASI INPUTAN, MENGHAPUS . , 
-        $request->merge(array('harga_barang'=>str_replace(["Rp","."," "], "", $request->input('harga_barang'))));
-        $request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
+        // dd($request->all());
+        if($pengumuman->jenis=='itemize'){
+            // INISIALISASI VARIABEL
+            $hargaBarang = [];
+            $hargaBarangEksternal = [];
+            $grup = strtotime("now");
+            
+            // MANIPULASI INPUTAN, MENGHAPUS . , 
+            $request->merge(array('harga_barang'=>str_replace(["Rp","."," "], "", $request->input('harga_barang'))));
+            $request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
 
-        // PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
-        if($request->input('harga_barang')!=""){
-            foreach ($request->input('harga_barang') as $key => $value) {
-                if($value>0){
-                    $hargaBarang[$key] = new PengumumanBarangUser([
-                        'pengumuman_barang_id'=>$key,
-                        'user_id'=>session('id'),
-                        'harga'=>$value
-                    ]);
-                    $total+=$value;
-                }else{
-                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
+            // PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
+            if($request->input('harga_barang')!=""){
+                foreach ($request->input('harga_barang') as $key => $value) {
+                    if($value>0){
+                        $hargaBarang[$key] = new PengumumanBarangUser([
+                            'pengumuman_barang_id'=>$key,
+                            'user_id'=>session('id'),
+                            'harga'=>$value
+                        ]);
+                        $total+=$value;
+                    }else{
+                        return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
+                    }
                 }
             }
-        }
 
-        foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-            if($value>0){
-                $hargaBarangEksternal[$key] = new BarangEksternalUser([
-                    'barang_eksternal_id'=>$key,
-                    'user_id'=>session('id'),
-                    'harga'=>$value
-                ]);
-                $total+=$value;
-            }else{
-                return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
+            foreach ($request->input('harga_barang_eksternal') as $key => $value) {
+                if($value>0){
+                    $barangSebelumnya = BarangEksternalUser::where('user_id',session('id'))->where('barang_eksternal_id',$key)->orderBy('grup','desc')->first();
+                    if($barangSebelumnya!=null){
+                        if($barangSebelumnya->harga >= $value){
+                            $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                                'barang_eksternal_id'=>$key,
+                                'user_id'=>session('id'),
+                                'harga'=>$value,
+                                'grup'=>$grup
+                            ]);
+                            $total+=$value;
+                        }else{
+                            return response()->json(['value'=>$barangSebelumnya->harga,'result'=>false,'message'=>'Harga setiap barang harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key]);
+                        }
+                    }else{
+                        $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                            'barang_eksternal_id'=>$key,
+                            'user_id'=>session('id'),
+                            'harga'=>$value,
+                            'grup'=>$grup
+                        ]);
+                        $total+=$value;
+                    }
+                }else{
+                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
+                }
             }
-        }
 
-        foreach ($hargaBarang as $key => $obj) {
-            PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->delete();
-            $obj->save();
-        }
-        foreach ($hargaBarangEksternal as $key => $obj) {
-            BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->delete();
-            $obj->save();
+            foreach ($hargaBarang as $key => $obj) {
+                PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->delete();
+                $obj->save();
+            }
+            foreach ($hargaBarangEksternal as $key => $obj) {
+                BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->delete();
+                $obj->save();
+            }
+        }else{
+            $auction = Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first();
+            if($auction!=null){
+                if($request->input('total_harga_input')!='' || $request->input('total_harga_input')!=null){
+                    $total = str_replace(["Rp","."," "], "", $request->input('total_harga_input'));
+                    if($auction->total<$total){
+                        return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak, tawaran harus lebih kecil dari tawaran sebelumnya','total'=>$auction->total]);
+                    }
+                }else{
+                    return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak','total'=>0]);
+                }
+            }else{
+                if($request->input('total_harga_input')!='' || $request->input('total_harga_input')!=null){
+                    $total = str_replace(["Rp","."," "], "", $request->input('total_harga_input'));
+                }else{
+                    return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak','total'=>0]);
+                }
+            }
         }
         Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->delete();
         Auction::create([

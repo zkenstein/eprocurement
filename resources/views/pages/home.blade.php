@@ -127,7 +127,6 @@
                                                     @else
                                                     Login Subkontraktor
                                                     </button>
-                                                    <strong>Status : <span style="color:red;">Penuh</span></strong>
                                                     @endif
                                                 @else
                                                     <button data-id="{{$pengumuman->id}}" data-toggle="modal" data-target="#login-subkon-modal" class="btn btn-primary btn-register">

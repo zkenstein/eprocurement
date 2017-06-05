@@ -218,6 +218,7 @@ class PublickController extends Controller
             }else{
                 return redirect()->route('auction');
             }
+            $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
             return view('pages.home_subkontraktor',$data);
         }else{#JIKA BELUM MASUK KE TENDER LOAD HALAMAN HOME BIASA
             $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','picInfo'])->orderBy('created_at','desc')->get();

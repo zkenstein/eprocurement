@@ -2,6 +2,15 @@
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="/jquery-countdown/jquery.countdown.css">
+<link rel="stylesheet" type="text/css" href="/bxslider/jquery.bxslider.min.css">
+<style type="text/css">
+    .bx-wrapper{
+        margin-bottom: 10px;
+        padding: 0px;
+        box-shadow: 0px 0px white;
+        margin-top: -15px;
+    }
+</style>
 <style type="text/css">
     #barang-data{
         width: 100% !important;
@@ -28,6 +37,11 @@
                         </div>
                         <div class="card-block">
                             <div class="row">
+                                <ul class="bxslider">
+                                    <li><img src="/img/4.png" width="100%" /></li>
+                                    <li><img src="/img/7.png" width="100%" /></li>
+                                    <li><img src="/img/8.png" width="100%" /></li>
+                                </ul>
                                 <div class="col-sm-12 padding-side">
                                 	<div class="row">
                                 		<div class="col-sm-6 col-md-3 padding-side">
@@ -55,10 +69,15 @@
                                 	</div>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-3 padding-side">
-                                            Harga Netto
+                                            Nilai HPS
                                         </div>
                                         <div class="col-sm-6 col-md-6 padding-side">
-                                            : <span>{{number_format($pengumuman->nilai_hps,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
+                                            :
+                                            @if($pengumuman->nilai_hps>0)
+                                            <span>{{number_format($pengumuman->nilai_hps,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
+                                            @else
+                                            -
+                                            @endif
                                         </div>
                                     </div>
                                     <br>
@@ -166,8 +185,13 @@
                                                 @else
                                                 <div class="form-group">
                                                     <label class="form-form-control-label">Total Penawaran</label>
-                                                    <input id="add-penawaran" type="text" class="form-control input-sm maskmoney" placeholder="Masukkan total penawaran" name="total_penawaran">
+                                                    <input id="add-penawaran" type="text" class="form-control input-sm maskmoneywithoutrp" placeholder="Masukkan total penawaran" name="total_harga_input"
+                                                    @if(isset($total_auction))
+                                                    value = "{{$total_auction}}"
+                                                    @endif
+                                                    >
                                                 </div>
+                                                <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
                                                 @endif
                                             </form>
                                         </div>
@@ -186,11 +210,19 @@
 @section('script')
 <script type="text/javascript" src="/jquery-countdown/jquery.plugin.min.js"></script>
 <script type="text/javascript" src="/jquery-countdown/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="/bxslider/jquery.bxslider.min.js"></script>
 <script type="text/javascript">
+$(".maskmoneywithoutrp").maskMoney('mask');
+$('.bxslider').bxSlider({
+    controls:false,
+    auto:true,
+    speed:300,
+    pager:false
+});
+@if($pengumuman->jenis=="itemize")
 var total = 0;
 $(document).ready(function(){
     $("#total_harga_input").maskMoney('mask', {{$total_auction}});
-    $(".maskmoneywithoutrp").maskMoney('mask');
     $(".input-auction-barang").keyup();
     if(total<{{$pengumuman->nilai_hps}}){
         $("#btn-simpan").addClass('disabled');
@@ -200,8 +232,8 @@ $(document).ready(function(){
 });
 $("#form-auction").submit(function(e){
     e.preventDefault();
-    if(total>{{$pengumuman->nilai_hps}}){
-        alert("Jumlah total kurang dari harga netto");
+    if(total>{{$pengumuman->nilai_hps}} && {{$pengumuman->nilai_hps}}>0){
+        alert("Jumlah total lebih dari HPS");
     }else{
         $("input").removeClass('danger-input');
         $("#btn-simpan").addClass('disabled');
@@ -216,6 +248,11 @@ $("#form-auction").submit(function(e){
                 if(res.indication!=undefined){
                     $("#input_"+res.indication).addClass('danger-input');
                     $("#input_"+res.indication).focus();
+                    alert(res.message);
+                    if(res.value!=undefined){
+                        $("#input_"+res.indication).val(res.value);
+                        $("#input_"+res.indication).maskMoney('mask');
+                    }
                 }
             }
         });
@@ -236,6 +273,28 @@ $(".input-auction-barang").keyup(function(){
         $("#btn-simpan").removeClass('disabled');
     }
 });
+@else
+    $("#form-auction").submit(function(e){
+        e.preventDefault();
+        var theForm = $(this);
+        $("#btn-simpan").addClass('disabled');
+        $(theForm).ajaxSubmit({
+            url:"{{route('pengajuan')}}",
+            type:"POST",
+            success:function(res){
+                console.log(res);
+                $("#btn-simpan").removeClass("disabled");
+                $("#btn-simpan").text("Submit");
+                if(res.result===false){
+                    alert(res.message);
+                    $("#add-penawaran").val(res.total);
+                    $(".maskmoneywithoutrp").maskMoney('mask');
+                }
+            }
+        });
+    });
+@endif
+
 @if($allow_auction==false)
 $('#auction-button').countdown({until: +{{$countdown}}, format: 'yowdHMS', onExpiry: goToAuction});
 function goToAuction(){
