@@ -44,7 +44,7 @@ class CreateUserTable extends Migration
             // $table->string('tdp')->nullable();
             // $table->string('siup')->nullable();
             // $table->date('tanggal_siup')->nullable();
-            $table->string('cluster')->nullable();
+            $table->string('cluster')->nullable()->comment = "1 = barang, 2 = jasa";
             $table->integer('departemen_id')->unsigned();
             $table->foreign('departemen_id')->references('id')->on('departemen')->onDelete('cascade');
             $table->timestamps();

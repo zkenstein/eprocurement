@@ -60,17 +60,20 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
             });
         }
         foreach($listUser as $user){
-            $kode_masuk = substr(md5(uniqid($pengumuman->id.'-'.$user->id, true)),5,6);
-            $mailer->queue('mail_undangan',['departemen_id'=>$user->departemen_id,'nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk,'departemen'=>$pengumuman->picInfo->departemenInfo],function($message) use ($user, $file, $pengumuman){
-                $message->to($user->email, $user->nama)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
-                $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
-                if($file!=null) $message->attach(storage_path('app/'.$file));
-            });
-            PengumumanUser::create([
-                'pengumuman_id' => $pengumuman->id,
-                'user_id' => $user->id,
-                'kode_masuk' => $kode_masuk
-            ]);
+            $pengumumanUser = PengumumanUser::where('user_id',$user->id)->where('pengumuman_id',$pengumuman->id)->first();
+            if($pengumumanUser==null){
+                $kode_masuk = substr(md5(uniqid($pengumuman->id.'-'.$user->id, true)),5,6);
+                $mailer->queue('mail_undangan',['departemen_id'=>$user->departemen_id,'nama_perusahaan'=>$user->nama,'pengumuman'=>$this->pengumuman,'kode_registrasi'=>$kode_masuk,'departemen'=>$pengumuman->picInfo->departemenInfo],function($message) use ($user, $file, $pengumuman){
+                    $message->to($user->email, $user->nama)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
+                    $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
+                    if($file!=null) $message->attach(storage_path('app/'.$file));
+                });
+                PengumumanUser::create([
+                    'pengumuman_id' => $pengumuman->id,
+                    'user_id' => $user->id,
+                    'kode_masuk' => $kode_masuk
+                ]);
+            }
         }
     }
 }

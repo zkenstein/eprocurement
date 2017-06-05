@@ -58,7 +58,7 @@
                                             Harga Netto
                                         </div>
                                         <div class="col-sm-6 col-md-6 padding-side">
-                                            : <span>{{number_format($pengumuman->harga_netto,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
+                                            : <span>{{number_format($pengumuman->nilai_hps,0,",",".").' ('.$pengumuman->mata_uang.')'}}</span>
                                         </div>
                                     </div>
                                     <br>
@@ -91,6 +91,7 @@
                     </div>
                 </div>
             </div>
+            @if($pengumuman->pemenang==null)
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -104,6 +105,7 @@
                                         <div class="col-sm-12 padding-side">
                                             <form method="post" action="" id="form-auction">
                                                 <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
+                                                @if($pengumuman->jenis=="itemize")
                                                 <table id="barang-data" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -161,6 +163,12 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+                                                @else
+                                                <div class="form-group">
+                                                    <label class="form-form-control-label">Total Penawaran</label>
+                                                    <input id="add-penawaran" type="text" class="form-control input-sm maskmoney" placeholder="Masukkan total penawaran" name="total_penawaran">
+                                                </div>
+                                                @endif
                                             </form>
                                         </div>
                                     </div>
@@ -170,6 +178,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @stop
@@ -183,7 +192,7 @@ $(document).ready(function(){
     $("#total_harga_input").maskMoney('mask', {{$total_auction}});
     $(".maskmoneywithoutrp").maskMoney('mask');
     $(".input-auction-barang").keyup();
-    if(total<{{$pengumuman->harga_netto}}){
+    if(total<{{$pengumuman->nilai_hps}}){
         $("#btn-simpan").addClass('disabled');
     }else{
         $("#btn-simpan").removeClass('disabled');
@@ -191,7 +200,7 @@ $(document).ready(function(){
 });
 $("#form-auction").submit(function(e){
     e.preventDefault();
-    if(total>{{$pengumuman->harga_netto}}){
+    if(total>{{$pengumuman->nilai_hps}}){
         alert("Jumlah total kurang dari harga netto");
     }else{
         $("input").removeClass('danger-input');
@@ -221,7 +230,7 @@ $(".input-auction-barang").keyup(function(){
             total+=parseInt(val.replace(/[^\w\s]/gi, ''));
     });
     $("#total_harga_input").maskMoney('mask', total);
-    if(total<{{$pengumuman->harga_netto}}){
+    if(total<{{$pengumuman->nilai_hps}}){
         $("#btn-simpan").addClass('disabled');
     }else{
         $("#btn-simpan").removeClass('disabled');

@@ -121,7 +121,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">HPS</label>
-                                            <input id="add-hps" type="text" class="form-control input-sm will-clear maskmoney" placeholder="HPS" name="hps">
+                                            <input id="add-hps" type="text" class="form-control input-sm will-clear maskmoney" placeholder="HPS" name="nilai_hps">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -151,23 +151,32 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
-                                    	<div class="form-group">
-                                            <label class="form-form-control-label">Cluster</label>
-                                            <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear select2" multiple name="cluster[]">
-                                                @if($list_pic[0]->cluster==1)
-                                                    @if(isset($list_cluster['barang']))
-                                                        @foreach($list_cluster['barang'] as $cluster)
-                                                        <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
-                                                        @endforeach
+                                        <div class="row">
+                                            <div class="form-group col-sm-6 padding-side">
+                                                <label class="form-form-control-label">Cluster</label>
+                                                <select required placeholder="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear select2" multiple name="cluster[]">
+                                                    @if($list_pic[0]->cluster==1)
+                                                        @if(isset($list_cluster['barang']))
+                                                            @foreach($list_cluster['barang'] as $cluster)
+                                                            <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    @else
+                                                        @if(isset($list_cluster['jasa']))
+                                                            @foreach($list_cluster['jasa'] as $cluster)
+                                                            <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
+                                                            @endforeach
+                                                        @endif
                                                     @endif
-                                                @else
-                                                    @if(isset($list_cluster['jasa']))
-                                                        @foreach($list_cluster['jasa'] as $cluster)
-                                                        <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                @endif
-                                            </select>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-6 padding-side">
+                                                <label class="form-form-control-label">Jenis Auction</label>
+                                                <select required id="add-jenis" class="form-control will-clear" name="jenis">
+                                                    <option value="group">Group</option>
+                                                    <option value="itemize">Itemize</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -357,7 +366,7 @@
                     "className": "mystyle-column",
                     "targets": 0,
                     "render": function(data, type, row, meta){
-                        var res = "<strong>Kode Pengumuman : </strong><a>"+row.kode+"</a><br><br>Kode PIC : <a>"+row.pic_info.kode+"</a><br>Nama PIC : "+row.pic_info.nama+"<br>Telp PIC : "+row.pic_info.telp+"<br>Email PIC: "+row.pic_info.email;
+                        var res = "<strong>Kode Pengumuman : </strong><a>"+row.kode+"</a><br><strong>Deskripsi </strong>: "+row.deskripsi+" <br><br>Kode PIC : <a>"+row.pic_info.kode+"</a><br>Nama PIC : "+row.pic_info.nama+"<br><br>Jenis Auction : <strong>"+row.jenis+"</strong>";
                         return res;
                     }
                 },

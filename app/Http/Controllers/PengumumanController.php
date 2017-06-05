@@ -142,6 +142,7 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
+        // dd($request->all());
         $clusterInput = $request->input('cluster');
         $checkPengumuman = Pengumuman::where('start_auction',$request->input('start_auction'))->whereHas('listCluster',function($q)use($clusterInput){
             $q->whereIn('cluster_id',$clusterInput);
@@ -170,16 +171,18 @@ class PengumumanController extends Controller
 
 
         // SETTING HPS
-        if($request->input('nilai_hps')=='' || $request->input('nilai_hps')=='Rp. 0') $request->merge(array('nilai_hps'=>'0'));
-        else $request->merge(array('nilai_hps'=>str_replace(["Rp","."," "], "", $request->input('nilai_hps'))));
-
+        if($request->input('nilai_hps')=='' || $request->input('nilai_hps')=='Rp. 0'){
+            $request->merge(array('nilai_hps'=>'0'));
+        } 
+        else {
+            $request->merge(array('nilai_hps'=>str_replace(["Rp","."," "], "", $request->input('nilai_hps'))));
+        }
         // Jika yang mengumumkan adalah PIC, set PIC sebagai sessionnya
         if(session('role')=='pic') $request->merge(array('pic' => session('id')));
 
         // SET CHECKBOX CC KE KADEP ATAU TIDAK
         if($request->exists('cc_kadep')) $request->merge(array('cc_kadep' => 1));
         else $request->merge(array('cc_kadep' => 0));
-
         $pengumuman = Pengumuman::create($request->except(['_token','_method','batas_waktu_penawaran','barang_csv','cluster','barang']));
         // Jika ada sumber data excel
         $excel = null;

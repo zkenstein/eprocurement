@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pengumuman extends Model
 {
     protected $table = 'pengumuman';
-    protected $fillable = ['kode','deskripsi','batas_awal_waktu_penawaran','batas_akhir_waktu_penawaran','validitas_harga','waktu_pengiriman','nilai_hps','mata_uang','max_register','pic','file_excel','start_auction','durasi','syarat_dan_ketentuan','cc_kadep'];
+    protected $fillable = ['kode','deskripsi','batas_awal_waktu_penawaran','batas_akhir_waktu_penawaran','validitas_harga','waktu_pengiriman','nilai_hps','mata_uang','max_register','pic','file_excel','start_auction','durasi','syarat_dan_ketentuan','cc_kadep','jenis'];
 
     public function listCluster(){
     	return $this->hasMany('App\PengumumanCluster');

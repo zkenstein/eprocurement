@@ -32,7 +32,8 @@ class CreatePengumumanTable extends Migration
             $table->dateTime('start_auction');
             $table->integer('durasi')->default(0);
             $table->text('syarat_dan_ketentuan');
-            $table->tinyInteger('cc_kadep')->default(0);
+            $table->tinyInteger('cc_kadep')->default(0)->comment = "0 = tidak mengirim CC, 1 = mengirim CC";
+            $table->string('jenis')->default('group');
             $table->timestamps();
         });
     }

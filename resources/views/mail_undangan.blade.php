@@ -33,7 +33,7 @@
 	        <tr>
 	            <td>Nilai HPS</td>
 				@if($pengumuman->nilai_hps > 0)
-	            	<td>: {{$pengumuman->harga_netto}} ({{$pengumuman->mata_uang}})</td>
+	            	<td>: {{$pengumuman->nilai_hps}} ({{$pengumuman->mata_uang}})</td>
 				@else
 					<td>: -</td>
 				@endif
@@ -58,6 +58,7 @@
 	        </tr>
 	    </tbody>
 	</table>
+	@if($pengumuman->syarat_dan_ketentuan!=null && $pengumuman->syarat_dan_ketentuan!="")
 	<p>
 		<strong>Syarat & Kondisi Penawaran :</strong><br>
 		{!!nl2br($pengumuman->syarat_dan_ketentuan)!!}
@@ -69,6 +70,7 @@
 		</ol>
 		-->
 	</p>
+	@endif
 	<p><span style="color: #333333;"><br />Untuk melakukan pendaftaran silahkan klik menu register di halaman&nbsp;<a href="{{route('home')}}" target="_blank">Home E-Procurement PT. PAL</a>&nbsp;sesuai dengan kode proyek di atas dan masukkan email anda beserta kode_registrasi yang kami kirimkan di atas.&nbsp;</span>
 	</p>
 	<p>Demikian surat penawaran ini. Atas perhatiannya kami sampaikan terimakasih.</p>
