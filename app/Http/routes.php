@@ -246,6 +246,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'PengumumanController@detailPengumuman',
 		'as'=>'detail_pengumuman'
 	]);
+	Route::post('/extends_pengumuman',[
+	    'uses'=>'PengumumanController@extendsPengumuman',
+        'as'=>'extends_pengumuman'
+    ]);
 	Route::get('/live_auction/{id?}',[
 		'uses'=>'GeneralController@liveAuctionPage',
 		'as'=>'live_auction'

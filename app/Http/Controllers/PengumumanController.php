@@ -139,7 +139,6 @@ class PengumumanController extends Controller
 
     public function addData(Request $request)
     {
-        // dd($request->all());
         $clusterInput = $request->input('cluster');
         $checkPengumuman = Pengumuman::where('start_auction',$request->input('start_auction'))->whereHas('listCluster',function($q)use($clusterInput){
             $q->whereIn('cluster_id',$clusterInput);
@@ -279,6 +278,32 @@ class PengumumanController extends Controller
 
     public function getValidUser(Request $request,$id){
         return response()->json(PengumumanUser::with(['userInfo','pengumumanInfo'])->where('pengumuman_id',$id)->where('total_auction','>',0)->get());
+    }
+
+    public function extendsPengumuman(Request $request){
+        $pengumuman = Pengumuman::with('listCluster')->where('id',$request->input('id'));
+        if(session('role')!='admin'){
+            $pengumuman = $pengumuman->where('pic',session('id'));
+        }
+        $pengumuman = $pengumuman->first();
+        if($pengumuman==null){
+            return response()->json(['result'=>false,'message'=>'Anda tidak memiliki akses untuk pengumuman ini'],401);
+        }
+        $clusterInput = array();
+        foreach ($pengumuman->listCluster as $cluster){
+            array_push($clusterInput,$cluster->cluster_id);
+        }
+        $checkPengumuman = Pengumuman::where('id','<>',$pengumuman->id)->where('start_auction',$request->input('start_auction'))->whereHas('listCluster',function($q)use($clusterInput){
+            $q->whereIn('cluster_id',$clusterInput);
+        })->first();
+        if($checkPengumuman!=null){
+            return response()->json(['result'=>false,'message'=>'Ada pengumuman lelang yang sama dengan waktu auction dan cluster yang sama pada waktu tersebut, silahkan ganti ke jam atau tanggal lain']);
+        }
+        $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
+        $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
+        $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
+        $pengumuman->update($request->except(['csrf_token','method','id']));
+        return response()->json(['result'=>true]);
     }
 
 }

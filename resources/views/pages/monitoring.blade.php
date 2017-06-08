@@ -32,7 +32,7 @@
                                         <th style="min-width:165px;">Jumlah Pendaftar</th>
                                         <th>Selesai Penawaran</th>
                                         <th>Max Pendaftar</th>
-                                        <th>Auction</th>
+                                        <th>Waktu</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -63,12 +63,16 @@
                                 	Tidak dibatasi
                                 	@endif
                                 	</td>
-                                	<td>{{\Carbon\Carbon::parse($pengumuman->start_auction)->formatLocalized('%A %d %B %Y %H:%m').' - '.\Carbon\Carbon::parse($pengumuman->start_auction)->addMinutes($pengumuman->durasi)->formatLocalized('%H:%m').' ('.$pengumuman->durasi.' minutes)'}}</td>
+                                	<td>
+                                        <strong>Batas Waktu Pendaftaran</strong> : <br>{{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y %H:%m')}}
+                                        <br>
+                                        <strong>Auction</strong> : <br>{{\Carbon\Carbon::parse($pengumuman->start_auction)->formatLocalized('%A %d %B %Y %H:%m').' - '.\Carbon\Carbon::parse($pengumuman->start_auction)->addMinutes($pengumuman->durasi)->formatLocalized('%H:%m').' ('.$pengumuman->durasi.' menit)'}}
+                                    </td>
                                 	<td>
                                 		<div class="btn-group">
                                 			<button onclick="lihatDetailPengumuman({{$pengumuman->id}})" class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>
-                                			@if($pengumuman->count_register<2 && strtotime($pengumuman->batas_akhir_waktu_penawaran) <= strtotime(\Carbon\Carbon::now()))
-                                				<button title="Extends" class="btn btn-danger btn-sm" onclick="getDataPengumuman({{$pengumuman->id}})">Extends Waktu</button>
+                                			@if(count($pengumuman->validUser)<2 && strtotime($pengumuman->validitas_harga) <= strtotime(\Carbon\Carbon::now()))
+                                				<button data-id="{{$pengumuman->id}}" title="Extends" class="btn btn-danger btn-sm btn-extends" onclick="getDataPengumuman({{$pengumuman->id}})">Extends Waktu</button>
                                 			@else
 	                                			@if(strtotime($pengumuman->start_auction) >= strtotime(\Carbon\Carbon::now()))
 	                                				<button title="Auction belum dimulai" class="btn btn-info btn-sm" disabled>Live Auction</button>
@@ -171,11 +175,12 @@
         </div>
     </div>
 
-    <form class="modal fade" id="modal-extends" tabindex="-1" role="dialog" aria-hidden="true" method="post">
+    <form class="modal fade" id="modal-extends" tabindex="-1" role="dialog" aria-hidden="true" method="post" action="{{route('intern.extends_pengumuman')}}">
         <div class="modal-dialog modal-lg modal-primary" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Extends Pengumuman</h4>
+                    <input type="hidden" name="id" id="extends-id">
                 </div>
                 <div class="modal-body">
                 	{{csrf_field()}}
@@ -183,14 +188,14 @@
                     	<div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Batas Waktu Penawaran</label>
-                                <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" name="batas_waktu_penawaran">
+                                <input id="extends-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" name="batas_waktu_penawaran">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Validitas Harga</label>
-                                <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" name="validitas_harga">
+                                <input id="extends-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" name="validitas_harga">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -199,41 +204,20 @@
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Waktu Pengiriman</label>
-                                <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" name="waktu_pengiriman">
+                                <input id="extends-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" name="waktu_pengiriman">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
                                 <label class="form-form-control-label">Waktu Auction</label>
-                                <input id="add-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
+                                <input id="extends-waktu-auction" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Auction" name="start_auction">
                             </div>
                         </div>
-                        <?php /*
-                        <div class="col-sm-12 col-md-6 padding-side">
-                            <div class="form-group">
-                                <label class="form-form-control-label">Maksimal Pendaftar</label>
-                                <input id="add-max-register" type="number" class="form-control input-sm will-clear" placeholder="Kosongkan jika tidak dibatasi" name="max_register">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        */ ?>
-                    </div>
-                    <div class="row">
-                        <!-- HARUSNYA INI FIELD WAKTU AUCTION -->
-                        <?php /*
-                        <div class="col-sm-12 col-md-6 padding-side">
-                            <div class="form-group">
-                                <label class="form-form-control-label">Durasi (Menit)</label>
-                                <input id="add-durasi" type="number" required class="form-control input-sm will-clear" placeholder="Durasi" name="durasi">
-                            </div>
-                        </div>
-                        */ ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--<button type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')" id="save-quantity-button">Batal</button>-->
-                    <button type="submit" class="btn btn-primary">Extends</button>
+                    <button type="submit" class="btn btn-primary btn-extends">Extends</button>
                 </div>
             </div>
         </div>
@@ -281,7 +265,7 @@
                 format: 'YYYY-MM-DD h:mm A',
                 cancelLabel: 'Clear'
             },
-            autoUpdateInput: false
+            autoUpdateInput: true
         });
         $("input.singledate").daterangepicker({
             timePicker: true,
@@ -292,7 +276,8 @@
                 cancelLabel: 'Clear'
             },
             singleDatePicker: true,
-            autoApply:true
+            autoApply:true,
+            autoUpdateInput: true
         });
         $('input.daterange').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm'));
@@ -338,8 +323,45 @@
         }
 
         function getDataPengumuman (id) {
-            // $("input").val("");
-        	$("#modal-extends").modal("show");
+            $("input").val("");
+            $.ajax({
+                url:"{{route('intern.detail_pengumuman')}}/"+id,
+                success:function(res){
+                    $("#extends-waktu-pengiriman").val(res.data.waktu_pengiriman);
+                    $("#extends-waktu-auction").val(res.data.start_auction);
+                    $("#extends-validitas-harga").val(res.data.validitas_harga);
+                    $("#extends-batas-waktu").val(res.data.batas_awal_waktu_penawaran+" - "+res.data.batas_akhir_waktu_penawaran);
+                    $("#extends-waktu-pengiriman").val(res.data.waktu_pengiriman);
+                    $("#extends-id").val(res.data.id);
+                    $("#modal-extends").modal("show");
+
+                    $("input.daterange").daterangepicker({
+                        timePicker: true,
+                        timePickerIncrement: 15,
+                        timePicker24Hour:true,
+                        locale: {
+                            format: 'YYYY-MM-DD h:mm',
+                            cancelLabel: 'Clear'
+                        },
+                        autoUpdateInput: true
+                    });
+                    $("input.singledate").daterangepicker({
+                        timePicker: true,
+                        timePickerIncrement: 15,
+                        timePicker24Hour:true,
+                        locale: {
+                            format: 'YYYY-MM-DD HH:mm:ss',
+                            cancelLabel: 'Clear'
+                        },
+                        singleDatePicker: true,
+                        autoApply:true,
+                        autoUpdateInput: true
+                    });
+                    $('input.daterange').on('apply.daterangepicker', function(ev, picker) {
+                        $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm'));
+                    });
+                }
+            });
         }
 
         $(".data-valid-user").click(function(){
@@ -359,6 +381,29 @@
                     $("#modal-valid-user").modal('show');
                 }
             });
+        });
+
+        $("#modal-extends").submit(function(e){
+            e.preventDefault();
+            $("button.btn-extends").prop('disabled', true);
+            var _c = confirm("Anda yakin akan data yang diisikan telah benar ?");
+            if(_c===true){
+                var myForm = $(this);
+                myForm.ajaxSubmit({
+                    type:"POST",
+                    success:function(res,status,xhr,$form){
+                        $("button.btn-extends").prop('disabled', false);
+                        alert("Email pemberitahuan extends akan dikirimkan ke vendor/subkontraktro");
+                        if(res.result==true){
+                            location.reload();
+                        }else{
+                            alert(res.message);
+                        }
+                    }
+                });
+            }else{
+                $("#modal-extends").modal('hide');
+            }
         });
     </script>
 @stop
