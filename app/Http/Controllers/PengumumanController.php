@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PengumumanUser;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,14 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Pengumuman;
 use App\PengumumanBarang;
 use App\PengumumanCluster;
-use App\User;
-use App\UserCluster;
 use Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use App\Jobs\KirimEmailPemberitahuan;
 use App\Jobs\InsertPengumumanUser;
 use App\Jobs\InsertBarangEksternal;
-use App\BarangEksternal;
 
 class PengumumanController extends Controller
 {
@@ -278,6 +275,10 @@ class PengumumanController extends Controller
             return response()->download(storage_path('app/berita_acara/berita_acara_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
         }
         return response('Anda tidak memiliki akses',403);
+    }
+
+    public function getValidUser(Request $request,$id){
+        return response()->json(PengumumanUser::with(['userInfo','pengumumanInfo'])->where('pengumuman_id',$id)->where('total_auction','>',0)->get());
     }
 
 }

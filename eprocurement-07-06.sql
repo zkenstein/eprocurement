@@ -5,6 +5,13 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+INSERT INTO `departemen` (`id`, `kode`, `nama`, `kadep`, `email_kadep`, `keterangan`, `created_at`, `updated_at`) VALUES
+(0,	'udefined',	'udefined',	'udefined',	'udefined',	'udefined',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(1,	'ABC',	'Departemen 1',	'Kadep 1',	'upload.kurniawan@gmail.com',	'',	'2017-05-25 08:34:43',	'2017-06-01 17:44:41'),
+(2,	'DEF',	'Departemen 2',	'Kadep 2',	'pdmojokerto.agung@gmail.com',	'',	'2017-05-25 08:35:01',	'2017-06-01 17:45:04'),
+(4,	'GHI',	'Departemen 3',	'Kadep 3',	'kadep3@pal.co.id',	'',	'2017-06-01 17:46:13',	'2017-06-01 17:46:49'),
+(5,	'JKL',	'Departemen 4',	'Kadep 4',	'kadep4@pal.co.id',	'',	'2017-06-01 17:46:37',	'2017-06-01 17:46:37');
+
 INSERT INTO `cluster` (`id`, `kode`, `nama`, `jenis`, `created_at`, `updated_at`) VALUES
 (1,	'1005',	'GUNS, THROUGH 30 MM',	'barang',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (2,	'1010',	'GUNS, OVER 30 MM UP TO 75 MM',	'barang',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
@@ -687,13 +694,6 @@ INSERT INTO `cluster` (`id`, `kode`, `nama`, `jenis`, `created_at`, `updated_at`
 (679,	'1370',	'PYROTECHNICS',	'barang',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (680,	'1375',	'DEMOLITION MATERIALS',	'barang',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
 
-INSERT INTO `departemen` (`id`, `kode`, `nama`, `kadep`, `email_kadep`, `keterangan`, `created_at`, `updated_at`) VALUES
-(0,	'udefined',	'udefined',	'udefined',	'udefined',	'udefined',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(1,	'ABC',	'Departemen 1',	'Kadep 1',	'upload.kurniawan@gmail.com',	'',	'2017-05-25 08:34:43',	'2017-06-01 17:44:41'),
-(2,	'DEF',	'Departemen 2',	'Kadep 2',	'pdmojokerto.agung@gmail.com',	'',	'2017-05-25 08:35:01',	'2017-06-01 17:45:04'),
-(4,	'GHI',	'Departemen 3',	'Kadep 3',	'kadep3@pal.co.id',	'',	'2017-06-01 17:46:13',	'2017-06-01 17:46:49'),
-(5,	'JKL',	'Departemen 4',	'Kadep 4',	'kadep4@pal.co.id',	'',	'2017-06-01 17:46:37',	'2017-06-01 17:46:37');
-
 INSERT INTO `user` (`id`, `kode`, `nama`, `email`, `password`, `telp`, `bidang_usaha`, `session_id`, `role`, `aktif`, `kadaluarsa`, `alamat`, `fax`, `pimpinan`, `cp`, `telp_cp`, `email_cp`, `klas_usaha`, `klas`, `cluster`, `departemen_id`, `created_at`, `updated_at`) VALUES
 (1,	'ADH14AD',	'ADHI SEGARA SEMESTA CV.',	'kontraktor1@herobimbel.id',	'',	'031 8072 733',	'PELUMAS MERK \"SHELL\"',	'',	'subkontraktor',	'0000-00-00 00:00:00',	'2019-04-21 00:00:00',	'TAMAN PONDOK JATI DH -1 SIDOARDJO 61257 INDONESIA',	'',	'BUDIONO',	'',	'',	'',	'AGEN',	'AGEN',	'',	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (2,	'ADH04AD',	'ADHIWANGSA UTAMA PT.',	'kontraktor2@herobimbel.id',	'',	'031-71985728',	'MEKANIKAL, ELEKTRIKAL, METAL, WIRE ROPE, KAYU ,CABLE',	'',	'subkontraktor',	'0000-00-00 00:00:00',	'2018-12-31 00:00:00',	'JL. PONDOK BENOWO INDAH BLOCK CS/16-A SURABAYA',	'031-71985728',	'RUSLI KURNIAWAN',	'',	'',	'',	'UMUM',	'GENSUP',	'',	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
@@ -898,4 +898,4 @@ INSERT INTO `user_cluster` (`id`, `user_id`, `cluster_id`, `created_at`, `update
 (22,	10,	1,	'2017-05-25 14:27:58',	'2017-05-25 14:27:58'),
 (23,	10,	7,	'2017-05-25 14:27:58',	'2017-05-25 14:27:58');
 
--- 2017-06-05 00:43:13
+-- 2017-06-06 00:38:32

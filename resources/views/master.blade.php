@@ -116,6 +116,10 @@
         .btn{
             cursor: pointer;
         }
+        .btn-black{
+            background-color: black;
+            color: white;
+        }
     </style>
     @yield('style')
 

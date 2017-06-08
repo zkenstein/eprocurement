@@ -105,6 +105,7 @@
                                         <th>Email</th>
                                         <th>Telp</th>
                                         <th>Cluster</th>
+                                        <th>Status</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -117,6 +118,7 @@
                                         <th>Email</th>
                                         <th>Telp</th>
                                         <th>Cluster</th>
+                                        <th>Status</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </tfoot>
@@ -257,11 +259,40 @@
                     }
                 },
                 {
+                    "targets": 5,
+                    "render": function(data, type, row, meta){
+                        if(row.is_kondite==0){
+                            return "NON KONDITE";
+                        }else{
+                            return "<strong  style='color:red;'>KONDITE</strong>";
+                        }
+                    }
+                },
+                {
                 	"className":"no-print",
                     "orderable":false,
-                	"targets": 5,
+                	"targets": 6,
                     "render": function(data, type, row, meta){
-                        return '<div class="btn-group"><button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getSubkontraktor('+row.id+')"><i class="icon-pencil"></i></button><button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusSubkontraktor('+row.id+')"><i class="icon-trash"></i></button></div>';
+                	    var btn;
+                	    if(row.is_kondite==0){
+                	        btn = '<button type="button" class="btn btn-black btn-sm kondite-button" data-id="'+row.id+'" onclick="setKondite('+row.id+')" title="Set Kondite">' +
+                                '<i class="icon-close"></i>' +
+                                '</button>';
+                        }else{
+                            btn = '<button type="button" class="btn btn-info btn-sm kondite-button" data-id="'+row.id+'" onclick="setKondite('+row.id+')" title="Set UnKondite">' +
+                                '<i class="icon-reload"></i>' +
+                                '</button>';
+                        }
+                        return '' +
+                            '<div class="btn-group">' +
+                                '<button type="button" class="btn btn-warning btn-sm edit-button" data-id="'+row.id+'" onclick="getSubkontraktor('+row.id+')">' +
+                                    '<i class="icon-pencil"></i>' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger btn-sm delete-button" data-id="'+row.id+'" onclick="hapusSubkontraktor('+row.id+')">' +
+                                    '<i class="icon-trash"></i>' +
+                                '</button>' +
+                                btn +
+                            '</div>';
                     }
                 }
             ],
@@ -382,6 +413,25 @@
                     $('form#edit-modal').modal('hide');
                 }
             });
-        })
+        });
+
+        function setKondite(id) {
+            $("button.kondite-button[data-id='"+id+"']").prop('disabled', true);
+            var _c = confirm("Anda yakin akan mengganti status vendor/subkontraktor ini ?");
+            if(_c===true){
+                $.ajax({
+                    url:"/intern/subkontraktor_set_kondite/"+id,
+                    method:"POST",
+                    data:{_token:csrf},
+                    success:function (res) {
+                        $("button.kondite-button[data-id='"+id+"']").prop('disabled', false);
+                        table.ajax.reload();
+                        csrf = res.token;
+                    }
+                });
+            }else{
+                $("button.kondite-button[data-id='"+id+"']").prop('disabled', false);
+            };
+        }
 	</script>
 @stop

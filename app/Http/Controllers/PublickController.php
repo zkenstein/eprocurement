@@ -208,7 +208,7 @@ class PublickController extends Controller
                 if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;
                 else $data['isIWin'] = false;
             }
-            if(strtotime($data['pengumuman']->start_auction) > strtotime(\Carbon\Carbon::now())){
+            if(strtotime($data['pengumuman']->start_auction) >= strtotime(\Carbon\Carbon::now())){
                 $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
                 $data['allow_auction'] = false;
             }else if(strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)) < strtotime(\Carbon\Carbon::now())){
@@ -216,7 +216,14 @@ class PublickController extends Controller
                 $data['allow_auction'] = true;
                 $data['auction_finish'] = true;
             }else{
-                return redirect()->route('auction');
+                $user = User::find(session('id'));
+                if($user->is_kondite==0){
+                    return redirect()->route('auction');
+                }
+                else{
+                    session()->put('error','Anda terkena sangsi KONDITE, anda tidak bisa mengikuti auction');
+                    return redirect()->route('logout');
+                }
             }
             $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
             return view('pages.home_subkontraktor',$data);

@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            @if($pengumuman->pemenang==null)
+            @if(strtotime($pengumuman->validitas_harga)>strtotime("now"))
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">

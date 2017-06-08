@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\CreateKontrak::class,
-        Commands\CreateBeritaAcara::class
+        Commands\CreateBeritaAcara::class,
+        Commands\CekValiditasHarga::class
     ];
 
     /**
@@ -28,8 +29,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->exec('php '.base_path('artisan queue:listen --timeout=10'))->everyMinute()->appendOutputTo(base_path('schedule_output.txt'));
-        $schedule->exec('mv '.base_path('schedule_output.txt').' '.base_path('schedule_logs/'.\Carbon\Carbon::now()->toTimeString().'.txt'))->hourly();
+//        $schedule->exec('php '.base_path('artisan queue:work --timeout=10'))->everyMinute()->appendOutputTo(base_path('schedule_output.txt'));
+//        $schedule->exec('mv '.base_path('schedule_output.txt').' '.base_path('schedule_logs/'.\Carbon\Carbon::now()->toTimeString().'.txt'))->hourly();
         $schedule->command('create:kontrak')->everyMinute()->appendOutputTo(base_path('cek_pemenang_output.txt'));
+        $schedule->command('cek:validitas_harga')->everyMinute()->appendOutputTo(base_path('cek_validitas_output.txt'));
+
     }
 }

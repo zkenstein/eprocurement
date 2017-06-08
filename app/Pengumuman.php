@@ -17,6 +17,10 @@ class Pengumuman extends Model
     	return $this->hasMany('App\PengumumanUser');
     }
 
+    public function listValidUser(){
+        return $this->hasMany('App\PengumumanUser')->where('total_auction','>',0);
+    }
+
     public function listRegisteredUser()
     {
         return $this->hasMany('App\PengumumanUser')->whereNotNull('waktu_register');   

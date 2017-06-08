@@ -47,6 +47,7 @@ class CreateUserTable extends Migration
             $table->string('cluster')->nullable()->comment = "1 = barang, 2 = jasa";
             $table->integer('departemen_id')->unsigned();
             $table->foreign('departemen_id')->references('id')->on('departemen')->onDelete('cascade');
+            $table->boolean('is_kondite')->nullable()->default(false);
             $table->timestamps();
         });
     }

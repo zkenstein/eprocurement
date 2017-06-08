@@ -143,7 +143,7 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		Route::post('/subkontraktor','SubkontraktorController@addData');
 		Route::patch('/subkontraktor/{id?}','SubkontraktorController@editData');
 		Route::delete('/subkontraktor/{id?}','SubkontraktorController@deleteData');
-
+        Route::post('/subkontraktor_set_kondite/{id?}','SubkontraktorController@setKondite');
 
 		// PIC
 		Route::get('/pic',[
@@ -225,6 +225,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'uses'=>'PengumumanController@getData2',
 		'as'=>'pengumuman_data2'
 	]);
+	Route::get('list_valid_user/{id?}',[
+	    'uses'=>'PengumumanController@getValidUser',
+        'as'=>'pengumuman_valid_user'
+    ]);
 	// DOWNLOAD FILE EXCEL PENGUMUMAN
 	Route::get('get_file_excel/{file_excel?}',[
 		'uses'=>'PengumumanController@getFileExcel',

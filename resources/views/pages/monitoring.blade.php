@@ -30,6 +30,7 @@
                                     <tr>
                                         <th style="min-width:165px;">Kode</th>
                                         <th style="min-width:165px;">Jumlah Pendaftar</th>
+                                        <th>Selesai Penawaran</th>
                                         <th>Max Pendaftar</th>
                                         <th>Auction</th>
                                         <th></th>
@@ -47,11 +48,14 @@
                                     @elseif($pengumuman->count_register==0)
                                         <strong style="color:red;">Belum ada pendaftar</strong>
                                 	@elseif($pengumuman->count_register==1)
-                                        <span style="color:red;">{{$pengumuman->count_register}} Sub kontraktor</span>
+                                        <span style="color:red;">{{$pengumuman->count_register}} <?php if($pengumuman->picInfo->cluster==1){ ?>Vendor<?php }else{ ?> Subkontraktor <?php } ?></span>
                                     @else
-                                		<span style="color:green;">{{$pengumuman->count_register}} Sub kontraktor</span>
+                                		<span style="color:green;">{{$pengumuman->count_register}} <?php if($pengumuman->picInfo->cluster==1){ ?>Vendor<?php }else{ ?> Subkontraktor <?php } ?></span>
                                 	@endif
                                 	</td>
+                                    <td>
+                                        <a href="javascript:;" class="data-valid-user" data-value="{{$pengumuman->id}}">{{count($pengumuman->listValidUser)}} <?php if($pengumuman->picInfo->cluster==1){ ?>Vendor<?php }else{ ?> Subkontraktor <?php } ?></a>
+                                    </td>
                                 	<td>
                                 	@if($pengumuman->max_register!=0)
                                 	{{$pengumuman->max_register}}
@@ -234,6 +238,23 @@
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="modal-valid-user" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="title-valid-user-modal"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 padding-side">
+                            <ul id="list-valid-user-place"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('script')
@@ -320,5 +341,24 @@
             // $("input").val("");
         	$("#modal-extends").modal("show");
         }
+
+        $(".data-valid-user").click(function(){
+            var id = $(this).data('value');
+            $("#list-valid-user-place").html('');
+            $.ajax({
+                url:"{{route('intern.pengumuman_valid_user')}}/"+id,
+                success:function(res){
+                    if(res.length>0){
+                        $.each(res,function(key,obj){
+                            $("#title-valid-user-modal").text('Vendor/Subkontraktor Yang Telah Melakukan Penawaran pada Pengumuman '+obj.pengumuman_info.kode);
+                            $("#list-valid-user-place").append('<li><strong>'+obj.user_info.kode+'</strong> - '+obj.user_info.nama+'</li>');
+                        });
+                    }else{
+                        $("#list-valid-user-place").append('Tidak Ada');
+                    }
+                    $("#modal-valid-user").modal('show');
+                }
+            });
+        });
     </script>
 @stop

@@ -18,4 +18,11 @@ class Cluster extends Model
     {
     	return $this->hasMany('App\UserCluster');
     }
+    /*FUNGSI PERCOBAAN
+    public function listUserNonKondite(){
+        return $this->hasMany('App\UserCluster')->whereHas('userInfo',function($q){
+            $q->where('is_kodite',0)->orWhere('is_kondite',null);
+        });
+    }
+    */
 }

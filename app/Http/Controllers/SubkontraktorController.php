@@ -31,7 +31,9 @@ class SubkontraktorController extends Controller
             break;
             case "3":
                 $orderBy = 'telp';
-            break;
+            case "5":
+                $orderBy = 'is_kondite';
+                break;
             default:
                 $orderBy = 'kode';
             break;
@@ -107,5 +109,13 @@ class SubkontraktorController extends Controller
     {
         User::where('id',$id)->delete();
         return response()->json(['result'=>true,'token'=>csrf_token()]);
+    }
+
+    public function setKondite(Request $request, $id){
+        $user = User::find($id);
+        $kondite = "";
+        if($user->is_kondite==0){ $user->is_kondite = 1; $user->save(); $kondite = 1; }
+        else{ $user->is_kondite = 0; $user->save(); $kondite = 0; }
+        return response()->json(['result'=>true,'token'=>csrf_token(),'kondite'=>$kondite]);
     }
 }
