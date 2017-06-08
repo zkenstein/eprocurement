@@ -141,7 +141,8 @@ class GeneralController extends Controller
     public function auctionPage(Request $request)
     {
         $allowAccessAuction = false;
-        $data['pengumuman'] = Pengumuman::find(session('pengumuman'));
+        $data['pengumuman'] = Pengumuman::with('listValidUser')->find(session('pengumuman'));
+        if(count($data['pengumuman']->listValidUser)<2) return redirect()->route('home');
         $startAuction = strtotime($data['pengumuman']->start_auction);
         $stopAuction = strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi));
 

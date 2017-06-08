@@ -87,19 +87,25 @@ class AuctionController extends Controller
         }else{
             $auction = Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first();
             if($auction!=null){
-                if($request->input('total_harga_input')!='' || $request->input('total_harga_input')!=null){
+                if($request->input('total_harga_input')!='' && $request->input('total_harga_input')!=null){
                     $total = str_replace(["Rp","."," "], "", $request->input('total_harga_input'));
                     if($auction->total<$total){
                         return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak, tawaran harus lebih kecil dari tawaran sebelumnya','total'=>$auction->total]);
+                    }
+                    if($total<=0){
+                        return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak, tawaran harus lebih dari 0','total'=>$auction->total]);
                     }
                 }else{
                     return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak','total'=>0]);
                 }
             }else{
-                if($request->input('total_harga_input')!='' || $request->input('total_harga_input')!=null){
+                if($request->input('total_harga_input')!='' && $request->input('total_harga_input')!=null){
                     $total = str_replace(["Rp","."," "], "", $request->input('total_harga_input'));
                 }else{
                     return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak','total'=>0]);
+                }
+                if($total<=0){
+                    return response()->json(['result'=>false,'message'=>'Tawaran anda ditolak, tawaran harus lebih dari 0']);
                 }
             }
         }
@@ -117,6 +123,10 @@ class AuctionController extends Controller
 	// FUNGSI INI MENGGUNAKAN MIDDELWARE VERIFYAUCTION UNTUK CEK APAKAH AUCTION SUDAH DIMLAI ATAU BELUM DAN APAKAH AUCTION SUDAH SELESAI ATAU BELUM
 	public function addAuction(Request $request)
 	{
+	    #CEK APAKAH USER YANG TELAH MELAKUKAN VALIDITAS HARGA SUDAH LEBIH DARI 1, JIKA BELUM REDIRECT KE HOME
+	    $p = Pengumuman::with('listValidUser')->find(session('pengumuman'));
+        if(count($p->listValidUser)<2) return redirect()->route('home');
+
 		// INISIALISASI VARIABEL
 		$total = 0;
 		$hargaBarang = [];

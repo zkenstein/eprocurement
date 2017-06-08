@@ -44,7 +44,7 @@
                                 	</td>
                                 	<td>
                                 	@if($pengumuman->count_register>=$pengumuman->max_register && $pengumuman->max_register!=0)
-                                		<span style="color:red;">{{$pengumuman->count_register}} (maksimal)</span>
+                                		<span style="color:green;">{{$pengumuman->count_register}} (maksimal)</span>
                                     @elseif($pengumuman->count_register==0)
                                         <strong style="color:red;">Belum ada pendaftar</strong>
                                 	@elseif($pengumuman->count_register==1)
@@ -66,12 +66,14 @@
                                 	<td>
                                         <strong>Batas Waktu Pendaftaran</strong> : <br>{{\Carbon\Carbon::parse($pengumuman->batas_akhir_waktu_penawaran)->formatLocalized('%A %d %B %Y %H:%m')}}
                                         <br>
+                                        <strong>Validitas Harga</strong> : <br>{{\Carbon\Carbon::parse($pengumuman->validitas_harga)->formatLocalized('%A %d %B %Y %H:%m')}}
+                                        <br>
                                         <strong>Auction</strong> : <br>{{\Carbon\Carbon::parse($pengumuman->start_auction)->formatLocalized('%A %d %B %Y %H:%m').' - '.\Carbon\Carbon::parse($pengumuman->start_auction)->addMinutes($pengumuman->durasi)->formatLocalized('%H:%m').' ('.$pengumuman->durasi.' menit)'}}
                                     </td>
                                 	<td>
                                 		<div class="btn-group">
                                 			<button onclick="lihatDetailPengumuman({{$pengumuman->id}})" class="btn btn-primary btn-sm" type="button" title="lihat detail"><i class="icon-eye"></i></button>
-                                			@if(count($pengumuman->validUser)<2 && strtotime($pengumuman->validitas_harga) <= strtotime(\Carbon\Carbon::now()))
+                                			@if(count($pengumuman->listValidUser)<2 && strtotime($pengumuman->validitas_harga) <= strtotime(\Carbon\Carbon::now()))
                                 				<button data-id="{{$pengumuman->id}}" title="Extends" class="btn btn-danger btn-sm btn-extends" onclick="getDataPengumuman({{$pengumuman->id}})">Extends Waktu</button>
                                 			@else
 	                                			@if(strtotime($pengumuman->start_auction) >= strtotime(\Carbon\Carbon::now()))
@@ -117,8 +119,8 @@
 	                				<td><span id="detail-waktu-pengiriman"></span></td>
 	                			</tr>
 	                			<tr>
-	                				<td>Harga Netto</td>
-	                				<td><span id="detail-harga-netto"></span></td>
+	                				<td>Nilai HPS</td>
+	                				<td><span id="detail-nilai-hps"></span></td>
 	                			</tr>
 	                		</table>
 	                	</div>
@@ -292,7 +294,7 @@
 	        			$("#detail-batas-waktu-penawaran").text(moment(res.data.batas_awal_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL')+" - "+moment(res.data.batas_akhir_waktu_penawaran,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-validitas-harga").text(moment(res.data.validitas_harga,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
 	        			$("#detail-waktu-pengiriman").text(moment(res.data.waktu_pengiriman,"YYYY-MM-DD HH:mm:ss").format('LLLL'));
-	        			$("#detail-harga-netto").text(accounting.formatMoney(res.data.harga_netto, "", 0, ".", ",")+''+" ("+res.data.mata_uang+")");
+	        			$("#detail-nilai-hps").text(accounting.formatMoney(res.data.nilai_hps, "", 0, ".", ",")+''+" ("+res.data.mata_uang+")");
 
 	        			$("#detail-kode-pic").text(res.data.pic_info.kode);
 	        			$("#detail-nama-pic").text(res.data.pic_info.nama);

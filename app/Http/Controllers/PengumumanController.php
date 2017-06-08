@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExtendsPengumuman;
 use App\PengumumanUser;
 use Illuminate\Http\Request;
 
@@ -302,6 +303,10 @@ class PengumumanController extends Controller
         $batas_waktu_penawaran = explode(" - ", $request->input('batas_waktu_penawaran'));
         $request->merge(array('batas_awal_waktu_penawaran' => $batas_waktu_penawaran[0].":00"));
         $request->merge(array('batas_akhir_waktu_penawaran' => $batas_waktu_penawaran[1].":00"));
+
+        $job = new ExtendsPengumuman($pengumuman);
+        $this->dispatch($job);
+
         $pengumuman->update($request->except(['csrf_token','method','id']));
         return response()->json(['result'=>true]);
     }

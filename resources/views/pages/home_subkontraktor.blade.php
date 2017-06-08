@@ -110,90 +110,92 @@
                     </div>
                 </div>
             </div>
-            @if(strtotime($pengumuman->validitas_harga)>strtotime("now"))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            Form Pengajuan
-                        </div>
-                        <div class="card-block">
-                            <div class="row">
-                                <div class="col-md-12 padding-side">
-                                    <div class="row">
-                                        <div class="col-sm-12 padding-side">
-                                            <form method="post" action="" id="form-auction">
-                                                <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
-                                                @if($pengumuman->jenis=="itemize")
-                                                <table id="barang-data" class="table table-bordered table-striped">
-                                                    <thead>
+
+            @if(strtotime($pengumuman->validitas_harga)>strtotime("now"))<?php /* JIKA MASIH BISA MEMASUKKAN PENAWARAN */ ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Form Pengajuan
+                            </div>
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-md-12 padding-side">
+                                        <div class="row">
+                                            <div class="col-sm-12 padding-side">
+                                                <form method="post" action="" id="form-auction">
+                                                    <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
+                                                    @if($pengumuman->jenis=="itemize")
+                                                    <table id="barang-data" class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="100">Kode</th>
+                                                                <th>Deskripsi</th>
+                                                                <th>Satuan</th>
+                                                                <th>Jumlah</th>
+                                                                <th width="250">Harga</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($list_barang as $barang)
                                                         <tr>
-                                                            <th width="100">Kode</th>
-                                                            <th>Deskripsi</th>
-                                                            <th>Satuan</th>
-                                                            <th>Jumlah</th>
-                                                            <th width="250">Harga</th>
+                                                            <td>{{$barang->barangInfo->kode}}</td>
+                                                            <td>{{$barang->barangInfo->deskripsi}}</td>
+                                                            <td>{{$barang->barangInfo->satuan}}</td>
+                                                            <td>{{$barang->quantity}}</td>
+                                                            <td>
+                                                                <input id="input_harga_barang{{$barang->id}}" required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                                                @if($barang->inUserAuction!=null)
+                                                                value = "{{$barang->inUserAuction->harga}}"
+                                                                @endif
+                                                                >
+                                                            </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($list_barang as $barang)
-                                                    <tr>
-                                                        <td>{{$barang->barangInfo->kode}}</td>
-                                                        <td>{{$barang->barangInfo->deskripsi}}</td>
-                                                        <td>{{$barang->barangInfo->satuan}}</td>
-                                                        <td>{{$barang->quantity}}</td>
-                                                        <td>
-                                                            <input id="input_harga_barang{{$barang->id}}" required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
-                                                            @if($barang->inUserAuction!=null)
-                                                            value = "{{$barang->inUserAuction->harga}}"
-                                                            @endif
-                                                            >
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                    @foreach($list_barang_eksternal as $barang)
-                                                    <tr>
-                                                        <td>{{$barang->kode}}</td>
-                                                        <td>{{$barang->deskripsi}}</td>
-                                                        <td>{{$barang->satuan}}</td>
-                                                        <td>{{$barang->quantity}}</td>
-                                                        <td>
-                                                            <input id="input_harga_barang_eksternal{{$barang->id}}" required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
-                                                            @if($barang->inUserAuction!=null)
-                                                            value = "{{$barang->inUserAuction->harga}}"
-                                                            @endif
-                                                            >
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                    <tr>
-                                                        <td colspan="4">
-                                                            <strong>Total</strong>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" disabled class="form-control maskmoneywithoutrp" id="total_harga_input">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4"></td>
-                                                        <td>
-                                                            <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                @else
-                                                <div class="form-group">
-                                                    <label class="form-form-control-label">Total Penawaran</label>
-                                                    <input id="add-penawaran" type="text" class="form-control input-sm maskmoneywithoutrp" placeholder="Masukkan total penawaran" name="total_harga_input"
-                                                    @if(isset($total_auction))
-                                                    value = "{{$total_auction}}"
+                                                        @endforeach
+                                                        @foreach($list_barang_eksternal as $barang)
+                                                        <tr>
+                                                            <td>{{$barang->kode}}</td>
+                                                            <td>{{$barang->deskripsi}}</td>
+                                                            <td>{{$barang->satuan}}</td>
+                                                            <td>{{$barang->quantity}}</td>
+                                                            <td>
+                                                                <input id="input_harga_barang_eksternal{{$barang->id}}" required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                                                @if($barang->inUserAuction!=null)
+                                                                value = "{{$barang->inUserAuction->harga}}"
+                                                                @endif
+                                                                >
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <strong>Total</strong>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" disabled class="form-control maskmoneywithoutrp" id="total_harga_input">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4"></td>
+                                                            <td>
+                                                                <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    @else
+                                                    <div class="form-group">
+                                                        <label class="form-form-control-label">Total Penawaran</label>
+                                                        <input id="add-penawaran" type="text" class="form-control input-sm maskmoneywithoutrp" placeholder="Masukkan total penawaran" name="total_harga_input"
+                                                        @if(isset($total_auction))
+                                                        value = "{{$total_auction}}"
+                                                        @endif
+                                                        >
+                                                    </div>
+                                                    <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
                                                     @endif
-                                                    >
-                                                </div>
-                                                <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
-                                                @endif
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +203,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            @if(isset($waiting_for_extends))
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-md-12 padding-side">
+                                        <p>Mohon maaf, jumlah pendaftar untuk pengumuman lelang ini belum memenuhi target. Kami akan melakukan extends waktu untuk pengumuman ini hingga dapat memenuhi target peserta</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
     </div>

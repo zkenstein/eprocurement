@@ -30,9 +30,9 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 //        $schedule->exec('php '.base_path('artisan queue:work --timeout=10'))->everyMinute()->appendOutputTo(base_path('schedule_output.txt'));
-//        $schedule->exec('mv '.base_path('schedule_output.txt').' '.base_path('schedule_logs/'.\Carbon\Carbon::now()->toTimeString().'.txt'))->hourly();
         $schedule->command('create:kontrak')->everyMinute()->appendOutputTo(base_path('cek_pemenang_output.txt'));
+        $schedule->exec('mv '.base_path('cek_pemenang_output.txt').' '.base_path('cron_logs/'.\Carbon\Carbon::now()->toTimeString().'cek_pemenang_output.txt'))->hourly();
         $schedule->command('cek:validitas_harga')->everyMinute()->appendOutputTo(base_path('cek_validitas_output.txt'));
-
+        $schedule->exec('mv '.base_path('cek_validitas_output.txt').' '.base_path('cron_logs/'.\Carbon\Carbon::now()->toTimeString().'cek_validitas_output.txt'))->hourly();
     }
 }

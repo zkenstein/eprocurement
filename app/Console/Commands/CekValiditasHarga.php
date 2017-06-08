@@ -43,8 +43,8 @@ class CekValiditasHarga extends Command
     public function handle()
     {
         $this->info("Cek validitas [".\Carbon\Carbon::now()."]");
-        $pengumuman = Pengumuman::with(['listRegisteredUser.userInfo'])->where('validitas_harga','<=',\Carbon\Carbon::now())->get();
-        if(count($pengumuman)<0){
+        $pengumuman = Pengumuman::with(['listRegisteredUser.userInfo'])->whereHas('listUnvalidUser',function($q){})->where('validitas_harga','<=',\Carbon\Carbon::now())->get();
+        if(count($pengumuman)>0){
           $this->info("Pengumuman dengan validitas harga sekarang ditemukan [".\Carbon\Carbon::now()."]");
                foreach ($pengumuman as $p){
                    foreach ($p->listRegisteredUser as $registeredUser){
@@ -58,7 +58,9 @@ class CekValiditasHarga extends Command
                                $message->to($data['user']->email, $data['user']->nama)->subject("Sangsi Kondite Proyek ".$data['pengumuman']->kode);
                                $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
                            });
-                           $this->info("Mail Kondite ke ".$user->email." [".\Carbon\Carbon::now()."]");
+                           $this->info("Mail Kondite ke ".$user->email." selesai dikirim[".\Carbon\Carbon::now()."]");
+                           $registeredUser->delete();
+                           $this->info("User ".$user->nama." dihapus dari pengumuman [".\Carbon\Carbon::now()."]");
                        }
                    }
                }

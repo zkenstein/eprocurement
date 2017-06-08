@@ -29,7 +29,12 @@
 	            <td>Delivery Time</td>
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
-
+			<?php /*
+			<tr>
+				<td>Waktu Auction</td>
+				<td>: {{$pengumuman->start_auctionn}} ({{$pengumuman->durasi}} Menit)</td>
+			</tr>
+			*/ ?>
 	        <tr>
 	            <td>Nilai HPS</td>
 				@if($pengumuman->nilai_hps > 0)
@@ -51,10 +56,6 @@
             			Tidak dibatasi
             		@endif
 	            </td>
-	        </tr>
-	        <tr>
-	            <td>&nbsp;</td>
-	            <td>&nbsp;</td>
 	        </tr>
 	    </tbody>
 	</table>
