@@ -58,6 +58,8 @@ class CekValiditasHarga extends Command
                                $message->to($data['user']->email, $data['user']->nama)->subject("Sangsi Kondite Proyek ".$data['pengumuman']->kode);
                                $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
                            });
+                           $p->count_register = $p->count_register-1;
+                           $p->save();
                            $this->info("Mail Kondite ke ".$user->email." selesai dikirim[".\Carbon\Carbon::now()."]");
                            $registeredUser->delete();
                            $this->info("User ".$user->nama." dihapus dari pengumuman [".\Carbon\Carbon::now()."]");

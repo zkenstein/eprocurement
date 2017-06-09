@@ -39,6 +39,7 @@
                         <div class="card-block">
                             <form method="post" action="" id="form-auction">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}" class="csrf_input">
+                                @if($pengumuman->jenis=='itemize')    
                                 <table id="barang-data" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -96,6 +97,17 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                @else
+                                <div class="form-group">
+                                    <label class="form-form-control-label">Total</label>
+                                    <input id="add-auction" type="text" class="form-control input-sm maskmoneywithoutrp" placeholder="Masukkan total auction" name="total_auction"
+                                    @if(isset($total_auction))
+                                    value = "{{$total_auction}}"
+                                    @endif
+                                    >
+                                </div>
+                                <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -162,6 +174,12 @@
                     if(res.indication!=undefined){
                         $("#input_"+res.indication).addClass('danger-input');
                         $("#input_"+res.indication).focus();
+                    }
+                    if(res.result==false){
+                        alert(res.message);
+                    }
+                    if(res.total!=undefined){
+                        $("#add-auction").val(res.total);
                     }
                 }
             })

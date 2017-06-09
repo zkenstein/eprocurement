@@ -42,7 +42,7 @@ class CreateKontrak extends Command
     public function handle()
     {
         $this->info("Cek pemenang [".\Carbon\Carbon::now()."]");
-        $pengumuman = Pengumuman::with(['listAuction.userInfo','listRegisteredUser.userInfo'])->where('start_auction','<=',\Carbon\Carbon::now())->whereNull('pemenang')->get();
+        $pengumuman = Pengumuman::with(['listAuction.userInfo','listRegisteredUser.userInfo'])->has('listValidUser','>','1')->where('start_auction','<=',\Carbon\Carbon::now())->whereNull('pemenang')->get();
         
         if(count($pengumuman)>0){
             foreach($pengumuman as $p){

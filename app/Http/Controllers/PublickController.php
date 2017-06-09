@@ -123,8 +123,9 @@ class PublickController extends Controller
         $data['captcha_src'] = captcha_src();
         // CEK APAKAH USER SUDAH MASUK SEBAGAI SUBKONTRAKTOR DALAM SEBUAH TENDER ATAU BELUM
         if(session()->has('pengumuman')){#JIKA SUDAH,  MASUK KE TENDER LOAD HALAMAN HOME TENDER
-
-            $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
+            $pengumumanUser = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first();
+            if($pengumumanUser==null) return redirect()->route('logout');
+            $data['total_auction'] = $pengumumanUser->total_auction;
             // MENGAMBIL DATA LIST BARANG INTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
             $data['list_barang'] = PengumumanBarang::with(['barangInfo','inUserAuction'])->where('pengumuman_id',session('pengumuman'))->get();
             // MENGAMBIL DATA LIST BARANG EKSTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
@@ -147,8 +148,8 @@ class PublickController extends Controller
                 $data['auction_finish'] = true;
             }else{
                 if(count($data['pengumuman']->listValidUser)>1){#JIKA SUDAH MASUK AUCTION DAN USER YANG VALID SUDAH LEBIH DARI 1
-//                    return redirect()->route('auction');
-                    dd(count($data['pengumuman']->listValidUser));
+                   return redirect()->route('auction');
+                    
                 }else{#JIKA SUDAH MASUK AUCTION DAN USER YANG VALID BELUM LEBIH DARI 1
                     $data['countdown'] = 0;
                     $data['waiting_for_extends'] = true;
