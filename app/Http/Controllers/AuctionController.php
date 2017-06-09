@@ -197,15 +197,23 @@ class AuctionController extends Controller
             $pengumumanUser = PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->first();
             if($pengumumanUser->total_auction<$total){
                 return response()->json(['result'=>false,'message'=>'Tawaran harus lebih kecil dari tawaran sebelumnya','total'=>$pengumumanUser->total_auction]);
+            }else if($pengumumanUser->total_auction==$total){
+                return response()->json(['result'=>true,'message'=>'Tawaran anda tidak disimpan karena sama dengan tawaran sebelumnya']);
             }else{
                 // CEK APAKAH TOTAL INPUTAN SAMA DENGAN USER LAIN
-                $pengumumanUser2 = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->first();
+                $pengumumanUser2 = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->where('user_id','<>',session('id'))->first();
                 // JIKA SUDAH DIAMBIL USER LAIN
                 if($pengumumanUser2!=null) {
                     return response()->json(['result'=>false,'message'=>'Total auction yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga barang sebelum submit','total'=>$pengumumanUser->total_auction]);
                 }
                 $pengumumanUser->total_auction = $total;
                 $pengumumanUser->save();
+                Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
+                Auction::create([
+                    'pengumuman_id'=>session('pengumuman'),
+                    'user_id'=>session('id'),
+                    'total'=>$total
+                ]);
                 return response()->json(['result'=>true,'message'=>'Tawaran anda berhasil disimpan']);
             }
         }

@@ -1,18 +1,274 @@
-Cek validitas [2017-06-09 11:01:01]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:01:01]
-Cek validitas [2017-06-09 11:02:01]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:02:01]
-Cek validitas [2017-06-09 11:03:02]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:03:02]
-Cek validitas [2017-06-09 11:04:02]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:04:02]
-Cek validitas [2017-06-09 11:05:01]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:05:01]
-Cek validitas [2017-06-09 11:06:01]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:06:01]
-Cek validitas [2017-06-09 11:07:01]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:07:01]
-Cek validitas [2017-06-09 11:08:02]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:08:02]
-Cek validitas [2017-06-09 11:09:02]
-Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 11:09:02]
+Cek validitas [2017-06-09 13:01:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:02:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:03:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:04:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:05:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:06:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:07:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:08:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:09:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:10:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:11:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:12:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:13:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:14:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:15:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:16:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:17:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:18:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:19:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:20:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:21:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:22:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:23:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:24:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:25:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:26:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:27:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:28:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:29:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:30:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:31:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:32:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:33:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:34:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-09 13:41:22]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:41:22]
+Cek validitas [2017-06-09 13:42:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:42:02]
+Cek validitas [2017-06-09 13:43:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:43:02]
+Cek validitas [2017-06-09 13:44:04]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:44:04]
+Cek validitas [2017-06-09 13:45:04]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:45:04]
+Cek validitas [2017-06-09 13:46:04]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:46:04]
+Cek validitas [2017-06-09 13:47:04]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:47:04]
+Cek validitas [2017-06-09 13:48:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:48:02]
+Cek validitas [2017-06-09 13:49:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:49:03]
+Cek validitas [2017-06-09 13:50:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:50:02]
+Cek validitas [2017-06-09 13:51:01]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:51:01]
+Cek validitas [2017-06-09 13:52:03]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:52:03]
+Cek validitas [2017-06-09 13:53:03]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:53:03]
+Cek validitas [2017-06-09 13:54:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:54:03]
+Cek validitas [2017-06-09 13:55:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:55:02]
+Cek validitas [2017-06-09 13:56:03]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:56:03]
+Cek validitas [2017-06-09 13:57:03]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:57:03]
+Cek validitas [2017-06-09 13:58:02]
+Pengumuman dengan validitas harga sekarang ditemukan [2017-06-09 13:58:02]

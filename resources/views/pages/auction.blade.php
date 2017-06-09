@@ -181,6 +181,7 @@
                     if(res.total!=undefined){
                         $("#add-auction").val(res.total);
                     }
+                    $(".maskmoneywithoutrp").maskMoney('mask');
                 }
             })
         });
