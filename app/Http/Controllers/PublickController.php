@@ -131,9 +131,7 @@ class PublickController extends Controller
             // MENGAMBIL DATA LIST BARANG EKSTERNAL YANG DILELANG DAN PENAWARAN USER SEBELUMNYA
             $data['list_barang_eksternal'] = BarangEksternal::with('inUserAuction')->where('pengumuman_id',session('pengumuman'))->get();
 
-
-
-
+            $data['isIWin'] = false;
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','listValidUser'])->find(session('pengumuman'));
             if(  $data['pengumuman']->pemenang!=null  ){
                 if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;

@@ -1,6 +1,7 @@
 @extends('master')
 
 @section('style')
+    <link rel="stylesheet" href="/select2/css/select2.min.css">
 	<style type="text/css">
 		#subkontraktor-data{
 			width: 100% !important;
@@ -8,6 +9,13 @@
         .table-responsive{
             width: 100%;
             overflow-x: scroll;
+        }
+        .select2-selection.select2-selection--multiple{
+            border-radius: 0;
+            border-color: #d9d9d9 !important;
+        }
+        .select2.select2-container.select2-container--default.select2-container--focus{
+            width: 100% !important;
         }
 	</style>
 @stop
@@ -65,7 +73,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Cluster</label>
-                                            <select required title="Pilih Cluster" data-live-search="true" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker dropdown" multiple name="cluster">
+                                            <select required title="Pilih Cluster" data-live-search="true" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear selectpicker select2 dropdown" multiple name="cluster">
                                                 @foreach($list_cluster as $cluster)
                                                 <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                                 @endforeach
@@ -175,8 +183,8 @@
                         </div>
                         <div class="col-sm-12 col-md-6 padding-side">
                             <div class="form-group">
-                                <label class="form-form-control-label">Cluster</label>
-                                <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="edit-cluster" class="form-control will-clear selectpicker" multiple name="cluster">
+                                <label class="form-form-control-label">Cluster</label><br>
+                                <select required title="Pilih Cluster" data-selected-text-format="count > 2" id="edit-cluster" class="form-control will-clear select2" multiple name="cluster">
                                     @foreach($list_cluster as $cluster)
                                     <option value="{{$cluster->id}}">{{$cluster->kode.' -   '.$cluster->nama}}</option>
                                     @endforeach
@@ -196,12 +204,15 @@
                     <button type="submit" class="btn btn-primary" id="save-edit-button">Simpan</button>
                 </div>
             </div>
+            </div>
         </div>
     </form>
 @stop
 
 @section('script')
+    <script src="/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
+        $(".select2").select2();
         var csrf = "{{csrf_token()}}";
 		var table = $("#subkontraktor-data").DataTable({
             "autoWidth": false,
@@ -322,7 +333,7 @@
                     $("#form-add input.needvalidate").removeClass('form-control-success');
                     $("#form-add input.needvalidate").next().removeClass('text-danger');
                     $("#form-add input.needvalidate").next().text('');
-                    $('#form-add .selectpicker').selectpicker('deselectAll');
+//                    $('#form-add .selectpicker').selectpicker('deselectAll');
                     csrf = res.token;
                     table.ajax.reload();
                 }
@@ -360,7 +371,7 @@
                         $("#edit-modal").modal('show').on('hidden.bs.modal', function () {
                             $("#edit-modal input").val('');
                             $("#edit-modal textarea").val('');
-                            $('#edit-modal .selectpicker').selectpicker('deselectAll');
+//                            $('#edit-modal .selectpicker').selectpicker('deselectAll');
                             listCluster = [];
                         });
                         $("#edit-kode").val(data.kode);
@@ -374,7 +385,7 @@
                         $.each(data.list_cluster,function(key,val){
                             listCluster[key] = val.cluster_id;
                         });
-                        $("#edit-cluster").selectpicker('val', listCluster);
+//                        $("#edit-cluster").selectpicker('val', listCluster);
                         $("#edit-bidang-usaha").val(data.bidang_usaha);
                         $("button.edit-button[data-id='"+id+"']").prop('disabled', false);
                         $("form#edit-modal").data('id',data.id);
@@ -407,7 +418,7 @@
                     $("form#edit-modal input.needvalidate").removeClass('form-control-success');
                     $("form#edit-modal input.needvalidate").next().removeClass('text-danger');
                     $("form#edit-modal input.needvalidate").next().text('');
-                    $('form#edit-modal .selectpicker').selectpicker('deselectAll');
+//                    $('form#edit-modal .selectpicker').selectpicker('deselectAll');
                     csrf = res.token;
                     table.ajax.reload();
                     $('form#edit-modal').modal('hide');

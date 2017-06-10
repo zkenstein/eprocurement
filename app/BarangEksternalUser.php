@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BarangEksternalUser extends Model
 {
     protected $table = "barang_eksternal_user";
-    protected $fillable = ['barang_eksternal_id','user_id','harga','status','grup'];
+    protected $fillable = ['barang_eksternal_id','user_id','harga','status','grup','is_win'];
 
     public function barangEksternalInfo()
     {

@@ -21,6 +21,7 @@ class CreateBarangEksternalUserTable extends Migration
             $table->double('harga');
             $table->tinyInteger('status')->default(1);
             $table->string('grup')->nullable();
+            $table->boolean('is_win')->default(false)->comment = "1 = win, 0 = not win";
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@
     <!-- Main styles for this application -->
     <link href="/css/style.css" rel="stylesheet">
     <!-- Multiple Select -->
-    <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    {{--<link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">--}}
     <style type="text/css">
         header.navbar .navbar-brand{
             background-image:url("/img/logo_pal_.png") !important;
@@ -613,7 +613,7 @@
     <script type="text/javascript" src="/js/accounting.min.js"></script>
 
     <!-- Multiple Select -->
-    <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    {{--<script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>--}}
     <script type="text/javascript" src="/js/jquery.form.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="/daterangepicker/daterangepicker.js"></script>

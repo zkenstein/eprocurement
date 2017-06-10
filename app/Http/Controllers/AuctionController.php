@@ -153,6 +153,7 @@ class AuctionController extends Controller
                 }
             }
 
+            $hargaBarangEksternalSebelumnya = BarangEksternalUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->orderBy('grup','desc')->get();
             foreach ($request->input('harga_barang_eksternal') as $key => $value) {
                 if($value>0){
                     $hargaBarangEksternal[$key] = new BarangEksternalUser([
