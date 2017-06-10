@@ -14,7 +14,7 @@
             border-radius: 0;
             border-color: #d9d9d9 !important;
         }
-        .select2.select2-container.select2-container--default.select2-container--focus{
+        .select2.select2-container.select2-container--default.select2-container--focus,.select2-selection.select2-selection--multiple,.select2.select2-container.select2-container--default{
             width: 100% !important;
         }
 	</style>

@@ -138,7 +138,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-6 padding-side">
                                                 <label class="form-form-control-label">Barang</label>
-                                                <select title="Pilih Barang" data-selected-text-format="count > 1" id="add-barang" class="form-control will-clear selectpicker" multiple name="barang[]">
+                                                <select title="Pilih Barang" data-selected-text-format="count > 1" id="add-barang" class="form-control will-clear selectpicker select2" multiple name="barang[]">
                                                     @foreach($list_barang as $barang)
                                                     <option value="{{$barang->id}}">{{$barang->kode}}</option>
                                                     @endforeach
@@ -454,7 +454,7 @@
                                         $("#form-add input.needvalidate").removeClass('form-control-success');
                                         $("#form-add input.needvalidate").next().removeClass('text-danger');
                                         $("#form-add input.needvalidate").next().text('');
-                                        $('#form-add .selectpicker').selectpicker('deselectAll');
+                                        // $('#form-add .selectpicker').selectpicker('deselectAll');
                                         $("input[name='_token']").val(res.token);
                                         csrf = res.token;
                                         location.reload();
@@ -479,7 +479,7 @@
                                 $("#form-add input.needvalidate").removeClass('form-control-success');
                                 $("#form-add input.needvalidate").next().removeClass('text-danger');
                                 $("#form-add input.needvalidate").next().text('');
-                                $('#form-add .selectpicker').selectpicker('deselectAll');
+                                // $('#form-add .selectpicker').selectpicker('deselectAll');
                                 $("input[name='_token']").val(res.token);
                                 csrf = res.token;
                                 location.reload();
@@ -540,6 +540,6 @@
             resetNow = false;
             $('.modal').modal('hide')
         }
-        $("#add-cluster").select2();
+        $(".select2").select2();
     </script>
 @stop

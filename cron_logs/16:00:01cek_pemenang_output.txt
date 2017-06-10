@@ -1,0 +1,19 @@
+Cek pemenang [2017-06-10 15:55:02]
+Pemenang untuk pengumuman 20170001 ditemukan [2017-06-10 15:55:02]
+Pemenang pengumuman 20170001 ditetapkan AKASIA TEKNOLOGI PT. [2017-06-10 15:55:02]
+Membuat kontrak [2017-06-10 15:55:02]
+Dokumen kontrak untuk pengumuman 20170001 berhasil dibuat [2017-06-10 15:55:05]
+Membuat berita acara [2017-06-10 15:55:05]
+Berita acara telah dibuat [2017-06-10 15:55:06]
+mengirim email ke pemenang : kontraktor6@herobimbel.id [2017-06-10 15:55:06]
+
+                                                                                                                                                        
+  [Swift_TransportException]                                                                                                                            
+  Connection could not be established with host smtp.gmail.com [php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution #0]  
+                                                                                                                                                        
+
+Cek pemenang [2017-06-10 15:56:01]
+Cek pemenang [2017-06-10 15:57:01]
+Cek pemenang [2017-06-10 15:58:01]
+Cek pemenang [2017-06-10 15:59:02]
+Cek pemenang [2017-06-10 16:00:01]

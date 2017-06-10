@@ -37,3 +37,25 @@ Cek pemenang [2017-06-10 22:36:02]
 Cek pemenang [2017-06-10 22:37:02]
 Cek pemenang [2017-06-10 22:38:02]
 Cek pemenang [2017-06-10 22:39:02]
+Cek pemenang [2017-06-10 22:40:03]
+Cek pemenang [2017-06-11 04:23:15]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek pemenang [2017-06-11 04:24:02]
+Cek pemenang [2017-06-11 04:25:02]
+Cek pemenang [2017-06-11 04:26:01]
+Cek pemenang [2017-06-11 04:27:01]
+Cek pemenang [2017-06-11 04:28:02]
+Cek pemenang [2017-06-11 04:29:02]
+Cek pemenang [2017-06-11 04:30:01]
+Cek pemenang [2017-06-11 04:31:01]
+Cek pemenang [2017-06-11 04:32:02]
+Cek pemenang [2017-06-11 04:33:02]
+Cek pemenang [2017-06-11 04:34:01]
+Cek pemenang [2017-06-11 04:35:01]
+Cek pemenang [2017-06-11 04:36:02]
+Cek pemenang [2017-06-11 04:37:02]
