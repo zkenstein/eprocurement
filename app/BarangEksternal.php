@@ -18,4 +18,9 @@ class BarangEksternal extends Model
     {
     	return $this->hasOne('App\BarangEksternalUser','barang_eksternal_id','id')->where('user_id',session('id'))->where('status',1);
     }
+
+    public function inAuction()
+    {
+        return $this->hasMany('App\BarangEksternalUser','barang_eksternal_id','id')->where('status',1);
+    }
 }

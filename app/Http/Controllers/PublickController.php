@@ -67,6 +67,12 @@ class PublickController extends Controller
                     if(strtotime($userPengumuman->pengumumanInfo->batas_awal_waktu_penawaran) <= strtotime(\Carbon\Carbon::now())){#Jika pendaftaran sudah dibuka
                         if(strtotime($userPengumuman->pengumumanInfo->batas_akhir_waktu_penawaran) >= strtotime(\Carbon\Carbon::now())){#Jika pendaftaran masih dibuka
                             if($userPengumuman->kode_masuk==$kodeMasuk){#Jika kode_masuk yang dimasukkan benar
+                                if($userPengumuman->pengumumanInfo->max_register!=0){#JIKA JUMLAH PENDAFTAR DIBATASI DIBATASI
+                                    if($userPengumuman->pengumumanInfo->count_register>=$userPengumuman->pengumumanInfo->max_register){#JIKA JUMLAH PENDAFTAR SUDAH MAX
+                                        return response()->json(['result'=>false,'message'=>'Pendaftaran untuk lelang ini sudah maksimal.', 'captcha_src'=>captcha_src()]);
+                                    }
+                                }
+                                #LANJUT REGISTER JIKA CEK SUDAH SELESAI
                                 $pengumuman = Pengumuman::find($pengumuman);
                                 $data['nama_perusahaan'] = $user->nama;
                                 $data['kode_pengumuman'] = $pengumuman->kode;

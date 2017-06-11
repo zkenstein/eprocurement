@@ -142,7 +142,8 @@ class GeneralController extends Controller
     {
         $allowAccessAuction = false;
         $data['pengumuman'] = Pengumuman::with('listValidUser')->find(session('pengumuman'));
-        if(count($data['pengumuman']->listValidUser)<2) return redirect()->route('home');
+        if(count($data['pengumuman']->listValidUser)<2) return redirect()->route('home');#JIKA USER YANG VALID < 2, KEMBALI KE HOME PAGE
+
         $startAuction = strtotime($data['pengumuman']->start_auction);
         $stopAuction = strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi));
 
@@ -152,6 +153,7 @@ class GeneralController extends Controller
         if($allowAccessAuction){
             // UNTUK MENAMPILKAN COUNTDOWN SAAT AUCTION
             $data['auctionNow'] = true;
+            if($data['pengumuman']->jenis=='group') $data['group_auction'] = true;#JIKA JENIS PENGUMUMAN GROUP/PAKETAN
 
             $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
             $data['TAG'] = 'auction';

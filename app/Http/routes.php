@@ -42,6 +42,7 @@ Route::get('auction_barang_data',[
 	'middleware'=>['verify_subkon_pengumuman']
 ]);
 Route::get('is_i_win','AuctionController@isIWin');
+Route::get('cek_win_item','AuctionController@cekWinItem');
 
 Route::get('tentang',[
 	'uses'=>'PublickController@tentangPage',

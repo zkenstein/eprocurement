@@ -19,6 +19,9 @@
     .danger-input,.danger-input:focus{
         border: 1px solid red;
     }
+    .danger{
+        color: red;
+    }
     </style>
 @stop
 
@@ -48,6 +51,7 @@
                                             <th>Satuan</th>
                                             <th>Jumlah</th>
                                             <th width="250">Harga</th>
+                                            <th width="50" style="text-align: center;">#</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,6 +68,9 @@
                                             @endif
                                             >
                                         </td>
+                                        <td>
+                                            <i class="icon-trophy"></i>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     @foreach($list_barang_eksternal as $barang)
@@ -79,6 +86,9 @@
                                             @endif
                                             >
                                         </td>
+                                        <td style="text-align: center;font-weight: bold;font-size: 23px;transition: 0.3s;" id="thropy_indicator{{$barang->id}}" class="thropy_indicator">
+                                            <i class="icon-trophy"></i>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     <tr>
@@ -88,11 +98,16 @@
                                         <td>
                                             <input type="text" disabled class="form-control maskmoneywithoutrp" id="total_harga_input">
                                         </td>
+                                        <td>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4"></td>
+                                        <td colspan="4">
                                         <td>
                                             <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
+                                        </td>
+                                        </td>
+                                        <td>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -144,7 +159,11 @@
         $(document).ready(function(){
             $("#total_harga_input").maskMoney('mask', {{$total_auction}});
             $(".maskmoneywithoutrp").maskMoney('mask');
+            @if(isset($group_auction))
             cekIfIWin();
+            @else
+            cekWinItem();
+            @endif
         });
         function previewImage(src) {
             $("#preview-gambar-barang").show();
@@ -196,6 +215,7 @@
             $("#total_harga_input").maskMoney('mask', total);
         });
 
+        @if(isset($group_auction))
         function cekIfIWin() {
             $.ajax({
                 url:"/is_i_win",
@@ -212,7 +232,21 @@
                 }
             });
         }
-
+        @else
+        function cekWinItem() {
+            $.ajax({
+                url:"/cek_win_item",
+                success:function(res){
+                    $(".thropy_indicator").removeClass('danger');
+                    $.each(res,function(key,val){
+                        console.log(val);
+                        $("#thropy_indicator"+val).addClass('danger');
+                    });
+                    setTimeout(function(){ cekWinItem(); }, 3000);
+                }
+            });
+        }
+        @endif
         <?php
         /*
         $("#barang-data").DataTable({

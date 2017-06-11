@@ -54,7 +54,7 @@
                                 	@endif
                                 	</td>
                                     <td>
-                                        <a href="javascript:;" class="data-valid-user" data-value="{{$pengumuman->id}}">{{count($pengumuman->listValidUser)}} <?php if($pengumuman->picInfo->cluster==1){ ?>Vendor<?php }else{ ?> Subkontraktor <?php } ?></a>
+                                        <a href="javascript:;" class="data-valid-user" data-value="{{$pengumuman->id}}" data-count="{{count($pengumuman->listValidUser)}}">{{count($pengumuman->listValidUser)}} <?php if($pengumuman->picInfo->cluster==1){ ?>Vendor<?php }else{ ?> Subkontraktor <?php } ?></a>
                                     </td>
                                 	<td>
                                 	@if($pengumuman->max_register!=0)
@@ -367,22 +367,24 @@
         }
 
         $(".data-valid-user").click(function(){
-            var id = $(this).data('value');
-            $("#list-valid-user-place").html('');
-            $.ajax({
-                url:"{{route('intern.pengumuman_valid_user')}}/"+id,
-                success:function(res){
-                    if(res.length>0){
-                        $.each(res,function(key,obj){
-                            $("#title-valid-user-modal").text('Vendor/Subkontraktor Yang Telah Melakukan Penawaran pada Pengumuman '+obj.pengumuman_info.kode);
-                            $("#list-valid-user-place").append('<li><strong>'+obj.user_info.kode+'</strong> - '+obj.user_info.nama+'</li>');
-                        });
-                    }else{
-                        $("#list-valid-user-place").append('Tidak Ada');
+            if($(this).data('count')>0){
+                var id = $(this).data('value');
+                $("#list-valid-user-place").html('');
+                $.ajax({
+                    url:"{{route('intern.pengumuman_valid_user')}}/"+id,
+                    success:function(res){
+                        if(res.length>0){
+                            $.each(res,function(key,obj){
+                                $("#title-valid-user-modal").text('Vendor/Subkontraktor Yang Telah Melakukan Penawaran pada Pengumuman '+obj.pengumuman_info.kode);
+                                $("#list-valid-user-place").append('<li><strong>'+obj.user_info.kode+'</strong> - '+obj.user_info.nama+'</li>');
+                            });
+                        }else{
+                            $("#list-valid-user-place").append('Tidak Ada');
+                        }
+                        $("#modal-valid-user").modal('show');
                     }
-                    $("#modal-valid-user").modal('show');
-                }
-            });
+                });
+            }
         });
 
         $("#modal-extends").submit(function(e){

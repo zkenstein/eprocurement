@@ -123,13 +123,21 @@ class AuctionController extends Controller
 	// FUNGSI INI MENGGUNAKAN MIDDELWARE VERIFYAUCTION UNTUK CEK APAKAH AUCTION SUDAH DIMLAI ATAU BELUM DAN APAKAH AUCTION SUDAH SELESAI ATAU BELUM
 	public function addAuction(Request $request)
 	{
+        // dd($request->all());
 	    #CEK APAKAH USER YANG TELAH MELAKUKAN VALIDITAS HARGA SUDAH LEBIH DARI 1, JIKA BELUM REDIRECT KE HOME
-	    $p = Pengumuman::with('listValidUser')->find(session('pengumuman'));
-        if(count($p->listValidUser)<2) return response()->json(['result'=>false],401);
-
+	    $p = Pengumuman::has('listValidUser','>',1)->find(session('pengumuman'));
+        if($p==null) return response()->json(['result'=>false],401);
+        
 		// INISIALISASI VARIABEL
 		$total = 0;
         if($p->jenis=='itemize'){
+            
+            #ALGORITMA : 
+            #1. cek apakah harga lebih dari 0 tiap barang
+            #2. cek apakah harga ada yang menyamai tiap barang
+            #3. cek apakah harga yang dimasukkan lebih besar dari sebelumnya
+            #4. jika lolos. input semua dan return true
+
             $hargaBarang = [];
             $hargaBarangEksternal = [];
             
@@ -138,6 +146,7 @@ class AuctionController extends Controller
             $request->merge(array('harga_barang_eksternal'=>str_replace(["Rp","."," "], "", $request->input('harga_barang_eksternal'))));
 
             // PERSIAPAN INSERT + COUNTING TOTAL UNTUK PENGECEKAN. DATA BELUM DIINSERT DAN DIRUBAH SEBELUM TERVERIFIKASI
+            /*
             if($request->input('harga_barang')!=""){
                 foreach ($request->input('harga_barang') as $key => $value) {
                     if($value>0){
@@ -152,11 +161,30 @@ class AuctionController extends Controller
                     }
                 }
             }
+            */
 
-            $hargaBarangEksternalSebelumnya = BarangEksternalUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->orderBy('grup','desc')->get();
+            /*
+            $hargaBarangEksternalSebelumnya = BarangEksternal::with('inUserAuction')->where('pengumuman_id',session('pengumuman'));
+
+            foreach ($hargaBarangEksternalSebelumnya as $key => $hargaBarang) {
+                if($hargaBarang->inUserAuction->harga<$request->input('harga_barang_eksternal.'.$hargaBarang->id)) {#JIKA SEBUAH BARANG EKSTERNAL DICEK TERNYATA LEBIH BESAR DARI HARGA SEBELUMNYA
+                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$hargaBarang->id]);
+                }
+            }
+            */
+
             foreach ($request->input('harga_barang_eksternal') as $key => $value) {
                 if($value>0){
-                    $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                    $cekHargaSama = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('harga',$value)->where('user_id','<>',session('id'))->first();
+                    if($cekHargaSama!=null){#CEK APAKAH ADA HARGA YANG SAMA PADA ITEM TERSEBUT
+                        return response()->json(['result'=>false,'message'=>'Ada harga item yang sama dengan pengguna lain, silahkan ganti dengan harga lain','indication'=>'harga_barang_eksternal'.$key]);
+                    }
+                    $cekhargaSebelumnya = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('user_id',session('id'))->first();
+                    if($cekhargaSebelumnya->harga<$value){#CEK APAKAH HARGA ITEM LEBIH KECI DARI SEBELUMNYA
+                        return response()->json(['result'=>false,'message'=>'Harga setiap item harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key,'value'=>$cekhargaSebelumnya->harga]);   
+                    }
+                    PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
+                    $hargaBarangEksternal[$key] = BarangEksternalUser::create([
                         'barang_eksternal_id'=>$key,
                         'user_id'=>session('id'),
                         'harga'=>$value
@@ -167,14 +195,21 @@ class AuctionController extends Controller
                 }
             }
 
+
+
+            /*
             // CEK APAKAH TOTAL INPUTAN SAMA DENGAN USER LAIN
             $pengumumanUser = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->first();
+
             // JIKA SUDAH DIAMBIL USER LAIN
             if($pengumumanUser!=null) {
                 return response()->json(['result'=>false,'message'=>'Total auction yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga barang sebelum submit']);    
             }
+            */
+
             // JIKA BELUM DIAMBIL OLEH USER LAIN
-            else{
+            // else{
+                /*
                 foreach ($hargaBarang as $key => $obj) {
                     PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
                     $obj->save();
@@ -183,6 +218,7 @@ class AuctionController extends Controller
                     BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
                     $obj->save();
                 }
+                */
                 Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->update(['status'=>0]);
                 Auction::create([
                     'pengumuman_id'=>session('pengumuman'),
@@ -191,7 +227,7 @@ class AuctionController extends Controller
                 ]);
                 PengumumanUser::where('user_id',session('id'))->where('pengumuman_id',session('pengumuman'))->update(['total_auction'=>$total]);
                 return response()->json(['result'=>true,'message'=>'Tawaran anda berhasil disimpan']);
-            }
+            // }
         }else{
             $total = str_replace(["Rp","."," "], "", $request->input('total_auction'));
             // CEK JIKA TOTAL LEBIH BESAR DARI SEBELUMNYA
@@ -218,6 +254,7 @@ class AuctionController extends Controller
                 return response()->json(['result'=>true,'message'=>'Tawaran anda berhasil disimpan']);
             }
         }
+        
 	}
 
 	public function getDataBarang(Request $request)
@@ -271,13 +308,38 @@ class AuctionController extends Controller
 
 	public function isIWin(Request $request)
 	{
-		$data = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction','>',0)->whereNotNull('waktu_register')->orderBy('total_auction','asc')->get();
-		if(count($data)>0){
-            if($data[0]->user_id==session('id')){
-                return response()->json(true,200);
+        $pengumuman = Pengumuman::find(session('pengumuman'));
+        if($pengumuman!=null){
+            if($pengumuman->jenis!='group') return response()->json('BAD REQUEST',401);#HANYA BOLEH MENGGUNAKAN FUNGSI INI JIKA PENGUMUMAN JENIS ITEMIZE
+            $data = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction','>',0)->whereNotNull('waktu_register')->orderBy('total_auction','asc')->get();
+            if(count($data)>0){
+                if($data[0]->user_id==session('id')){
+                    return response()->json(true,200);
+                }
+                return response()->json(false,200);
             }
             return response()->json(false,200);
         }
-        return response()->json(false,200);
+        return response()->json('BAD REQUEST',401);
 	}
+
+    public function cekWinItem(Request $request)
+    {
+        $pengumuman = Pengumuman::find(session('pengumuman'));
+        if($pengumuman!=null){
+            if($pengumuman->jenis!='itemize') return response()->json('BAD REQUEST',401);#HANYA BOLEH MENGGUNAKAN FUNGSI INI JIKA PENGUMUMAN JENIS GROUP
+            // ALGORITMA BUAT DAPET BARANG EKSTERNAL MANA SAJA YANG USER MENANGKAN
+            $barangEksternal = collect(BarangEksternal::with('inAuction')->where('pengumuman_id',session('pengumuman'))->get());
+            $win = array();
+            foreach ($barangEksternal as $key => $object) {
+                $o = collect($object->inAuction)->sortBy('harga');
+                foreach ($o as $k => $v) {
+                    if($v->user_id==session('id')) array_push($win, $v->barang_eksternal_id);
+                    break;
+                }
+            }
+            return response()->json($win,200);
+        }
+        return response()->json('BAD REQUEST',401);
+    }
 }

@@ -196,9 +196,11 @@
             <li class="nav-item d-md-down-none">
                 <span id="timer" class="nav-link" href="#"></span>
             </li>
+            @if(isset($group_auction))
             <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#" id="win-flag"><i class="icon-flag"></i></a>
+                <a class="nav-link" href="#" id="win-flag"><i class="icon-trophy"></i></a>
             </li>
+            @endif
             @endif
         </ul>
     </header>

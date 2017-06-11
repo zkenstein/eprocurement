@@ -1,0 +1,441 @@
+Cek validitas [2017-06-11 06:01:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:02:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:03:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:04:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:05:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:06:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:07:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:08:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:09:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:10:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:11:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:12:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:13:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:14:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:15:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:16:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:17:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:18:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:19:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:20:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:21:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:22:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:23:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:24:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:25:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 06:26:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:24:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:25:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:26:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:27:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:28:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:29:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:30:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:31:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:32:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:33:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:34:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:35:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:36:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:37:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:38:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:39:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:40:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:41:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:42:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:43:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:44:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:45:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:46:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:47:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:48:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:49:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:50:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:51:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:52:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:53:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:54:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:55:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:56:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:57:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:58:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 12:59:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-06-11 13:00:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
