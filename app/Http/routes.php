@@ -41,8 +41,15 @@ Route::get('auction_barang_data',[
 	'uses'=>'AuctionController@getDataBarang',
 	'middleware'=>['verify_subkon_pengumuman']
 ]);
-Route::get('is_i_win','AuctionController@isIWin');
-Route::get('cek_win_item','AuctionController@cekWinItem');
+Route::get('is_i_win',[
+	'uses'=>'AuctionController@isIWin',
+	'middleware'=>'verify_auction'
+]);
+Route::get('cek_win_item',[
+	'uses'=>'AuctionController@cekWinItem',
+	'middleware'=>'verify_auction'
+]);
+Route::get('tes_itemize','AuctionController@tesItemize');
 
 Route::get('tentang',[
 	'uses'=>'PublickController@tentangPage',
@@ -82,6 +89,11 @@ Route::get('gu','PublickController@generateUser');
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC
 Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only']],function(){
 
+	// MENDAPATKAN JUMLAH USER DALAM BEBERAPA CLUSTER
+	Route::post('/count_user_cluster',[
+		'uses'=>'GeneralController@countUserCluster',
+		'as'=>'count_user_cluster'
+	]);
 	// VALIDASI UMUM
 	Route::get('/validate_input/{name?}',[
 		'uses'=>'GeneralController@validateInput',

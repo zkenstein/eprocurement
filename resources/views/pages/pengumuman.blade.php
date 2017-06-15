@@ -153,7 +153,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="row">
                                             <div class="form-group col-sm-6 padding-side">
-                                                <label class="form-form-control-label">Cluster</label>
+                                                <label class="form-form-control-label">Cluster</label> <small style="color: red;" id="keterangan_cluster"></small>
                                                 <select required placeholder="Pilih Cluster" data-selected-text-format="count > 2" id="add-cluster" class="form-control will-clear select2" multiple name="cluster[]">
                                                     @if($list_pic[0]->cluster==1)
                                                         @if(isset($list_cluster['barang']))
@@ -274,33 +274,35 @@
     <script src="/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
         var resetNow = false;
+        var pic_jenis = $("option:selected", this).data('jenis');
         function refreshCluster() {
             var data = $("#add-pic").find(":selected").data('jenis');
-            
+
         }
         var cluster_barang = null, cluster_jasa = null;
         @if(isset($list_cluster['barang']))
-        var cluster_barang = [
+        cluster_barang = [
             @foreach($list_cluster['barang'] as $cluster)
                 {id:{{$cluster->id}} , text:"{{$cluster->kode.' - '.$cluster->nama}}"},
             @endforeach
         ];
         @endif
         @if(isset($list_cluster['jasa']))
-            var cluster_barang = [
-                @foreach($list_cluster['jasa'] as $cluster)
-                    {id:{{$cluster->id}} , text:"{{$cluster->kode.' - '.$cluster->nama}}"},
-                @endforeach
-            ];
+        cluster_jasa = [
+            @foreach($list_cluster['jasa'] as $cluster)
+                {id:{{$cluster->id}} , text:"{{$cluster->kode.' - '.$cluster->nama}}"},
+            @endforeach
+        ];
         @endif
 
         $(document).ready(function(){
+            initSelect2();
             $("#form-add input:not([name='_token'], [name='_method'])").val('');
             $("#add-pic").change(function(){
                 var s = $(this);
-                var jenis = $("option:selected", this).data('jenis');
+                pic_jenis = $("option:selected", this).data('jenis');
                 $("#add-cluster").children().remove();
-                if(jenis==1){
+                if(pic_jenis==1){
                     if(cluster_barang!=null){
                         $.each(cluster_barang,function(key,obj){
                             $("#add-cluster").append("<option value='"+obj.id+"'>"+obj.text+"</option>");
@@ -314,6 +316,7 @@
                     }
                 }
                 $("#add-cluster").select2().trigger("change");
+                initSelect2();
             });
         });
 
@@ -540,6 +543,30 @@
             resetNow = false;
             $('.modal').modal('hide')
         }
-        $(".select2").select2();
+        function initSelect2() {
+            $("#keterangan_cluster").text("");
+            $(".select2").select2({
+                placeholder: 'Pilih',
+                allowClear: true,
+                templateSelection:function(data,container){
+                    console.log(data);
+                    var text = data.text.split(" - ");
+                    return text[0];
+                }
+            }).on('select2:closing', function (evt) {
+                var data = $(this).val();
+                $.ajax({
+                    url:"{{route('intern.count_user_cluster')}}",
+                    method:"POST",
+                    data:{data:data},
+                    success:function(res){
+                        $("#keterangan_cluster").text("Terpilih "+res+" Subkon/vendor");
+                    }
+                });
+            });
+        }
+
     </script>
 @stop
+
+

@@ -67,6 +67,7 @@
 </div>
 <div>
 	<strong style="width:100%;text-decoration: underline;">Hasil Akhir Proses E-Auction</strong>
+	@if($pengumuman->jenis=='group')
 	<table class="padding-big" style="width:100%;border-collapse: collapse;">
 		<tr>
 			<th>Kode</th>
@@ -81,6 +82,30 @@
 			</td>
 		</tr>
 	</table>
+	@else
+	<table class="padding-big" style="width:100%;border-collapse: collapse;">
+		<tr>
+			<th>Rekanan</th>
+			<th>Item</th>
+			<th>Harga</th>
+		</tr>
+		@foreach($para_pemenang as $pemenang)
+			<?php $k=0; ?>
+			@foreach($pemenang->listBarangEksternalAuction as $barangEksternalUser)
+			<tr>
+				@if($k==0)
+				<td rowspan="{{count($pemenang->listBarangEksternalAuction)}}">
+					{{$pemenang->nama}}
+				</td>
+				@endif
+				<td>{{$barangEksternalUser->barangEksternalInfo->kode}}</td>
+				<td>{{number_format($barangEksternalUser->harga,0,",",".")}}</td>
+			</tr>
+			<?php $k++; ?>
+			@endforeach
+		@endforeach
+	</table>
+	@endif
 </div>
 <div>
 	<br>
@@ -113,6 +138,7 @@
 <div style="font-family:sans-serif;background: #65a7d7;padding: 8px;display: inline-block;">Auction Bid History</div>
 <br>
 <br>
+@if($pengumuman->jenis=='group')
 <table style="border-collapse: collapse;width: 100%;">
 	<tr style="background-color: #f7cb4d;">
 		<th>Bidder</th>
@@ -133,6 +159,28 @@
 	</tr>
 	@endforeach
 </table>
+@else
+<table style="border-collapse: collapse;width: 100%;">
+	<tr style="background-color: #f7cb4d;">
+		<th>Bidder</th>
+		<th>Item</th>
+		<th>Bid Amount {{' ('.$pengumuman->mata_uang.')'}}</th>
+		<th>Bid Time</th>
+	</tr>
+	@foreach($list_barang_eksternal_auction as $barangEksternalAuction)
+	@if($barangEksternalAuction->status==1)
+	<tr style="background-color: aqua;">
+	@else
+	<tr>
+	@endif
+		<td>{{$barangEksternalAuction->userInfo->nama}}</td>
+		<td>{{$barangEksternalAuction->barangEksternalInfo->kode}}</td>
+		<td>{{number_format($barangEksternalAuction->harga,0,",",".")}}</td>
+		<td>{{$barangEksternalAuction->created_at}}</td>
+	</tr>
+	@endforeach
+</table>
+@endif
 <div>
 	<p>catatan : Dokumen berita acara e-auction ini tidak dibutuhkan tanda tangan para pihak karena sudah dalam bentuk elektronik file</p>
 </div>

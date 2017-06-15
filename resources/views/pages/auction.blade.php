@@ -22,6 +22,9 @@
     .danger{
         color: red;
     }
+    #next_countdown{
+        border: 0px solid white;
+    }
     </style>
 @stop
 
@@ -131,14 +134,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-preview" tabindex="-1" role="dialog" aria-hidden="true" data-id="">
+    <div class="modal fade" id="modal-finish" tabindex="-1" role="dialog" aria-hidden="true" data-id="">
         <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 padding-side">
-                            <img src="" id="preview-gambar-barang" width="100%">
-                            <iframe src="" style="width: 100%;height: 500px;" id="preview-pdf-barang"></iframe>
+                            Tunggu Selama <span id="next_countdown"></span> Detik, anda akan di redirect ke halaman home
                         </div>
                     </div>
                 </div>
@@ -152,7 +154,26 @@
     <script type="text/javascript" src="/jquery-countdown/jquery.plugin.min.js"></script>
     <script type="text/javascript" src="/jquery-countdown/jquery.countdown.min.js"></script>
 	<script type="text/javascript">
-        $('#timer').countdown({until: +{{$countdown}},compact: true, format: 'yowdHMS', onExpiry: function(){location.href="{{route('logout')}}"}});
+        $('#timer').countdown({
+            until: +{{$countdown}},
+            compact: true, 
+            format: 'yowdHMS', 
+            onExpiry: function(){
+                // location.href="{{route('logout')}}"
+                $("#modal-finish").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $("#next_countdown").countdown({
+                    until: +30,
+                    format: 's',
+                    layout: '{sn}',
+                    onExpiry: function(){
+                        location.href="{{route('home')}}"
+                    }
+                });
+            }
+        });
 
 		var csrf = "{{csrf_token()}}";
         var total = 0;

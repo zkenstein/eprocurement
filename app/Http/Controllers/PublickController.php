@@ -13,6 +13,7 @@ use App\Pengumuman;
 use App\PengumumanUser;
 use App\PengumumanBarang;
 use App\BarangEksternal;
+use App\BarangEksternalUser;
 use Mail;
 
 class PublickController extends Controller
@@ -139,9 +140,14 @@ class PublickController extends Controller
 
             $data['isIWin'] = false;
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','listValidUser'])->find(session('pengumuman'));
-            if(  $data['pengumuman']->pemenang!=null  ){
+            if(  $data['pengumuman']->pemenang!=null ){
                 if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;
                 else $data['isIWin'] = false;
+            }
+            // CEK JIKA PENGUMUMAN PEMENANG = 0;
+            if($data['pengumuman']->pemenang==0){
+                $cekBarangMenang = BarangEksternalUser::with('barangEksternalInfo')->where('user_id',session('id'))->where('is_win',1)->get();
+                if(count($cekBarangMenang)>0) $data['isIWin'] = true;
             }
             if(strtotime($data['pengumuman']->start_auction) >= strtotime(\Carbon\Carbon::now())){#JIKA BELUM MASUK AUCTION
                 $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
@@ -162,6 +168,7 @@ class PublickController extends Controller
                 }
             }
             $data['total_auction'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first()->total_auction;
+            // dd($data);
             return view('pages.home_subkontraktor',$data);
         }else{#JIKA BELUM MASUK KE TENDER LOAD HALAMAN HOME BIASA
             $data['list_pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','picInfo'])->orderBy('created_at','desc')->get();

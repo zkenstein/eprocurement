@@ -13,12 +13,14 @@ use App\BarangEksternal;
 use App\BarangEksternalUser;
 use App\PengumumanBarang;
 use App\PengumumanBarangUser;
+use App\User;
 
 class AuctionController extends Controller
 {
     public function pengajuan(Request $request)
     {
         $pengumuman = Pengumuman::find(session('pengumuman'));
+        if(strtotime("now")>strtotime($pengumuman->validitas_harga)){return response()->json(['result'=>false,'message'=>'Waktu pengajuan telah selesai']);}
         $total = 0;
         // dd($request->all());
         if($pengumuman->jenis=='itemize'){
@@ -40,6 +42,7 @@ class AuctionController extends Controller
                             'user_id'=>session('id'),
                             'harga'=>$value
                         ]);
+
                         $total+=$value;
                     }else{
                         return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
@@ -58,6 +61,12 @@ class AuctionController extends Controller
                                 'harga'=>$value,
                                 'grup'=>$grup
                             ]);
+                            // SET CEK HARGA MINIMAL
+                            $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
+                            if($minHarga->id==$hargaBarangEksternal[$key]->id){
+                                $hargaBarangEksternal[$key]->is_win = 1;
+                                $hargaBarangEksternal[$key]->save();
+                            }
                             $total+=$value;
                         }else{
                             return response()->json(['value'=>$barangSebelumnya->harga,'result'=>false,'message'=>'Harga setiap barang harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key]);
@@ -132,11 +141,11 @@ class AuctionController extends Controller
 		$total = 0;
         if($p->jenis=='itemize'){
             
-            #ALGORITMA : 
+            #ALGORITMA ITEMIZE: 
             #1. cek apakah harga lebih dari 0 tiap barang
             #2. cek apakah harga ada yang menyamai tiap barang
             #3. cek apakah harga yang dimasukkan lebih besar dari sebelumnya
-            #4. jika lolos. input semua dan return true
+            #4. jika lolos. input semua, harga sebelumnya di set status=0 dan return true
 
             $hargaBarang = [];
             $hargaBarangEksternal = [];
@@ -172,9 +181,9 @@ class AuctionController extends Controller
                 }
             }
             */
-
+            $grup = strtotime("now");
             foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-                if($value>0){
+                if($value>0){#CEK HARGA LEBIH DARI 0
                     $cekHargaSama = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('harga',$value)->where('user_id','<>',session('id'))->first();
                     if($cekHargaSama!=null){#CEK APAKAH ADA HARGA YANG SAMA PADA ITEM TERSEBUT
                         return response()->json(['result'=>false,'message'=>'Ada harga item yang sama dengan pengguna lain, silahkan ganti dengan harga lain','indication'=>'harga_barang_eksternal'.$key]);
@@ -183,12 +192,19 @@ class AuctionController extends Controller
                     if($cekhargaSebelumnya->harga<$value){#CEK APAKAH HARGA ITEM LEBIH KECI DARI SEBELUMNYA
                         return response()->json(['result'=>false,'message'=>'Harga setiap item harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key,'value'=>$cekhargaSebelumnya->harga]);   
                     }
-                    PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->update(['status'=>0]);
-                    $hargaBarangEksternal[$key] = BarangEksternalUser::create([
+                    BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->update(['status'=>0,'is_win'=>0]);
+                    $hargaBarangEksternal = BarangEksternalUser::create([
                         'barang_eksternal_id'=>$key,
                         'user_id'=>session('id'),
-                        'harga'=>$value
+                        'harga'=>$value,
+                        'grup'=>$grup
                     ]);
+                    // SET CEK JIKA ITEM YANG DISUBMIT PALINNG KECIL NILAINYA
+                    $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
+                    if($minHarga->id==$hargaBarangEksternal->id){
+                        $hargaBarangEksternal->is_win = 1;
+                        $hargaBarangEksternal->save();
+                    }
                     $total+=$value;
                 }else{
                     return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
@@ -338,6 +354,50 @@ class AuctionController extends Controller
                     break;
                 }
             }
+            return response()->json($win,200);
+        }
+        return response()->json('BAD REQUEST',401);
+    }
+
+    public function tesItemize(Request $request)
+    {
+        $pengumuman = Pengumuman::with(['listBarangEksternal.inAuction'])->find(session('pengumuman'));
+        if($pengumuman!=null){
+            if($pengumuman->jenis!='itemize') return response()->json('BAD REQUEST',401);#HANYA BOLEH MENGGUNAKAN FUNGSI INI JIKA PENGUMUMAN JENIS GROUP
+            // ALGORITMA BUAT DAPET BARANG EKSTERNAL MANA SAJA YANG USER MENANGKAN
+            
+            // $barangEksternalUser = BarangEksternalUser::with(['barangEksternalInfo','userInfo'])->whereHas('barangEksternalInfo',function($q){
+                // $q->where('pengumuman_id',session('pengumuman'));
+            // })->where('is_win',1)->get();
+            #QUERY UNTUK MENDAPATKAN PEMENANG DAN ITEM ITEM NYA :D
+            $pemenang = User::with(['listBarangEksternalAuction'=>function($q){
+                $q->with('barangEksternalInfo')->where('is_win',1)->whereHas('barangEksternalInfo',function($q2){
+                    $q2->where('pengumuman_id',session('pengumuman'));
+                });
+            }])->whereHas('listBarangEksternalAuction',function($q){
+                $q->wherehas('barangEksternalInfo',function($q2){
+                    $q2->where('pengumuman_id',session('pengumuman'));
+                })->where('status',1)->where('is_win',1);
+            })->get();
+
+            $listBarangEksternalAuction = BarangEksternalUser::with(['userInfo','barangEksternalInfo'])->whereHas('barangEksternalInfo',function($q){
+                $q->where('pengumuman_id',session('pengumuman'));
+            })->get();
+            $data['list_barang_eksternal_auction'] = $listBarangEksternalAuction;
+            $data['pengumuman'] = $pengumuman;
+            $data['para_pemenang'] = $pemenang;
+            
+            // $createBeritaAcara  = \PDF::loadView('berita_acara',$data)->setPaper('folio','potrait')->save(storage_path('app/tes/berita_acara/berita_acara_'.$pengumuman->id.'pdf'));
+            $info = array();
+            foreach ($pemenang as $pem) {
+                $data['pemenang'] = $pem;
+                \Mail::send('mail_pemenang', $data, function($message) use($pem,$pengumuman){
+                    $message->to($pem->email, $pem->nama)->subject("Pengumuman Hasil Lelang Proyek ".$pengumuman->kode);
+                    $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
+                });
+                array_push($info, "sukses mengirim email ke ".$pem->email);
+            }
+            dd($info);
             return response()->json($win,200);
         }
         return response()->json('BAD REQUEST',401);

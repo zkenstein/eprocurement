@@ -84,24 +84,33 @@
                                     @if($allow_auction==false)
                                     <button id="auction-button" class="btn btn-primary btn-lg btn-block disabled">Auction Belum Dimulai</button>
                                     @else
-                                        @if($isIWin)
-                                        <div class="card card-inverse card-success">
-                                            <div class="card-header">
-                                                Pengumuman Pemenang Tender
+                                        @if($pengumuman->jenis=='group')
+                                            @if($isIWin)
+                                            <div class="card card-inverse card-success">
+                                                <div class="card-header">
+                                                    Pengumuman Pemenang Tender
+                                                </div>
+                                                <div class="card-block">
+                                                    Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="{{'/'.'download_kontrak/'.$pengumuman->id.'/1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0'}}">Download Kontrak</a>
+                                                </div>
                                             </div>
-                                            <div class="card-block">
-                                                Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="{{'/'.'download_kontrak/'.$pengumuman->id.'/1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0'}}">Download Kontrak</a>
+                                            @else
+                                            <div class="card card-inverse card-danger">
+                                                <div class="card-header">
+                                                    Pengumuman Tender
+                                                </div>
+                                                <div class="card-block">
+                                                    Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
+                                                    <?php /*
+                                                    <p>
+                                                        Tender ini domenangkan oleh peserta dengan total penawaran {{$penawaran_pemenang}}
+                                                    </p>
+                                                    */ ?>
+                                                </div>
                                             </div>
-                                        </div>
+                                            @endif
                                         @else
-                                        <div class="card card-inverse card-danger">
-                                            <div class="card-header">
-                                                Pengumuman Tender
-                                            </div>
-                                            <div class="card-block">
-                                                Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
-                                            </div>
-                                        </div>
+                                            
                                         @endif
                                     @endif
                                 </div>
@@ -241,11 +250,13 @@ var total = 0;
 $(document).ready(function(){
     $("#total_harga_input").maskMoney('mask', {{$total_auction}});
     $(".input-auction-barang").keyup();
+    /*
     if(total<{{$pengumuman->nilai_hps}}){
         $("#btn-simpan").addClass('disabled');
     }else{
         $("#btn-simpan").removeClass('disabled');
     }
+    */
 });
 $("#form-auction").submit(function(e){
     e.preventDefault();
@@ -260,6 +271,7 @@ $("#form-auction").submit(function(e){
             url:"{{route('pengajuan')}}",
             type:"POST",
             success:function(res){
+                if(res.result==false) alert(res.message);
                 $("#btn-simpan").removeClass("disabled");
                 $("#btn-simpan").text("Submit");
                 if(res.indication!=undefined){
@@ -284,11 +296,13 @@ $(".input-auction-barang").keyup(function(){
             total+=parseInt(val.replace(/[^\w\s]/gi, ''));
     });
     $("#total_harga_input").maskMoney('mask', total);
+    /*
     if(total<{{$pengumuman->nilai_hps}}){
         $("#btn-simpan").addClass('disabled');
     }else{
         $("#btn-simpan").removeClass('disabled');
     }
+    */
 });
 @else
     $("#form-auction").submit(function(e){

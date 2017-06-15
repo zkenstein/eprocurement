@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserCluster;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -100,7 +101,7 @@ class GeneralController extends Controller
     public function pengumumanPage(Request $request)
     {
     	$data['TAG'] = 'pengumuman';
-        $data['list_cluster'] = collect(Cluster::all())->groupBy('jenis');
+        $data['list_cluster'] = collect(Cluster::whereHas('listUser',function($q){})->get())->groupBy('jenis');
         $data['list_barang'] = Barang::all();
         $data['list_pic'] = User::where('role','pic')->get();
     	return view('pages.pengumuman',$data);
@@ -180,5 +181,19 @@ class GeneralController extends Controller
     {
         $data['TAG'] = 'arsip';
         return view('pages.arsip',$data);
+    }
+
+    public function countUserCluster(Request $request)
+    {
+        $data = $request->input('data');
+//        $result = UserCluster::whereHas('userInfo',function($q)use ($data){$q->where('is_kondite',0);})->whereIn('cluster_id',$request->input('data'))->count();
+
+
+        $result = User::whereHas('listCluster',function($q)use($data){
+            $q->whereIn('cluster_id',$data);
+        })->where('is_kondite',0)->count();
+
+
+        return response()->json($result);
     }
 }

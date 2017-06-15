@@ -56,4 +56,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsTo('App\Departemen','departemen_id');
     }
+
+    public function listBarangEksternalAuction()
+    {
+        return $this->hasMany('App\BarangEksternalUser','user_id');
+    }
 }

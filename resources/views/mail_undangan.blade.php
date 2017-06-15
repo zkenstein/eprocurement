@@ -38,7 +38,7 @@
 	        <tr>
 	            <td>Nilai HPS</td>
 				@if($pengumuman->nilai_hps > 0)
-	            	<td>: {{$pengumuman->nilai_hps}} ({{$pengumuman->mata_uang}})</td>
+	            	<td>: {{number_format($pengumuman->nilai_hps,0,",",".").' ('.$pengumuman->mata_uang.')'}}</td>
 				@else
 					<td>: -</td>
 				@endif

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Pengumuman;
 use App\Auction;
-
+#UNTUK MENCEGAH AKSES AUCTION KETIKA AUCTION TELAH SELESAI ATAU BELUM DIMULAI
 class VerifikasiAuction
 {
     /**
