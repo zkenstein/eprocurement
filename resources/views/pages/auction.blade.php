@@ -242,11 +242,11 @@
                 url:"/is_i_win",
                 success:function(res){
                     if(res===true) {
-                        $("#win-flag").css({"color":"blue","font-size":"120%"});
+                        $("#win-flag").css({"color":"blue"});
                         $("#win-flag").attr("title","Anda mencapai harga terendah");
                     }
                     else {
-                        $("#win-flag").css({"color":"gray","font-size":"100%"});
+                        $("#win-flag").css({"color":"gray"});
                         $("#win-flag").attr("title","Anda tidak mencapai harga terendah");
                     }
                     cekIfIWin();

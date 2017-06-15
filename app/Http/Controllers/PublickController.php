@@ -140,9 +140,12 @@ class PublickController extends Controller
 
             $data['isIWin'] = false;
             $data['pengumuman'] = Pengumuman::with(['listCluster.clusterInfo','listBarang.barangInfo','listValidUser'])->find(session('pengumuman'));
-            if(  $data['pengumuman']->pemenang!=null ){
-                if($data['pengumuman']->pemenang == session('id')) $data['isIWin'] = true;
-                else $data['isIWin'] = false;
+            if(  $data['pengumuman']->pemenang!=null && $data['pengumuman']->pemenang!=0 ){
+                if($data['pengumuman']->pemenang == session('id')) {
+                    $data['isIWin'] = true;
+                }else{
+                    $data['harga_yang_menang'] = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction','>',0)->min('total_auction');
+                }
             }
             // CEK JIKA PENGUMUMAN PEMENANG = 0;
             if($data['pengumuman']->pemenang==0){

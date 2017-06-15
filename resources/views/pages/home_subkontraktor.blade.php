@@ -100,7 +100,12 @@
                                                     Pengumuman Tender
                                                 </div>
                                                 <div class="card-block">
-                                                    Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
+                                                    Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya<br>
+                                                    Tender ini dimenangkan oleh Subkon/Vendor dengan nilai penawaran 
+                                                    @if(isset($harga_yang_menang))
+                                                    {{number_format($harga_yang_menang,0,",",".")}}
+                                                    @endif
+
                                                     <?php /*
                                                     <p>
                                                         Tender ini domenangkan oleh peserta dengan total penawaran {{$penawaran_pemenang}}
@@ -110,7 +115,30 @@
                                             </div>
                                             @endif
                                         @else
-                                            
+                                            @if($isIWin)
+                                            <div class="card card-inverse card-success">
+                                                <div class="card-header">
+                                                    Pengumuman Pemenang Tender
+                                                </div>
+                                                <div class="card-block">
+                                                    Selamat!! Anda memenangkan tender ini. Silahkan cek Email mengenai detail barang yang anda menangkan
+                                                </div>
+                                            </div>
+                                            @else
+                                            <div class="card card-inverse card-danger">
+                                                <div class="card-header">
+                                                    Pengumuman Tender
+                                                </div>
+                                                <div class="card-block">
+                                                    Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
+                                                    <?php /*
+                                                    <p>
+                                                        Tender ini domenangkan oleh peserta dengan total penawaran {{$penawaran_pemenang}}
+                                                    </p>
+                                                    */ ?>
+                                                </div>
+                                            </div>
+                                            @endif
                                         @endif
                                     @endif
                                 </div>

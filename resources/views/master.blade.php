@@ -198,7 +198,7 @@
             </li>
             @if(isset($group_auction))
             <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#" id="win-flag"><i class="icon-trophy"></i></a>
+                <a class="nav-link" href="#" id="win-flag" style="font-size: 23px;"><i class="icon-trophy"></i></a>
             </li>
             @endif
             @endif
