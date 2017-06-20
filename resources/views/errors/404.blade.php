@@ -38,14 +38,6 @@
                     <p style="margin:5px auto;text-align: center;"><strong>Oops! </strong>Halaman yang anda cari tidak ditemukan</p>
                 </div>
                 <div class="input-prepend input-group" style="margin-top: 10px;">
-                    <?php /*
-                    <span class="input-group-addon"><i class="fa fa-search"></i>
-                    </span>
-                    <input id="prependedInput" class="form-control" size="16" type="text" placeholder="What are you looking for?">
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="button">Search</button>
-                    </span>
-                    */ ?>
                     <a class="btn btn-info" href="{{route('home')}}" style="margin:0px auto;">Kembali</a>
                 </div>
             </div>

@@ -31,26 +31,12 @@
                         </div>
                         <div class="card-block">
                             <form id="form-add" action="" method="post" enctype="multipart/form-data">
-                                <?php /*
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 padding-side">
-                                        <div class="form-group">
-                                            <label class="form-form-control-label">Deskripsi</label>
-                                            <input id="add-deskripsi" type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
-                                        </div>
-                                    </div>
-                                </div>
-                                */ ?>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
-                                            <?php /*
-                                            <label class="form-form-control-label">Kode</label>
-                                            <input id="add-kode" type="text" required name="kode" class="form-control input-sm will-clear needvalidate" data-rule="required|unique:pengumuman,kode|alpha_num" placeholder="Kode Pengumuman">
-                                            */ ?>
                                             <div class="form-group">
                                             <label class="form-form-control-label">Deskripsi</label>
-                                            <input id="add-deskripsi" type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
+                                            <input id="add-deskripsi" required type="text" class="form-control input-sm will-clear" placeholder="Deskripsi Pengumuman" name="deskripsi">
                                         </div>
                                             <span class="help-block"></span>
                                         </div>
@@ -75,14 +61,14 @@
                                 	<div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Batas Waktu Penawaran</label>
-                                            <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" readonly name="batas_waktu_penawaran">
+                                            <input id="add-batas-waktu" type="text" required class="form-control input-sm will-clear daterange" placeholder="batas waktu penawaran" name="batas_waktu_penawaran">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Validitas Harga</label>
-                                            <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" readonly name="validitas_harga">
+                                            <input id="add-validitas-harga" type="text" required class="form-control input-sm will-clear singledate" required placeholder="Validitas Harga" name="validitas_harga">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -105,7 +91,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Waktu Pengiriman</label>
-                                            <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" readonly name="waktu_pengiriman">
+                                            <input id="add-waktu-pengiriman" type="text" required class="form-control input-sm will-clear singledate" placeholder="Waktu Pengiriman" name="waktu_pengiriman">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -128,7 +114,7 @@
                                     <div class="col-sm-12 col-md-6 padding-side">
                                         <div class="form-group">
                                             <label class="form-form-control-label">Mata Uang</label>
-                                            <input id="add-mata-uang" type="text" required class="form-control input-sm will-clear needvalidate" data-rule="required|alpha" placeholder="Mata Uang" name="mata_uang">
+                                            <input id="add-mata-uang" type="text" class="form-control input-sm will-clear needvalidate" data-rule="required|alpha" placeholder="Mata Uang" name="mata_uang">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -146,7 +132,7 @@
                                             </div>
                                             <div class="form-group col-sm-6 padding-side">
                                                 <label class="form-form-control-label">Import CSV</label>
-                                                <input type="file" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                <input type="file" id="add-barang-eksternal" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                             </div>
                                         </div>
                                     </div>
@@ -432,18 +418,55 @@
 
         $("#form-add").submit(function(e){
             e.preventDefault();
-            var _c = confirm("Anda yakin data yang telah diisikan benar ?\n Sistem akan mengirimkan email ke Subkontraktor dan Pengumuman tidak akan dapat dihapus setelah email terkirim");
-            if(_c===true){
-                $("#add-submit").prop('disabled', true);
-                var myForm = $(this);
-                if($("#add-barang").val().length>0){
-                    $("#modal-quantity").modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    }).on('hidden.bs.modal', function () {
-                        if(resetNow==false){
-                            $("#add-quantity-div").css("display","none");
-                            $("#add-quantity-div").appendTo("#form-add");
+            var inputBarang = $("#add-barang").val();
+            var inputBarangEksternal = $("#add-barang-eksternal").val();
+            console.log(inputBarang.length);
+            console.log(inputBarangEksternal.length);
+            if(inputBarang.length<=0 && inputBarangEksternal.length<=0){
+                alert("Salah satu field 'Barang' ataupun 'Import CSV' harus terisi");
+                return;
+            }else{
+                if(inputBarang.length>0 && inputBarangEksternal.length>0){
+                    alert("Hanya salah satu yang boleh terisi field 'Barang' ataupun 'Import CSV'");
+                    return;
+                }else{
+                    var _c = confirm("Anda yakin data yang telah diisikan benar ?\n Sistem akan mengirimkan email ke Subkontraktor dan Pengumuman tidak akan dapat dihapus setelah email terkirim");
+                    if(_c===true){
+                        $("#add-submit").prop('disabled', true);
+                        var myForm = $(this);
+                        if($("#add-barang").val().length>0){
+                            $("#modal-quantity").modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            }).on('hidden.bs.modal', function () {
+                                if(resetNow==false){
+                                    $("#add-quantity-div").css("display","none");
+                                    $("#add-quantity-div").appendTo("#form-add");
+                                    myForm.ajaxSubmit({
+                                        type:"POST",
+                                        success:function(res,status,xhr,$form){
+                                            $("#add-submit").prop('disabled', false);
+                                            if(res.result==true){
+                                                $("#form-add input:not([name='_token'], [name='_method'])").val('');
+                                                $("#form-add textarea").val('');
+                                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
+                                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
+                                                $("#form-add input.needvalidate").removeClass('form-control-danger');
+                                                $("#form-add input.needvalidate").removeClass('form-control-success');
+                                                $("#form-add input.needvalidate").next().removeClass('text-danger');
+                                                $("#form-add input.needvalidate").next().text('');
+                                                // $('#form-add .selectpicker').selectpicker('deselectAll');
+                                                $("input[name='_token']").val(res.token);
+                                                csrf = res.token;
+                                                location.reload();
+                                            }else{
+                                                alert(res.message);
+                                            }
+                                        }
+                                    });
+                                }
+                            }).modal('show');
+                        }else{
                             myForm.ajaxSubmit({
                                 type:"POST",
                                 success:function(res,status,xhr,$form){
@@ -467,30 +490,7 @@
                                 }
                             });
                         }
-                    }).modal('show');
-                }else{
-                    myForm.ajaxSubmit({
-                        type:"POST",
-                        success:function(res,status,xhr,$form){
-                            $("#add-submit").prop('disabled', false);
-                            if(res.result==true){
-                                $("#form-add input:not([name='_token'], [name='_method'])").val('');
-                                $("#form-add textarea").val('');
-                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
-                                $("#form-add input.needvalidate").parent(".form-group").removeClass('has-danger');
-                                $("#form-add input.needvalidate").removeClass('form-control-danger');
-                                $("#form-add input.needvalidate").removeClass('form-control-success');
-                                $("#form-add input.needvalidate").next().removeClass('text-danger');
-                                $("#form-add input.needvalidate").next().text('');
-                                // $('#form-add .selectpicker').selectpicker('deselectAll');
-                                $("input[name='_token']").val(res.token);
-                                csrf = res.token;
-                                location.reload();
-                            }else{
-                                alert(res.message);
-                            }
-                        }
-                    });
+                    }
                 }
             }
         });

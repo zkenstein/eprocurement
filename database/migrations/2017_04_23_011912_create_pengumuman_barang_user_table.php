@@ -21,6 +21,7 @@ class CreatePengumumanBarangUserTable extends Migration
             $table->double('harga');
             $table->tinyInteger('status')->default(1);
             $table->string('grup')->nullable();
+            $table->boolean('is_win')->default(0);
             $table->timestamps();
         });
     }
