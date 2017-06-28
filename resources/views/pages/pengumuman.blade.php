@@ -584,12 +584,20 @@
                 processData: false,
                 contentType: false,
                 success:function(res){
-                    $("#keterangan_csv").text("file csv valid");
-                    $("#keterangan_csv").css("color","green");
+                    if(res.hasil===true){
+                        $("#keterangan_csv").text("file csv valid");
+                        $("#keterangan_csv").css("color","green");
+                    }else{
+                        alert(res.message);
+                        $("#add-barang-eksternal").val('');
+                        $("#keterangan_csv").text("file csv tidak valid");
+                        $("#keterangan_csv").css("color","red");
+                    }
                 },
                 statusCode: {
                     500: function() {
                         alert("CSV yang anda inputkan tidak valid");
+                        $("#add-barang-eksternal").val('');
                         $("#keterangan_csv").text("file csv tidak valid");
                         $("#keterangan_csv").css("color","red");
                     }

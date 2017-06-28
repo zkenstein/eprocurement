@@ -143,12 +143,20 @@ class PengumumanController extends Controller
     public function validateCsv(Request $request)
     {
         $filename = strtotime('now').'.'.$request->file('barang_csv')->getClientOriginalExtension();
-
         $file = \File::get($request->file('barang_csv'));
         \Storage::disk('local')->put($filename, $file);
-        
         $file = fopen(storage_path('app/'.$filename),"r");
+        $tmpfile = fopen(storage_path('app/'.$filename),"r");
         $c = 0;
+        //PROSES MENGHITUNG JUMLAH BARIS
+        $linecount = 0;
+        while(!feof($tmpfile)){
+            $line = fgets($tmpfile);
+            $linecount++;
+        }
+        fclose($tmpfile);
+
+        //PROSES VALIDASI DENGAN INSERT KE TABEL CSV_VALIDATION
         while(! feof($file)){
             $line = fgetcsv($file);
             $dataBarangEksternal = explode(";",$line[0]);
@@ -162,16 +170,27 @@ class PengumumanController extends Controller
                         'quantity'=>isset($dataBarangEksternal[3])?$dataBarangEksternal[3]:1
                     ]);
                 }else{
-                    return response()->json(['hasil'=>false,'line'=>$c,'message'=>'Kesalahan pada baris ke '.$c],500);    
+                    $this->finishingValidation($file,$filename);
+                    return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1)],222);
                 }
-            }else{
-                return response()->json(['hasil'=>false,'line'=>$c,'message'=>'Kesalahan pada baris ke '.$c],500);
+            }
+            else if($linecount==($c+1)){
+                $this->finishingValidation($file,$filename);
+                return response()->json(['hasil'=>true,'else'=>1],200);
+            }
+            else{
+                $this->finishingValidation($file,$filename);
+                return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1)],222);
             }
         }
+        $this->finishingValidation($file,$filename);
+        return response()->json(['hasil'=>true,'count'=>$c],200);
+    }
+    //JIKA VALIDASI SELESAI, TUTUP FILE, HAPUS dan KOSONGKAN TABEL CSV_VALIDATION
+    private function finishingValidation($file,$filename){
         fclose($file);
         \Storage::disk('local')->delete($filename);
         CsvValidation::query()->truncate();
-        return response()->json(['hasil'=>true]);
     }
 
     public function addData(Request $request)
