@@ -248,6 +248,10 @@ Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only'
 		'as'=>'get_file_excel'
 	]);
 	Route::post('/pengumuman','PengumumanController@addData');
+	Route::put('/validate_csv',[
+		'uses'=>'PengumumanController@validateCsv',
+		'as'=>'validate_csv'
+	]);
 	// Route::delete('/pengumuman/{id?}','PengumumanController@deleteData');
 
 	// MONITORING

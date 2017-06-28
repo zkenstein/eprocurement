@@ -15,6 +15,7 @@ use Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Jobs\InsertPengumumanUser;
 use App\Jobs\InsertBarangEksternal;
+use App\CsvValidation;
 
 class PengumumanController extends Controller
 {
@@ -138,15 +139,52 @@ class PengumumanController extends Controller
         ],200);        
     }
 
+    //VALIDASI CSV
+    public function validateCsv(Request $request)
+    {
+        $filename = strtotime('now').'.'.$request->file('barang_csv')->getClientOriginalExtension();
+
+        $file = \File::get($request->file('barang_csv'));
+        \Storage::disk('local')->put($filename, $file);
+        
+        $file = fopen(storage_path('app/'.$filename),"r");
+        $c = 0;
+        while(! feof($file)){
+            $line = fgetcsv($file);
+            $dataBarangEksternal = explode(";",$line[0]);
+            if(sizeof($dataBarangEksternal)==4){
+                if($line!=""){
+                    $c++;
+                    CsvValidation::create([
+                        'kode'=>$dataBarangEksternal[0],
+                        'deskripsi'=>$dataBarangEksternal[1],
+                        'satuan'=>isset($dataBarangEksternal[2])?$dataBarangEksternal[2]:"",
+                        'quantity'=>isset($dataBarangEksternal[3])?$dataBarangEksternal[3]:1
+                    ]);
+                }else{
+                    return response()->json(['hasil'=>false,'line'=>$c,'message'=>'Kesalahan pada baris ke '.$c],500);    
+                }
+            }else{
+                return response()->json(['hasil'=>false,'line'=>$c,'message'=>'Kesalahan pada baris ke '.$c],500);
+            }
+        }
+        fclose($file);
+        \Storage::disk('local')->delete($filename);
+        CsvValidation::query()->truncate();
+        return response()->json(['hasil'=>true]);
+    }
+
     public function addData(Request $request)
     {
         $clusterInput = $request->input('cluster');
+        //CEK PENGUMUMAN AUCTION YANG BERTABRAKAN
         $checkPengumuman = Pengumuman::where('start_auction',$request->input('start_auction'))->whereHas('listCluster',function($q)use($clusterInput){
             $q->whereIn('cluster_id',$clusterInput);
         })->first();
         if($checkPengumuman!=null){
             return response()->json(['result'=>false,'message'=>'Ada pengumuman lelang yang sama dengan waktu auction dan cluster yang sama pada waktu tersebut, silahkan ganti ke jam atau tanggal lain']);
         }
+        //PENGKODEAN PENGUMUMAN
         $lastPengumuman = Pengumuman::orderBy('kode', 'desc')->first();
         $kode = "";
         if($lastPengumuman==null){
@@ -158,6 +196,7 @@ class PengumumanController extends Controller
                 $kode = \Carbon\Carbon::now()->year."0001";
             }
         }
+        //REQUEST DIGABUNGKAN SETELAH DIRUBAH BENTUK
         $request->merge(array('kode' => $kode));
         
         $date = date_format(date_create(),'U');
@@ -193,19 +232,19 @@ class PengumumanController extends Controller
             // Mulai backgroundprocess insert barang eksternal
             $job1 = new InsertBarangEksternal($pengumuman->id,$excel);
             $this->dispatch($job1);
+        }else if(count($request->input('barang'))>0){# cek jika ada inputan barang
+            // Insert pengumuman barang
+            foreach($request->input('barang') as $barang){
+                PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
+            }
+        }else{#JIKA PENGUMUMAN TANPA ADA BARANG EKSTERNAL MAUPUN MASTER BARANG
+            Pengumuman::delete($pengumuman->id);
+            return response()->json(['result'=>true,'token'=>csrf_token()]);
         }
 
         // Mulai backgroundprocess insert user + kirim email
         $job2 = new InsertPengumumanUser($pengumuman,$request->input('cluster'));
         $this->dispatch($job2);
-
-        // cek jika ada inputan barang
-        if(count($request->input('barang'))>0){
-            // Insert pengumuman barang
-            foreach($request->input('barang') as $barang){
-                PengumumanBarang::create(['pengumuman_id'=>$pengumuman->id,'barang_id'=>$barang,'quantity'=>$request->input('quantity.'.$barang)]);
-            }
-        }
 
         // Insert pengumuman cluster
         foreach($request->input('cluster') as $cluster){
@@ -213,7 +252,7 @@ class PengumumanController extends Controller
         }
 
         // Return
-        return response()->json(['result'=>true,'token'=>csrf_token(),'request'=>$request->all()]);
+        return response()->json(['result'=>true,'token'=>csrf_token()]);
     }
 
     public function deleteData(Request $request, $id)

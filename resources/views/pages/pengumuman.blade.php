@@ -131,7 +131,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-6 padding-side">
-                                                <label class="form-form-control-label">Import CSV</label>
+                                                <label class="form-form-control-label">Import CSV</label> <small style="color: red;" id="keterangan_csv"></small>
                                                 <input type="file" id="add-barang-eksternal" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                             </div>
                                         </div>
@@ -171,8 +171,6 @@
                                         <div class="form-group">
                                             <label class="form-form-control-label">Syarat dan Ketentuan</label>
                                             <textarea id="add-syarat_dan_ketentuan" required name="syarat_dan_ketentuan" class="form-control will-clear"  placeholder="Syarat dan Ketentuan" rows="3"></textarea>
-                                            <!--
-                                            <textarea rows="9" class="form-control input-sm will-clear" placeholder="Syarat dan Ketentuan" name="syarat_dan_ketentuan" id="add-syarat_dan_ketentuan"></textarea>-->
                                         </div>
                                     </div>
                                 </div>
@@ -206,9 +204,6 @@
                                         <th style="min-width:165px;">Kode / PIC</th>
                                         <th style="min-width:165px;">Waktu</th>
                                         <th>Max Pendaftar</th>
-                                        <?php /*
-                                        <th>Harga Netto</th>
-                                        */ ?>
                                         <th>Cluster</th>
                                         <th>Barang</th>
                                     </tr>
@@ -220,9 +215,6 @@
                                         <th style="min-width:165px;">Kode / PIC</th>
                                         <th style="min-width:165px;">Waktu</th>
                                         <th>Max Pendaftar</th>
-                                        <?php /*
-                                        <th>Harga Netto</th>
-                                        */ ?>
                                         <th>Cluster</th>
                                         <th>Barang</th>
                                     </tr>
@@ -256,7 +248,7 @@
 @stop
 
 @section('script')
-    {{--<script type="text/javascript" src="/js/bootstrap-typeahead.min.js"></script>--}}
+    <script type="text/javascript" src="/js/simpleUpload.min.js"></script>
     <script src="/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
         var resetNow = false;
@@ -420,8 +412,6 @@
             e.preventDefault();
             var inputBarang = $("#add-barang").val();
             var inputBarangEksternal = $("#add-barang-eksternal").val();
-            console.log(inputBarang.length);
-            console.log(inputBarangEksternal.length);
             if(inputBarang.length<=0 && inputBarangEksternal.length<=0){
                 alert("Salah satu field 'Barang' ataupun 'Import CSV' harus terisi");
                 return;
@@ -523,13 +513,14 @@
         function modalQuantityShow() {
             $("#add-quantity-div").html('');
             $.each($('#add-barang').val(),function(key,val){
+                console.log(barang[val]);
                 $("#add-quantity-div").append('<div class="col-sm-12 col-md-12 padding-side"><div class="form-group">'+barang[val]+'<label class="form-form-control-label"></label><input type="number" name="quantity['+val+']" class="form-control"></div></div>');
             });
         }
 
-        $('#add-barang').on('hidden.bs.select', function (e) {
-            modalQuantityShow();
-        });
+        // $('#add-barang').on('hidden.bs.select', function (e) {
+        //     modalQuantityShow();
+        // });
 
         function resetMyModal() {
             resetNow = true;
@@ -545,11 +536,22 @@
         }
         function initSelect2() {
             $("#keterangan_cluster").text("");
-            $(".select2").select2({
-                placeholder: 'Pilih',
+            $("#add-barang").select2({
+                placeholder: 'Pilih Barang',
                 allowClear: true,
                 templateSelection:function(data,container){
-                    console.log(data);
+                    var text = data.text.split(" - ");
+                    return text[0];
+                }
+            }).on("select2:select", function (e) { 
+                modalQuantityShow();
+            }).on("select2:unselect", function (e) { 
+                modalQuantityShow();
+            });
+            $("#add-cluster").select2({
+                placeholder: 'Pilih Cluster',
+                allowClear: true,
+                templateSelection:function(data,container){
                     var text = data.text.split(" - ");
                     return text[0];
                 }
@@ -565,6 +567,35 @@
                 });
             });
         }
+
+        $("#add-barang-eksternal").on('change', function(e){
+            var file = e.target.files[0];
+            var data = new FormData();
+
+            data.append('barang_csv', file);
+            data.append('_method','put');
+
+            $.ajax({
+                url:"{{route('intern.validate_csv')}}",
+                type:"POST",
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success:function(res){
+                    $("#keterangan_csv").text("file csv valid");
+                    $("#keterangan_csv").css("color","green");
+                },
+                statusCode: {
+                    500: function() {
+                        alert("CSV yang anda inputkan tidak valid");
+                        $("#keterangan_csv").text("file csv tidak valid");
+                        $("#keterangan_csv").css("color","red");
+                    }
+                }
+            });
+        });
 
     </script>
 @stop

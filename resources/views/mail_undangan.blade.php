@@ -59,22 +59,50 @@
 	        </tr>
 	    </tbody>
 	</table>
+	
+	@if($list_barang!=null)<!-- JIKA LIST BARANG ADA -->
+	<div>
+		List Item :
+	</div>
+
+	<table style="border:1px solid gray;border-collapse: collapse;">
+		<thead style="border:1px solid gray;">
+			<tr style="border:1px solid gray;">
+				<th style="border:1px solid gray;">Kode</th>
+				<th style="border:1px solid gray;">Deskripsi</th>
+				<th style="border:1px solid gray;">Jumlah</th>
+				<th style="border:1px solid gray;">Ket</th>
+			</tr>
+		</thead>
+		<tbody style="border:1px solid gray;">
+			@foreach($list_barang as $b)
+			<tr style="border:1px solid gray;">
+				<td style="border:1px solid gray;">{{$b['barang_info']['kode']}}</td>
+				<td style="border:1px solid gray;">{{$b['barang_info']['deskripsi']}}</td>
+				<td style="border:1px solid gray;">{{$b['quantity']}}{{$b['barang_info']['satuan']}}</td>
+				<td style="border:1px solid gray;">
+					<img style="width: 100px;" src="{{env('SERVER')}}/img/barang/{{$b['barang_info']['gambar']}}"/>
+					<br>
+					@if(!is_null($b['barang_info']['pdf']))
+					<a download href="{{env('SERVER')}}/img/barang/{{$b['barang_info']['pdf']}}">Download PDF</a>
+					@endif
+				</td>
+			</tr>
+			
+			@endforeach
+		</tbody>
+	</table>
+	@endif
+
 	@if($pengumuman->syarat_dan_ketentuan!=null && $pengumuman->syarat_dan_ketentuan!="")
 	<p>
 		<strong>Syarat & Kondisi Penawaran :</strong><br>
 		{!!nl2br($pengumuman->syarat_dan_ketentuan)!!}
-		<!--
-		<ol>
-			<li>Harga berlaku 1 (satu) minggu</li>
-			<li>Belum termasuk PPN 10%</li>
-			<li>Tempat Pengiriman PT. PAL Indonesia, Surabaya</li>
-		</ol>
-		-->
 	</p>
 	@endif
 	<p><span style="color: #333333;"><br />Untuk melakukan pendaftaran silahkan klik menu register di halaman&nbsp;<a href="{{route('home')}}" target="_blank">Home E-Procurement PT. PAL</a>&nbsp;sesuai dengan kode proyek di atas dan masukkan email anda beserta kode_registrasi yang kami kirimkan di atas.&nbsp;</span>
 	</p>
-	<p>Demikian surat penawaran ini. Atas perhatiannya kami sampaikan terimakasih.</p>
+	<p>Demikian surat undangan ini. Atas perhatiannya kami sampaikan terimakasih.</p>
 	<br>
 	@if($departemen!=null)
 	<p>Tertanda <strong>Kepala Departemen {{$departemen->nama}}</strong></p><br><br>

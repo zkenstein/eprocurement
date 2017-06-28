@@ -11,12 +11,12 @@ class PengumumanBarang extends Model
 
     public function barangInfo()
     {
-    	return $this->belongsTo('App\Barang','barang_id');
+    	return $this->hasOne('App\Barang','id','barang_id');
     }
 
     public function pengumumanInfo()
     {
-    	return $this->belongsTo('App\Pengumuman');
+    	return $this->hasOne('App\Pengumuman','id','pengumuman_id');
     }
 
     public function inUserAuction()
