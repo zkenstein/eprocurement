@@ -131,7 +131,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-6 padding-side">
-                                                <label class="form-form-control-label">Import CSV</label> <small style="color: red;" id="keterangan_csv"></small>
+                                                <label class="form-form-control-label">CSV <small>Semicolon(;) separated</small></label> <small style="color: red;" id="keterangan_csv"></small>
                                                 <input type="file" id="add-barang-eksternal" name="barang_csv" class="form-control input-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                             </div>
                                         </div>
@@ -569,6 +569,9 @@
         }
 
         $("#add-barang-eksternal").on('change', function(e){
+            $(this).addClass('disable');
+            $("#keterangan_csv").text("Proses validasi");
+            $("#keterangan_csv").css("color","gray");
             var file = e.target.files[0];
             var data = new FormData();
 
@@ -584,6 +587,7 @@
                 processData: false,
                 contentType: false,
                 success:function(res){
+                    $(this).removeClass('disable');
                     if(res.hasil===true){
                         $("#keterangan_csv").text("file csv valid");
                         $("#keterangan_csv").css("color","green");
@@ -596,6 +600,7 @@
                 },
                 statusCode: {
                     500: function() {
+                        $(this).removeClass('disable');
                         alert("CSV yang anda inputkan tidak valid");
                         $("#add-barang-eksternal").val('');
                         $("#keterangan_csv").text("file csv tidak valid");

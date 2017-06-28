@@ -158,21 +158,17 @@ class PengumumanController extends Controller
 
         //PROSES VALIDASI DENGAN INSERT KE TABEL CSV_VALIDATION
         while(! feof($file)){
-            $line = fgetcsv($file);
-            $dataBarangEksternal = explode(";",$line[0]);
+            // $line = fgetcsv($file);
+            $dataBarangEksternal = fgetcsv($file,null,';');
+            // $dataBarangEksternal = explode(";",$line[0]);
             if(sizeof($dataBarangEksternal)==4){
-                if($line!=""){
-                    $c++;
-                    CsvValidation::create([
-                        'kode'=>$dataBarangEksternal[0],
-                        'deskripsi'=>$dataBarangEksternal[1],
-                        'satuan'=>isset($dataBarangEksternal[2])?$dataBarangEksternal[2]:"",
-                        'quantity'=>isset($dataBarangEksternal[3])?$dataBarangEksternal[3]:1
-                    ]);
-                }else{
-                    $this->finishingValidation($file,$filename);
-                    return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1)],222);
-                }
+                $c++;
+                CsvValidation::create([
+                    'kode'=>$dataBarangEksternal[0],
+                    'deskripsi'=>$dataBarangEksternal[1],
+                    'satuan'=>isset($dataBarangEksternal[2])?$dataBarangEksternal[2]:"",
+                    'quantity'=>isset($dataBarangEksternal[3])?$dataBarangEksternal[3]:1
+                ]);
             }
             else if($linecount==($c+1)){
                 $this->finishingValidation($file,$filename);
@@ -180,7 +176,7 @@ class PengumumanController extends Controller
             }
             else{
                 $this->finishingValidation($file,$filename);
-                return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1)],222);
+                return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1),'size'=>sizeof($dataBarangEksternal),'data'=>$dataBarangEksternal],222);
             }
         }
         $this->finishingValidation($file,$filename);
