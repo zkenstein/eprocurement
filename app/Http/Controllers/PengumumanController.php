@@ -159,7 +159,7 @@ class PengumumanController extends Controller
         //PROSES VALIDASI DENGAN INSERT KE TABEL CSV_VALIDATION
         while(! feof($file)){
             // $line = fgetcsv($file);
-            $dataBarangEksternal = fgetcsv($file,null,';');
+            $dataBarangEksternal = fgetcsv($file,null,';');//Semicolon separated
             // $dataBarangEksternal = explode(";",$line[0]);
             if(sizeof($dataBarangEksternal)==4){
                 $c++;
@@ -179,6 +179,7 @@ class PengumumanController extends Controller
                 return response()->json(['hasil'=>false,'line'=>$c,'message'=>'File tidak valid, Kesalahan file pada baris ke '.($c+1),'size'=>sizeof($dataBarangEksternal),'data'=>$dataBarangEksternal],222);
             }
         }
+        //JIKA FILE VALID
         $this->finishingValidation($file,$filename);
         return response()->json(['hasil'=>true,'count'=>$c],200);
     }
