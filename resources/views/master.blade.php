@@ -146,6 +146,11 @@
             <li class="nav-item px-1">
                 <a class="nav-link <?=$TAG=='kontak'?'active':''?>" href="{{route('kontak')}}">Kontak</a>
             </li>
+            @if(session('role')=='admin' || session('role')=='pic')
+            <li class="nav-item px-1" data-toggle="modal" data-target="#password-modal">
+                <a class="nav-link" href="#">Ganti Password</a>
+            </li>
+            @endif
             @if(session('role')=='subkontraktor')
             <!--
             <li class="nav-item px-1">
@@ -592,6 +597,48 @@
     </form>
     @endif
 
+    @if(session('role')=='admin' || session('role')=='pic')
+    <form class="modal fade" action="" method="post" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Ganti Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i>
+                            </span>
+                            <input required autocomplete="false" type="password" id="password-lama" name="password_lama" class="form-control" placeholder="Password Sebelumnya">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i>
+                            </span>
+                            <input required autocomplete="false" type="password" id="password-baru" name="password_baru" class="form-control" placeholder="Password Baru">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-asterisk"></i>
+                            </span>
+                            <input required autocomplete="false" type="password" id="password-baru-confirm" name="password_baru_confirm" class="form-control" placeholder="Konfirmasi Password Baru">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="button-submit-password">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    @endif
+
     <footer class="app-footer">
         <a href="http://coreui.io">CoreUI</a> © 2017 creativeLabs.
         <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a>
@@ -869,6 +916,35 @@
         });
         @if(session()->has('error'))
         alert("{{session()->pull('error')}}");
+        @endif
+        @if(session('role')=='admin' || session('role')=='pic')
+        $("#password-modal").submit(function(e){
+            e.preventDefault();
+            var password_lama = $("#password-lama").val().trim();
+            var password_baru = $("#password-baru").val().trim();
+            var password_baru_confirm = $("#password-baru-confirm").val().trim();
+            if(password_baru_confirm==password_baru){
+                $.ajax({
+                    url:"{{route('intern.change_password')}}",
+                    method:"POST",
+                    data:{password:password_lama,password_baru:password_baru},
+                    success:function(res){
+                        if(res.hasil===true){
+                            alert("Password berhasil diganti");
+                            $("#password-lama").val('');
+                            $("#password-baru").val('');
+                            $("#password-baru-confirm").val('');
+                            $("#password-modal").modal('hide');
+                        }else{
+                            alert(res.message);
+                            location.reload();
+                        }
+                    }
+                });
+            }else{
+                alert("Password baru dan password konrimasi harus sama");
+            }
+        });
         @endif
     </script>
 </body>

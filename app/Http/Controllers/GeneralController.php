@@ -196,4 +196,18 @@ class GeneralController extends Controller
 
         return response()->json($result);
     }
+
+    public function changePassword(Request $request)
+    {
+        $password_lama = trim($request->input('password'));
+        $user = User::find(session('id'));
+        if ($password_lama==$user->password) {
+            $user->password = $request->input('password_baru');
+            $user->save();
+            return response()->json(['hasil'=>true]);
+        }else{
+            $request->session()->flush();
+            return response()->json(['hasil'=>false,'message'=>'password lama yang anda masukkan tidak sesuai']);
+        }
+    }
 }

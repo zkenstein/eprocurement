@@ -88,7 +88,11 @@ Route::get('gu','PublickController@generateUser');
 
 // HARUS LOGIN SEBAGAI ADMIN DAN PIC
 Route::group(['prefix'=>'intern','as'=>'intern.','middleware'=>['pic_admin_only']],function(){
-
+	// GANTI PASSWORD
+	Route::post('change_password',[
+		'uses'=>'GeneralController@changePassword',
+		'as'=>'change_password'
+	]);
 	// MENDAPATKAN JUMLAH USER DALAM BEBERAPA CLUSTER
 	Route::post('/count_user_cluster',[
 		'uses'=>'GeneralController@countUserCluster',
