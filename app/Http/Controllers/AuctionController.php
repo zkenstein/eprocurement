@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Auction;
+use App\Barang;
 use App\Pengumuman;
 use App\PengumumanUser;
 use App\BarangEksternal;
@@ -19,6 +20,7 @@ class AuctionController extends Controller
 {
     public function pengajuan(Request $request)
     {
+        // dd($request->all());
         $pengumuman = Pengumuman::find(session('pengumuman'));
         if(strtotime("now")>strtotime($pengumuman->validitas_harga)){return response()->json(['result'=>false,'message'=>'Waktu pengajuan telah selesai']);}
         $total = 0;
@@ -48,50 +50,51 @@ class AuctionController extends Controller
                         return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang'.$key]);
                     }
                 }
+                foreach ($hargaBarang as $key => $obj) {
+                    PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->delete();
+                    $obj->save();
+                }
             }
 
-            foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-                if($value>0){
-                    $barangSebelumnya = BarangEksternalUser::where('user_id',session('id'))->where('barang_eksternal_id',$key)->orderBy('grup','desc')->first();
-                    if($barangSebelumnya!=null){
-                        if($barangSebelumnya->harga >= $value){
+            if ($request->input('harga_barang_eksternal')!="") {
+                foreach ($request->input('harga_barang_eksternal') as $key => $value) {
+                    if($value>0){
+                        $barangSebelumnya = BarangEksternalUser::where('user_id',session('id'))->where('barang_eksternal_id',$key)->orderBy('grup','desc')->first();
+                        if($barangSebelumnya!=null){
+                            if($barangSebelumnya->harga >= $value){
+                                $hargaBarangEksternal[$key] = new BarangEksternalUser([
+                                    'barang_eksternal_id'=>$key,
+                                    'user_id'=>session('id'),
+                                    'harga'=>$value,
+                                    'grup'=>$grup
+                                ]);
+                                // SET CEK HARGA MINIMAL
+                                $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
+                                if($minHarga->id==$hargaBarangEksternal[$key]->id){
+                                    $hargaBarangEksternal[$key]->is_win = 1;
+                                    $hargaBarangEksternal[$key]->save();
+                                }
+                                $total+=$value;
+                            }else{
+                                return response()->json(['value'=>$barangSebelumnya->harga,'result'=>false,'message'=>'Harga setiap barang harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key]);
+                            }
+                        }else{
                             $hargaBarangEksternal[$key] = new BarangEksternalUser([
                                 'barang_eksternal_id'=>$key,
                                 'user_id'=>session('id'),
                                 'harga'=>$value,
                                 'grup'=>$grup
                             ]);
-                            // SET CEK HARGA MINIMAL
-                            $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
-                            if($minHarga->id==$hargaBarangEksternal[$key]->id){
-                                $hargaBarangEksternal[$key]->is_win = 1;
-                                $hargaBarangEksternal[$key]->save();
-                            }
                             $total+=$value;
-                        }else{
-                            return response()->json(['value'=>$barangSebelumnya->harga,'result'=>false,'message'=>'Harga setiap barang harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key]);
                         }
                     }else{
-                        $hargaBarangEksternal[$key] = new BarangEksternalUser([
-                            'barang_eksternal_id'=>$key,
-                            'user_id'=>session('id'),
-                            'harga'=>$value,
-                            'grup'=>$grup
-                        ]);
-                        $total+=$value;
+                        return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
                     }
-                }else{
-                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
+                } 
+                foreach ($hargaBarangEksternal as $key => $obj) {
+                    BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->delete();
+                    $obj->save();
                 }
-            }
-
-            foreach ($hargaBarang as $key => $obj) {
-                PengumumanBarangUser::where('pengumuman_barang_id',$key)->where('user_id',session('id'))->delete();
-                $obj->save();
-            }
-            foreach ($hargaBarangEksternal as $key => $obj) {
-                BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->delete();
-                $obj->save();
             }
         }else{
             $auction = Auction::where('pengumuman_id',session('pengumuman'))->where('user_id',session('id'))->first();
@@ -182,32 +185,34 @@ class AuctionController extends Controller
             }
             */
             $grup = strtotime("now");
-            foreach ($request->input('harga_barang_eksternal') as $key => $value) {
-                if($value>0){#CEK HARGA LEBIH DARI 0
-                    $cekHargaSama = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('harga',$value)->where('user_id','<>',session('id'))->first();
-                    if($cekHargaSama!=null){#CEK APAKAH ADA HARGA YANG SAMA PADA ITEM TERSEBUT
-                        return response()->json(['result'=>false,'message'=>'Ada harga item yang sama dengan pengguna lain, silahkan ganti dengan harga lain','indication'=>'harga_barang_eksternal'.$key]);
+            if($request->input('harga_barang_eksternal')!=""){
+                foreach ($request->input('harga_barang_eksternal') as $key => $value) {
+                    if($value>0){#CEK HARGA LEBIH DARI 0
+                        $cekHargaSama = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('harga',$value)->where('user_id','<>',session('id'))->first();
+                        if($cekHargaSama!=null){#CEK APAKAH ADA HARGA YANG SAMA PADA ITEM TERSEBUT
+                            return response()->json(['result'=>false,'message'=>'Ada harga item yang sama dengan pengguna lain, silahkan ganti dengan harga lain','indication'=>'harga_barang_eksternal'.$key]);
+                        }
+                        $cekhargaSebelumnya = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('user_id',session('id'))->first();
+                        if($cekhargaSebelumnya->harga<$value){#CEK APAKAH HARGA ITEM LEBIH KECI DARI SEBELUMNYA
+                            return response()->json(['result'=>false,'message'=>'Harga setiap item harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key,'value'=>$cekhargaSebelumnya->harga]);   
+                        }
+                        BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->update(['status'=>0,'is_win'=>0]);
+                        $hargaBarangEksternal = BarangEksternalUser::create([
+                            'barang_eksternal_id'=>$key,
+                            'user_id'=>session('id'),
+                            'harga'=>$value,
+                            'grup'=>$grup
+                        ]);
+                        // SET CEK JIKA ITEM YANG DISUBMIT PALINNG KECIL NILAINYA
+                        $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
+                        if($minHarga->id==$hargaBarangEksternal->id){
+                            $hargaBarangEksternal->is_win = 1;
+                            $hargaBarangEksternal->save();
+                        }
+                        $total+=$value;
+                    }else{
+                        return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
                     }
-                    $cekhargaSebelumnya = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->where('user_id',session('id'))->first();
-                    if($cekhargaSebelumnya->harga<$value){#CEK APAKAH HARGA ITEM LEBIH KECI DARI SEBELUMNYA
-                        return response()->json(['result'=>false,'message'=>'Harga setiap item harus lebih kecil dari sebelumnya','indication'=>'harga_barang_eksternal'.$key,'value'=>$cekhargaSebelumnya->harga]);   
-                    }
-                    BarangEksternalUser::where('barang_eksternal_id',$key)->where('user_id',session('id'))->update(['status'=>0,'is_win'=>0]);
-                    $hargaBarangEksternal = BarangEksternalUser::create([
-                        'barang_eksternal_id'=>$key,
-                        'user_id'=>session('id'),
-                        'harga'=>$value,
-                        'grup'=>$grup
-                    ]);
-                    // SET CEK JIKA ITEM YANG DISUBMIT PALINNG KECIL NILAINYA
-                    $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
-                    if($minHarga->id==$hargaBarangEksternal->id){
-                        $hargaBarangEksternal->is_win = 1;
-                        $hargaBarangEksternal->save();
-                    }
-                    $total+=$value;
-                }else{
-                    return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
                 }
             }
 
@@ -345,13 +350,24 @@ class AuctionController extends Controller
         if($pengumuman!=null){
             if($pengumuman->jenis!='itemize') return response()->json('BAD REQUEST',401);#HANYA BOLEH MENGGUNAKAN FUNGSI INI JIKA PENGUMUMAN JENIS GROUP
             // ALGORITMA BUAT DAPET BARANG EKSTERNAL MANA SAJA YANG USER MENANGKAN
-            $barangEksternal = collect(BarangEksternal::with('inAuction')->where('pengumuman_id',session('pengumuman'))->get());
             $win = array();
-            foreach ($barangEksternal as $key => $object) {
-                $o = collect($object->inAuction)->sortBy('harga');
-                foreach ($o as $k => $v) {
-                    if($v->user_id==session('id')) array_push($win, $v->barang_eksternal_id);
-                    break;
+            if(is_null($pengumuman->file_excel) || $pengumuman->file_excel==""){
+                $barang = collect(PengumumanBarang::with('inAuction.pengumumanBarangInfo')->where('pengumuman_id',session('pengumuman'))->get());
+                foreach ($barang as $key => $object) {
+                    $o = collect($object->inAuction)->sortBy('harga');
+                    foreach ($o as $k => $v) {
+                        if($v->user_id==session('id')) array_push($win, $v->pengumumanBarangInfo->barang_id);
+                        break;
+                    }
+                }
+            }else{
+                $barangEksternal = collect(BarangEksternal::with('inAuction')->where('pengumuman_id',session('pengumuman'))->get());
+                foreach ($barangEksternal as $key => $object) {
+                    $o = collect($object->inAuction)->sortBy('harga');
+                    foreach ($o as $k => $v) {
+                        if($v->user_id==session('id')) array_push($win, $v->barang_eksternal_id);
+                        break;
+                    }
                 }
             }
             return response()->json($win,200);

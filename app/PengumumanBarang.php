@@ -23,4 +23,9 @@ class PengumumanBarang extends Model
     {
         return $this->hasOne('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('user_id',session('id'))->where('status',1);
     }
+
+    public function inAuction()
+    {
+        return $this->hasMany('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('status',1);
+    }
 }

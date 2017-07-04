@@ -71,7 +71,7 @@
                                             @endif
                                             >
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;font-weight: bold;font-size: 23px;transition: 0.3s;" id="thropy_indicator{{$barang->id}}" class="thropy_indicator">
                                             <i class="icon-trophy"></i>
                                         </td>
                                     </tr>
