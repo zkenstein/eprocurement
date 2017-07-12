@@ -168,22 +168,20 @@
                                                             <tr>
                                                                 <th width="100">Kode</th>
                                                                 <th>Deskripsi</th>
-                                                                <th>Satuan</th>
-                                                                <th>Jumlah</th>
-                                                                <th width="250">Harga</th>
+                                                                <th width="100">Jumlah</th>
+                                                                <th width="200">Harga</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($list_barang as $barang)
+                                                        @foreach($list_barang as $barangInPengumuman)
                                                         <tr>
-                                                            <td>{{$barang->barangInfo->kode}}</td>
-                                                            <td>{{$barang->barangInfo->deskripsi}}</td>
-                                                            <td>{{$barang->barangInfo->satuan}}</td>
-                                                            <td>{{$barang->quantity}}</td>
+                                                            <td>{{$barangInPengumuman->barangInfo->kode}}</td>
+                                                            <td>{{$barangInPengumuman->barangInfo->deskripsi}}</td>
+                                                            <td>{{$barangInPengumuman->quantity}} {{$barangInPengumuman->barangInfo->satuan}}</td>
                                                             <td>
-                                                                <input id="input_harga_barang{{$barang->id}}" required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
-                                                                @if($barang->inUserAuction!=null)
-                                                                value = "{{$barang->inUserAuction->harga}}"
+                                                                <input id="input_harga_barang{{$barangInPengumuman->id}}" required name="harga_barang[{{$barangInPengumuman->id}}]" data-id="{{$barangInPengumuman->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                                                @if($barangInPengumuman->inUserAuction!=null)
+                                                                value = "{{$barangInPengumuman->inUserAuction->harga}}"
                                                                 @endif
                                                                 >
                                                             </td>
@@ -193,8 +191,7 @@
                                                         <tr>
                                                             <td>{{$barang->kode}}</td>
                                                             <td>{{$barang->deskripsi}}</td>
-                                                            <td>{{$barang->satuan}}</td>
-                                                            <td>{{$barang->quantity}}</td>
+                                                            <td>{{$barang->quantity}} {{$barang->satuan}}</td>
                                                             <td>
                                                                 <input id="input_harga_barang_eksternal{{$barang->id}}" required name="harga_barang_eksternal[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
                                                                 @if($barang->inUserAuction!=null)
@@ -204,16 +201,18 @@
                                                             </td>
                                                         </tr>
                                                         @endforeach
+                                                        <?php /*
                                                         <tr>
-                                                            <td colspan="4">
+                                                            <td colspan="3">
                                                                 <strong>Total</strong>
                                                             </td>
                                                             <td>
                                                                 <input type="text" disabled class="form-control maskmoneywithoutrp" id="total_harga_input">
                                                             </td>
                                                         </tr>
+                                                        */ ?>
                                                         <tr>
-                                                            <td colspan="4"></td>
+                                                            <td colspan="3"></td>
                                                             <td>
                                                                 <button type="submit" id="btn-simpan" class="btn btn-primary btn-block">Submit</button>
                                                             </td>
@@ -221,9 +220,9 @@
                                                         </tbody>
                                                     </table>
                                                     @else
-                                                    <div class="form-group">
+                                                    <div id="form-group-total" class="form-group <?php if($total_auction>0) { ?>has-success <?php } ?>">
                                                         <label class="form-form-control-label">Total Penawaran</label>
-                                                        <input id="add-penawaran" type="text" class="form-control input-sm maskmoneywithoutrp" placeholder="Masukkan total penawaran" name="total_harga_input"
+                                                        <input id="add-penawaran" type="text" class="form-control input-sm maskmoneywithoutrp <?php if($total_auction>0) { ?>form-control-success<?php } ?>" placeholder="Masukkan total penawaran" name="total_harga_input"
                                                         @if(isset($total_auction))
                                                         value = "{{$total_auction}}"
                                                         @endif
@@ -257,6 +256,24 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-response" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Penawaran anda berhasil disimpan</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
         </div>
     </div>
 @stop
@@ -299,13 +316,21 @@ $("#form-auction").submit(function(e){
             url:"{{route('pengajuan')}}",
             type:"POST",
             success:function(res){
-                if(res.result==false) alert(res.message);
+                if(res.result==false){
+                    alert(res.message);
+                } else{
+                    $("#modal-response").modal('show');
+                    @if($pengumuman->jenis=='group')
+                    $("#form-group-total").addClass('has-success');
+                    $("#add-penawaran").addClass('form-control-success');
+                    @endif
+                }
                 $("#btn-simpan").removeClass("disabled");
                 $("#btn-simpan").text("Submit");
+
                 if(res.indication!=undefined){
                     $("#input_"+res.indication).addClass('danger-input');
                     $("#input_"+res.indication).focus();
-                    alert(res.message);
                     if(res.value!=undefined){
                         $("#input_"+res.indication).val(res.value);
                         $("#input_"+res.indication).maskMoney('mask');

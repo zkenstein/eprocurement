@@ -79,9 +79,10 @@ class PublickController extends Controller
                                 $data['kode_pengumuman'] = $pengumuman->kode;
                                 $data['waktu_auction'] = $pengumuman->start_auction;
                                 $data['durasi_auction'] = $pengumuman->durasi;
+                                $data['waktu_validitas'] = $pengumuman->validitas_harga;
                                 Mail::queue('mail_followup',$data,function($message)use($user){
                                     $message->to($user->email, $user->nama)->subject("PAL Follow Up Registration");
-                                    $message->from(env('MAIL_USERNAME'),"PT.PAL");
+                                    $message->from(env('MAIL_USERNAME'),"PT.PAL Indonesia (Persero)");
                                 });
                                 $userPengumuman->waktu_register = \Carbon\Carbon::now();
                                 $userPengumuman->save();
@@ -155,15 +156,19 @@ class PublickController extends Controller
             if(strtotime($data['pengumuman']->start_auction) >= strtotime(\Carbon\Carbon::now())){#JIKA BELUM MASUK AUCTION
                 $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
                 $data['allow_auction'] = false;
-            }else if(strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)) < strtotime(\Carbon\Carbon::now())){#JIKA SUDAH DITEMUKAN PEMENANG
+            }
+            else if(strtotime(\Carbon\Carbon::parse($data['pengumuman']->start_auction)->addMinutes($data['pengumuman']->durasi)) < strtotime(\Carbon\Carbon::now())){#JIKA SUDAH DITEMUKAN PEMENANG
                 $data['countdown'] = 0;
                 $data['allow_auction'] = true;
                 $data['auction_finish'] = true;
             }else{
-                if(count($data['pengumuman']->listValidUser)>1){#JIKA SUDAH MASUK AUCTION DAN USER YANG VALID SUDAH LEBIH DARI 1
+                #JIKA SUDAH MASUK AUCTION DAN USER YANG VALID SUDAH LEBIH DARI 1
+                if(count($data['pengumuman']->listValidUser)>1){
                    return redirect()->route('auction');
                     
-                }else{#JIKA SUDAH MASUK AUCTION DAN USER YANG VALID BELUM LEBIH DARI 1
+                }
+                #JIKA SUDAH MASUK AUCTION DAN USER YANG VALID BELUM LEBIH DARI 1
+                else{
                     $data['countdown'] = 0;
                     $data['waiting_for_extends'] = true;
                     $data['allow_auction'] = false;

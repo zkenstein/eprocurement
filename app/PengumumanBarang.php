@@ -19,6 +19,11 @@ class PengumumanBarang extends Model
     	return $this->hasOne('App\Pengumuman','id','pengumuman_id');
     }
 
+    // public function inMyAuction($value='')
+    // {
+    //     return $this->hasOne('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('user_id',session('id'))->where('status',1);
+    // }
+
     public function inUserAuction()
     {
         return $this->hasOne('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('user_id',session('id'))->where('status',1);
@@ -27,5 +32,10 @@ class PengumumanBarang extends Model
     public function inAuction()
     {
         return $this->hasMany('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('status',1);
+    }
+
+    public function minInAuction()
+    {
+        return $this->hasOne('App\PengumumanBarangUser','pengumuman_barang_id','id')->where('status',1)->orderBy('harga');
     }
 }

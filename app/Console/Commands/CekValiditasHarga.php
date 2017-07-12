@@ -54,7 +54,8 @@ class CekValiditasHarga extends Command
                            $user->save();
                            $data['user'] = $user;
                            $data['pengumuman'] = $p;
-                           Mail::send('mail_kondite', $data, function($message) use($data){
+//                           $this->info("Mengirim email kondite ke  [".\Carbon\Carbon::now()."]");
+                           Mail::queue('mail_kondite', $data, function($message) use($data){
                                $message->to($data['user']->email, $data['user']->nama)->subject("Sangsi Kondite Proyek ".$data['pengumuman']->kode);
                                $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
                            });

@@ -29,6 +29,10 @@
 	            <td>Delivery Time</td>
 	            <td>: {{$pengumuman->waktu_pengiriman}}</td>
 	        </tr>
+	        <tr>
+	            <td>Jenis</td>
+	            <td>: {{$pengumuman->jenis}}</td>
+	        </tr>
 			<?php /*
 			<tr>
 				<td>Waktu Auction</td>

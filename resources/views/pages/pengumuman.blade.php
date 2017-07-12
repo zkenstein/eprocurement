@@ -415,15 +415,17 @@
             if(inputBarang.length<=0 && inputBarangEksternal.length<=0){
                 alert("Salah satu field 'Barang' ataupun 'Import CSV' harus terisi");
                 return;
-            }else{
+            }
+            else{
                 if(inputBarang.length>0 && inputBarangEksternal.length>0){
                     alert("Hanya salah satu yang boleh terisi field 'Barang' ataupun 'Import CSV'");
                     return;
-                }else{
+                }
+                else{
                     var _c = confirm("Anda yakin data yang telah diisikan benar ?\n Sistem akan mengirimkan email ke Subkontraktor dan Pengumuman tidak akan dapat dihapus setelah email terkirim");
                     if(_c===true){
                         $("#add-submit").prop('disabled', true);
-                        var myForm = $(this);
+                        var myForm = $("#form-add");
                         if($("#add-barang").val().length>0){
                             $("#modal-quantity").modal({
                                 backdrop: 'static',
@@ -436,7 +438,7 @@
                                         type:"POST",
                                         success:function(res,status,xhr,$form){
                                             $("#add-submit").prop('disabled', false);
-                                            if(res.result==true){
+                                            if(res.result===true){
                                                 $("#form-add input:not([name='_token'], [name='_method'])").val('');
                                                 $("#form-add textarea").val('');
                                                 $("#form-add input.needvalidate").parent(".form-group").removeClass('has-success');
@@ -447,9 +449,12 @@
                                                 $("#form-add input.needvalidate").next().text('');
                                                 // $('#form-add .selectpicker').selectpicker('deselectAll');
                                                 $("input[name='_token']").val(res.token);
-                                                csrf = res.token;
+//                                                csrf = res.token;
                                                 location.reload();
-                                            }else{
+                                            }
+                                            else{
+                                                $("#add-quantity-div").css("display","block");
+                                                $("#add-quantity-div").appendTo("#modal-quantity .modal-body");
                                                 alert(res.message);
                                             }
                                         }
@@ -485,6 +490,7 @@
             }
         });
 
+        <?php /*
         function hapusPengumuman(id) {
             $("button.delete-button[data-id='"+id+"']").prop('disabled', true);
             var _c = confirm("Anda yakin akan menghapus Pengumuman ini ?\n Semua data yang berkaitan dengan barang ini akan terhapus");
@@ -509,6 +515,7 @@
                 $("button.delete-button[data-id='"+id+"']").prop('disabled', false);
             }
         }
+        */ ?>
 
         function modalQuantityShow() {
             $("#add-quantity-div").html('');
@@ -517,10 +524,6 @@
                 $("#add-quantity-div").append('<div class="col-sm-12 col-md-12 padding-side"><div class="form-group">'+barang[val]+'<label class="form-form-control-label"></label><input type="number" name="quantity['+val+']" class="form-control"></div></div>');
             });
         }
-
-        // $('#add-barang').on('hidden.bs.select', function (e) {
-        //     modalQuantityShow();
-        // });
 
         function resetMyModal() {
             resetNow = true;

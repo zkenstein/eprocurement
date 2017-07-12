@@ -166,8 +166,8 @@ class PengumumanController extends Controller
                 CsvValidation::create([
                     'kode'=>$dataBarangEksternal[0],
                     'deskripsi'=>$dataBarangEksternal[1],
-                    'satuan'=>isset($dataBarangEksternal[2])?$dataBarangEksternal[2]:"",
-                    'quantity'=>isset($dataBarangEksternal[3])?$dataBarangEksternal[3]:1
+                    'satuan'=>$dataBarangEksternal[2],
+                    'quantity'=>$dataBarangEksternal[3]
                 ]);
             }
             else if($linecount==($c+1)){

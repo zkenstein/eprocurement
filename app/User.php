@@ -61,4 +61,14 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\BarangEksternalUser','user_id');
     }
+
+    public function listBarangAuction()
+    {
+        return $this->hasMany('App\PengumumanBarangUser','user_id');
+    }
+
+    public function listBarangMenang()
+    {
+        return $this->hasMany('App\PengumumanBarangUser','user_id')->where('is_win',1);
+    }
 }

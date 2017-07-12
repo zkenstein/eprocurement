@@ -40,7 +40,7 @@
 	<strong>BERITA ACARA E-AUCTION</strong>
 </div>
 <div style="width: 100%;text-align: center;">
-	No. {{$pengumuman->kode}}/BA/84200/III/{{\Carbon\Carbon::parse($pengumuman->start_auction)->year}}
+	No. BA/{{$pengumuman->kode}}
 </div>
 <br>
 <div>
@@ -57,7 +57,7 @@
 		<li>Deskripsi dan spesifikasi : <br><strong>Union Fittings & Bushing Boss untuk Proyek W000297 Fasilitas Apung, sesuai SPPH No. 63/SPPH/83200/III/2017</strong></li>
 		*/ ?>
 		<li>Hasil Auction Terlampir</li>
-		<li>Kondisi Penawaran Franco PT PAL Indonesia</li>
+		<li>Kondisi Penawaran PT PAL Indonesia</li>
 		<li>Subject to appproval management</li>
 		<li>Peserta tender harus mentaati peraturan E-Auction yang berlaku</li>
 		<li>Hasil tender tidak bisa dibatalkan</li>
@@ -89,21 +89,39 @@
 			<th>Item</th>
 			<th>Harga</th>
 		</tr>
-		@foreach($para_pemenang as $pemenang)
-			<?php $k=0; ?>
-			@foreach($pemenang->listBarangEksternalAuction as $barangEksternalUser)
-			<tr>
-				@if($k==0)
-				<td rowspan="{{count($pemenang->listBarangEksternalAuction)}}">
-					{{$pemenang->nama}}
-				</td>
-				@endif
-				<td>{{$barangEksternalUser->barangEksternalInfo->kode}}</td>
-				<td>{{number_format($barangEksternalUser->harga,0,",",".")}}</td>
-			</tr>
-			<?php $k++; ?>
+		@if($pengumuman->file_excel!=null && $pengumuman->file_excel!='')
+			@foreach($para_pemenang as $pemenang)
+				<?php $k=0; ?>
+				@foreach($pemenang->listBarangEksternalAuction as $barangEksternalUser)
+				<tr>
+					@if($k==0)
+					<td rowspan="{{count($pemenang->listBarangEksternalAuction)}}">
+						{{$pemenang->nama}}
+					</td>
+					@endif
+					<td>{{$barangEksternalUser->barangEksternalInfo->kode}}</td>
+					<td>{{number_format($barangEksternalUser->harga,0,",",".")}}</td>
+				</tr>
+				<?php $k++; ?>
+				@endforeach
 			@endforeach
-		@endforeach
+		@else
+			@foreach($para_pemenang as $pemenang)
+			<tr>
+				<td>{{$pemenang->nama}}</td>
+				<td>
+				@foreach($pemenang->listBarangMenang as $barangMenang)
+					{{$barangMenang->pengumumanBarangInfo->barangInfo->kode}} ({{$barangMenang->pengumumanBarangInfo->quantity}} {{$barangMenang->pengumumanBarangInfo->barangInfo->satuan}})<br>
+				@endforeach
+				</td>
+				<td>
+					@foreach($pemenang->listBarangMenang as $barangMenang)
+						{{number_format($barangMenang->harga,0,",",".")}}<br>
+					@endforeach
+				</td>
+			</tr>
+			@endforeach
+		@endif
 	</table>
 	@endif
 </div>
@@ -111,29 +129,6 @@
 	<br>
 	<span style="width: 100%;padding-top: 10px;">Surabaya, {{\Carbon\Carbon::parse($pengumuman->start_auction)->day}}/{{\Carbon\Carbon::parse($pengumuman->start_auction)->month}}/{{\Carbon\Carbon::parse($pengumuman->start_auction)->year}}</span>
 </div>
-<?php /*
-<div>
-	<div>
-		<strong>Rekanan:</strong>
-	</div>
-	<br>
-	<ol class="margin-li">
-		<li>CV.Rizky Karya</li>
-		<li>CV.Rizky Abadi</li>
-		<li>CV.Budi Karya</li>
-	</ol>
-</div>
-<br>
-<div>
-	<div>
-		<strong>PT.PAL INDONESIA:</strong>
-	</div> 
-	<br>
-	<ol class="margin-li">
-		<li>Muhadi</li>
-	</ol>
-</div>
-*/ ?>
 <div class="page-break"></div>
 <div style="font-family:sans-serif;background: #65a7d7;padding: 8px;display: inline-block;">Auction Bid History</div>
 <br>
@@ -167,18 +162,33 @@
 		<th>Bid Amount {{' ('.$pengumuman->mata_uang.')'}}</th>
 		<th>Bid Time</th>
 	</tr>
-	@foreach($list_barang_eksternal_auction as $barangEksternalAuction)
-	@if($barangEksternalAuction->status==1)
-	<tr style="background-color: aqua;">
+	@if($pengumuman->file_excel!=null && $pengumuman->file_excel!='')
+		@foreach($list_barang_eksternal_auction as $barangEksternalAuction)
+			@if($barangEksternalAuction->status==1)
+			<tr style="background-color: aqua;">
+			@else
+			<tr>
+			@endif
+				<td>{{$barangEksternalAuction->userInfo->nama}}</td>
+				<td>{{$barangEksternalAuction->barangEksternalInfo->kode}}</td>
+				<td>{{number_format($barangEksternalAuction->harga,0,",",".")}}</td>
+				<td>{{$barangEksternalAuction->created_at}}</td>
+			</tr>
+		@endforeach
 	@else
-	<tr>
+		@foreach($list_barang_in_auction as $barangInAuction)
+			@if($barangInAuction->status==1)
+			<tr style="background-color: aqua;">
+			@else
+			<tr>
+			@endif
+			<td>{{$barangInAuction->userInfo->nama}}</td>
+				<td>{{$barangInAuction->pengumumanBarangInfo->barangInfo->kode}}</td>
+				<td>{{number_format($barangInAuction->harga,0,",",".")}}</td>
+				<td>{{$barangInAuction->created_at}}</td>
+			</tr>
+		@endforeach
 	@endif
-		<td>{{$barangEksternalAuction->userInfo->nama}}</td>
-		<td>{{$barangEksternalAuction->barangEksternalInfo->kode}}</td>
-		<td>{{number_format($barangEksternalAuction->harga,0,",",".")}}</td>
-		<td>{{$barangEksternalAuction->created_at}}</td>
-	</tr>
-	@endforeach
 </table>
 @endif
 <div>

@@ -65,13 +65,13 @@
                                         <td>{{$barang->barangInfo->satuan}}</td>
                                         <td>{{$barang->quantity}}</td>
                                         <td>
-                                            <input id="input_harga_barang{{$barang->id}}" required name="harga_barang[{{$barang->id}}]" data-id="{{$barang->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
+                                            <input id="input_harga_barang{{$barang->barangInfo->id}}" required name="harga_barang[{{$barang->barangInfo->id}}]" data-id="{{$barang->barangInfo->id}}" autocomplete="false" type="text" class="form-control input-auction-barang maskmoneywithoutrp" placeholder=""
                                             @if($barang->inUserAuction!=null)
                                             value = "{{$barang->inUserAuction->harga}}"
                                             @endif
                                             >
                                         </td>
-                                        <td style="text-align: center;font-weight: bold;font-size: 23px;transition: 0.3s;" id="thropy_indicator{{$barang->id}}" class="thropy_indicator">
+                                        <td style="text-align: center;font-weight: bold;font-size: 23px;transition: 0.3s;" id="thropy_indicator{{$barang->barangInfo->id}}" class="thropy_indicator">
                                             <i class="icon-trophy"></i>
                                         </td>
                                     </tr>
@@ -148,6 +148,23 @@
         </div>
     </div>
     
+    <div class="modal fade" id="modal-response" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-primary" role="document">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Penawaran anda berhasil disimpan</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('script')
@@ -217,6 +234,8 @@
                     }
                     if(res.result==false){
                         alert(res.message);
+                    }else{
+                        $("#modal-response").modal('show');
                     }
                     if(res.total!=undefined){
                         $("#add-auction").val(res.total);

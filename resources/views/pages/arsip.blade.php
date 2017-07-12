@@ -81,7 +81,7 @@
             {
                 "targets": 1,
                 "render": function(data, type, row, meta){
-                    return "<a class='btn btn-primary' download href='{{route('download_kontak')}}/"+row.id+"/0'>Download Kontrak</a><br><br><a download class='btn btn-primary' href='{{route('intern.download_berita_acara')}}/"+row.id+"'>Download Berita Acara</a>";
+                    return "<a download class='btn btn-primary' href='{{route('intern.download_berita_acara')}}/"+row.id+"'>Download Berita Acara</a>";
                 }
             }
         ],
