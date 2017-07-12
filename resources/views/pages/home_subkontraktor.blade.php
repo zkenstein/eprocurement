@@ -10,6 +10,13 @@
         box-shadow: 0px 0px white;
         margin-top: -15px;
     }
+    table{
+        border-collapse: collapse;
+    }
+    table tr td,th{
+        padding: 10px;
+        border: 1px solid white;
+    }
 </style>
 <style type="text/css">
     #barang-data{
@@ -121,7 +128,24 @@
                                                     Pengumuman Pemenang Tender
                                                 </div>
                                                 <div class="card-block">
-                                                    Selamat!! Anda memenangkan tender ini. Silahkan cek Email mengenai detail barang yang anda menangkan
+                                                    Selamat!! Anda memenangkan tender ini. Silahkan cek email anda untuk melihat detail pengumuman pemenang
+                                                    <br>
+                                                    Detail Item yang anda menangkan pada tender ini :
+                                                    <br>
+                                                    <table>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Harga</th>
+                                                        </tr>
+                                                        @foreach($list_barang_menang as $barangMenang)
+                                                        <tr>
+                                                            <td>{{$barangMenang->pengumumanBarangInfo->barangInfo->kode}} ({{$barangMenang->pengumumanBarangInfo->quantity}} {{$barangMenang->pengumumanBarangInfo->barangInfo->satuan}})</td>
+                                                            <td>
+                                                                {{number_format($barangMenang->harga,0,",",".")}}
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </table>
                                                 </div>
                                             </div>
                                             @else

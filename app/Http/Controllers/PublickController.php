@@ -12,6 +12,7 @@ use App\UserCluster;
 use App\Pengumuman;
 use App\PengumumanUser;
 use App\PengumumanBarang;
+use App\PengumumanBarangUser;
 use App\BarangEksternal;
 use App\BarangEksternalUser;
 use Mail;
@@ -150,8 +151,20 @@ class PublickController extends Controller
             }
             // CEK JIKA PENGUMUMAN PEMENANG = 0;
             if($data['pengumuman']->pemenang==0){
-                $cekBarangMenang = BarangEksternalUser::with('barangEksternalInfo')->where('user_id',session('id'))->where('is_win',1)->get();
-                if(count($cekBarangMenang)>0) $data['isIWin'] = true;
+                if($data['pengumuman']->file_excel!=null && $data['pengumuman']->file_excel!=''){
+                    $cekBarangMenang = BarangEksternalUser::with('barangEksternalInfo')->where('user_id',session('id'))->where('is_win',1)->get();
+                    if(count($cekBarangMenang)>0) {
+                        $data['isIWin'] = true;
+                    }
+                }else{
+                    $cekBarangMenang = PengumumanBarangUser::with('pengumumanBarangInfo.barangInfo')->where('user_id',session('id'))->where('is_win',1)->whereHas('pengumumanBarangInfo',function($q){
+                        $q->where('pengumuman_id',session('pengumuman'));
+                    })->get();
+                    if(count($cekBarangMenang)>0) {
+                        $data['isIWin'] = true;
+                        $data['list_barang_menang'] = $cekBarangMenang;
+                    }
+                }
             }
             if(strtotime($data['pengumuman']->start_auction) >= strtotime(\Carbon\Carbon::now())){#JIKA BELUM MASUK AUCTION
                 $data['countdown'] = \Carbon\Carbon::parse($data['pengumuman']->start_auction)->diffInSeconds(\Carbon\Carbon::now());
