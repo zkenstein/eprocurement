@@ -40,10 +40,12 @@
 		</tr>
 		@if($pengumuman->file_excel!=null && $pengumuman->file_excel!='')
 			@foreach($pemenang->listBarangEksternalAuction as $barangEksternalUser)
-			<tr>
-				<td style="border:1px solid black;padding:3px;">{{$barangEksternalUser->barangEksternalInfo->kode}}</td>
-				<td style="border:1px solid black;padding:3px;">{{number_format($barangEksternalUser->harga,0,",",".")}}</td>
-			</tr>
+				@if($barangEksternalUser->is_win==1)
+					<tr>
+						<td style="border:1px solid black;padding:3px;">{{$barangEksternalUser->barangEksternalInfo->kode}}</td>
+						<td style="border:1px solid black;padding:3px;">{{number_format($barangEksternalUser->harga,0,",",".")}}</td>
+					</tr>
+				@endif
 			@endforeach
 		@else
 			@foreach($pemenang->listBarangMenang as $barangMenang)

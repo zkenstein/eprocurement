@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Berita Acara</title>
+	<title>Kontrak</title>
 	<style type="text/css">
 		*{
 			font-family: sans-serif;

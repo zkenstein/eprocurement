@@ -31,6 +31,7 @@ class InsertBarangEksternal extends Job implements SelfHandling, ShouldQueue
     public function handle()
     {
         $pengumuman = Pengumuman::find($this->pengumumanId);
+        BarangEksternal::where('pengumuman_id',$pengumuman->id)->delete();
         $file = fopen(storage_path('app/'.$this->namaFileExcel),"r");
         $list_item = array();
         $c = 0;

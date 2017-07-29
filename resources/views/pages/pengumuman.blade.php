@@ -401,7 +401,7 @@
                             else
                                 show+="<a>"+val.barang_info.kode+"</a>, ";
                         });
-                        if(row.file_excel!=null) show+="<br><a href='{{route('intern.get_file_excel')}}/"+row.file_excel+"' download class='btn btn-sm btn-primary'>Download Excel Barang</a>"
+                        if(row.file_excel!=null) show+="<br><a href='{{route('intern.get_file_excel')}}/"+row.kode+".pdf' download class='btn btn-sm btn-primary'>Download List Item</a>"
                         return show;
                     }
                 }

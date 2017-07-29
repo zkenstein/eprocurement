@@ -155,6 +155,7 @@ class PublickController extends Controller
                     $cekBarangMenang = BarangEksternalUser::with('barangEksternalInfo')->where('user_id',session('id'))->where('is_win',1)->get();
                     if(count($cekBarangMenang)>0) {
                         $data['isIWin'] = true;
+                        $data['list_barang_menang'] = $cekBarangMenang;
                     }
                 }else{
                     $cekBarangMenang = PengumumanBarangUser::with('pengumumanBarangInfo.barangInfo')->where('user_id',session('id'))->where('is_win',1)->whereHas('pengumumanBarangInfo',function($q){
@@ -272,10 +273,10 @@ class PublickController extends Controller
     }
     */
 
-    public function tesMail(){
+    /*public function tesMail(){
         Mail::send('tesmail',array('a'=>'a'), function ($m){
             $m->from(env('MAIL_USERNAME'),"PT.PAL");
             $m->to('pdmojokerto.agung@gmail.com', 'Agung Kurniawan')->subject('Your Reminder!');
         });
-    }
+    }*/
 }

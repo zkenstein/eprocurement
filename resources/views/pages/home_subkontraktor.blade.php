@@ -98,7 +98,10 @@
                                                     Pengumuman Pemenang Tender
                                                 </div>
                                                 <div class="card-block">
-                                                    Selamat!! Anda memenangkan tender ini. Silahkan klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="{{'/'.'download_kontrak/'.$pengumuman->id.'/1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0'}}">Download Kontrak</a>
+                                                    Selamat!! Anda memenangkan tender ini. Silahkan menghubungi PT.PAL Indonesia untuk menindak lanjuti.
+                                                    <?php /*
+                                                    klik link berikut untuk mengunduh kontrak. <a style="font-weight: bold;" download href="{{'/'.'download_kontrak/'.$pengumuman->id.'/1'.sha1($pengumuman->id.'##'.$pengumuman->kode.'%%'.$pengumuman->pemenang).'0'}}">Download Kontrak</a>
+                                                    */ ?>
                                                 </div>
                                             </div>
                                             @else
@@ -112,12 +115,6 @@
                                                     @if(isset($harga_yang_menang))
                                                     {{number_format($harga_yang_menang,0,",",".")}}
                                                     @endif
-
-                                                    <?php /*
-                                                    <p>
-                                                        Tender ini domenangkan oleh peserta dengan total penawaran {{$penawaran_pemenang}}
-                                                    </p>
-                                                    */ ?>
                                                 </div>
                                             </div>
                                             @endif
@@ -137,14 +134,25 @@
                                                             <th>Item</th>
                                                             <th>Harga</th>
                                                         </tr>
-                                                        @foreach($list_barang_menang as $barangMenang)
-                                                        <tr>
-                                                            <td>{{$barangMenang->pengumumanBarangInfo->barangInfo->kode}} ({{$barangMenang->pengumumanBarangInfo->quantity}} {{$barangMenang->pengumumanBarangInfo->barangInfo->satuan}})</td>
-                                                            <td>
-                                                                {{number_format($barangMenang->harga,0,",",".")}}
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
+                                                        @if(is_null($pengumuman->file_excel) || $pengumuman->file_excel=='')
+                                                            @foreach($list_barang_menang as $barangMenang)
+                                                            <tr>
+                                                                <td>{{$barangMenang->pengumumanBarangInfo->barangInfo->kode}} ({{$barangMenang->pengumumanBarangInfo->quantity}} {{$barangMenang->pengumumanBarangInfo->barangInfo->satuan}})</td>
+                                                                <td>
+                                                                    {{number_format($barangMenang->harga,0,",",".")}}
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @else
+                                                            @foreach($list_barang_menang as $barangMenang)
+                                                            <tr>
+                                                                <td>{{$barangMenang->barangEksternalInfo->kode}} ({{$barangMenang->barangEksternalInfo->quantity}} {{$barangMenang->barangEksternalInfo->satuan}})</td>
+                                                                <td>
+                                                                    {{number_format($barangMenang->harga,0,",",".")}}
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @endif
                                                     </table>
                                                 </div>
                                             </div>
@@ -155,11 +163,6 @@
                                                 </div>
                                                 <div class="card-block">
                                                     Maaf anda belum memenangkan tender ini. Anda dapat mencoba pada penawaran berikutnya
-                                                    <?php /*
-                                                    <p>
-                                                        Tender ini domenangkan oleh peserta dengan total penawaran {{$penawaran_pemenang}}
-                                                    </p>
-                                                    */ ?>
                                                 </div>
                                             </div>
                                             @endif
@@ -390,13 +393,14 @@ $(".input-auction-barang").keyup(function(){
             url:"{{route('pengajuan')}}",
             type:"POST",
             success:function(res){
-                console.log(res);
                 $("#btn-simpan").removeClass("disabled");
                 $("#btn-simpan").text("Submit");
                 if(res.result===false){
                     alert(res.message);
                     $("#add-penawaran").val(res.total);
                     $(".maskmoneywithoutrp").maskMoney('mask');
+                }else{
+                    $("#modal-response").modal('show');
                 }
             }
         });

@@ -125,7 +125,7 @@ class AuctionController extends Controller
                 $pengumumanUser2 = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->where('user_id','<>',session('id'))->first();
                 // JIKA SUDAH DIAMBIL USER LAIN
                 if($pengumumanUser2!=null) {
-                    return response()->json(['result'=>false,'message'=>'Total yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga barang sebelum submit','total'=>$pengumumanUser->total_auction]);
+                    return response()->json(['result'=>false,'message'=>'Total yang anda masukkan sama dengan Subkontraktor/Vendor lain. Silahkan ganti harga sebelum submit','total'=>$pengumumanUser->total_auction]);
                 }
                 $pengumumanUser->total_auction = $total;
                 $pengumumanUser->save();
@@ -224,11 +224,11 @@ class AuctionController extends Controller
                             'grup'=>$grup
                         ]);
                         // SET CEK JIKA ITEM YANG DISUBMIT PALINNG KECIL NILAINYA
-                        $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
-                        if($minHarga->id==$hargaBarangEksternal->id){
-                            $hargaBarangEksternal->is_win = 1;
-                            $hargaBarangEksternal->save();
-                        }
+                        // $minHarga = BarangEksternalUser::where('barang_eksternal_id',$key)->where('status',1)->orderBy('harga')->first();
+                        // if($minHarga->id==$hargaBarangEksternal->id){
+                        //     $hargaBarangEksternal->is_win = 1;
+                        //     $hargaBarangEksternal->save();
+                        // }
                         $total+=$value;
                     }else{
                         return response()->json(['result'=>false,'message'=>'Harga setiap barang harus lebih dari 0','indication'=>'harga_barang_eksternal'.$key]);
@@ -292,7 +292,7 @@ class AuctionController extends Controller
                 $pengumumanUser2 = PengumumanUser::where('pengumuman_id',session('pengumuman'))->where('total_auction',$total)->where('user_id','<>',session('id'))->first();
                 // JIKA SUDAH DIAMBIL USER LAIN
                 if($pengumumanUser2!=null) {
-                    return response()->json(['result'=>false,'message'=>'Total auction yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga barang sebelum submit','total'=>$pengumumanUser->total_auction]);
+                    return response()->json(['result'=>false,'message'=>'Total auction yang anda masukkan sama dengan Subkontraktor lain. Silahkan ganti harga item sebelum submit','total'=>$pengumumanUser->total_auction]);
                 }
                 $pengumumanUser->total_auction = $total;
                 $pengumumanUser->save();

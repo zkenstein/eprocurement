@@ -48,7 +48,7 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
         $file = $pengumuman->file_excel;
 
         if($pengumuman->cc_kadep==1){#JIKA MENGIRIM CARBON COPY KE KADEP
-            $mailer->send('mail_undangan',['departemen_id'=>$pengumuman->picInfo->departemenInfo->id,'nama_perusahaan'=>'Nama Perusahaan','pengumuman'=>$pengumuman,'kode_registrasi'=>'kode masuk','departemen'=>$pengumuman->picInfo->departemenInfo,'list_barang'=>$listBarang],function($message) use ($file, $pengumuman){
+            $mailer->queue('mail_undangan',['departemen_id'=>$pengumuman->picInfo->departemenInfo->id,'nama_perusahaan'=>'Nama Perusahaan','pengumuman'=>$pengumuman,'kode_registrasi'=>'kode masuk','departemen'=>$pengumuman->picInfo->departemenInfo,'list_barang'=>$listBarang],function($message) use ($file, $pengumuman){
                 $message->to($pengumuman->picInfo->email, $pengumuman->picInfo->departemenInfo->nama)->cc($pengumuman->picInfo->departemenInfo->email_kadep)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
                 $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
                 if($file!=null) 
@@ -56,7 +56,7 @@ class InsertPengumumanUser extends Job implements SelfHandling, ShouldQueue
                     // $message->attach(storage_path('app/'.$file));
             });
         }else{#JIKA TIDAK MENGIRIM CARBON COPY
-            $mailer->send('mail_undangan',['departemen_id'=>$pengumuman->picInfo->departemenInfo->id,'nama_perusahaan'=>'Nama Perusahaan','pengumuman'=>$pengumuman,'kode_registrasi'=>'kode masuk','departemen'=>$pengumuman->picInfo->departemenInfo,'list_barang'=>$listBarang],function($message) use ($file, $pengumuman){
+            $mailer->queue('mail_undangan',['departemen_id'=>$pengumuman->picInfo->departemenInfo->id,'nama_perusahaan'=>'Nama Perusahaan','pengumuman'=>$pengumuman,'kode_registrasi'=>'kode masuk','departemen'=>$pengumuman->picInfo->departemenInfo,'list_barang'=>$listBarang],function($message) use ($file, $pengumuman){
                 $message->to($pengumuman->picInfo->email, $pengumuman->picInfo->departemenInfo->nama)->subject("PAL Tender Invitation - ".$pengumuman->deskripsi);
                 $message->from(env('MAIL_USERNAME'),"PT. PAL Indonesia (Persero)");
                 if($file!=null) 

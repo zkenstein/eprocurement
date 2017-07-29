@@ -56,6 +56,14 @@ class CreateKontrak extends Command
                         $this->info('Pengumuman Itemize ['.\Carbon\Carbon::now().']');
                         if($p->file_excel!=null){
                             $this->info("PENGUMUMAN dengan file excel");
+                            $this->info("PENCARIAN BARANG DENGAN HARGA PALING KECIL");
+                            $listBarang = BarangEksternal::where('pengumuman_id',$p->id)->get();
+                            foreach ($listBarang as $barang) {
+                                $barangMenang = BarangEksternalUser::where('status',1)->where('barang_eksternal_id',$barang->id)->orderBy('harga')->first();
+                                $barangMenang->is_win = 1;
+                                $barangMenang->save();
+                            }
+                            $this->info("Penentuan pemenang");
                             $pemenang = User::with(['listBarangEksternalAuction'=>function($q)use($p){
                                 $q->with('barangEksternalInfo')->where('is_win',1)->whereHas('barangEksternalInfo',function($q2)use($p){
                                     $q2->where('pengumuman_id',$p->id);
@@ -78,6 +86,7 @@ class CreateKontrak extends Command
                                 foreach ($pemenang as $pem) {
                                     $this->info('mengirim email ke pemenang : '.$pem->email.' ['.\Carbon\Carbon::now().']');
                                     $data['pemenang'] = $pem;
+                                    $data['list_barang_menang'] = BarangEksternalUser::with('barangEksternalInfo')->where('is_win',1)->where('user_id',$pem->id)->get();
                                     Mail::queue('mail_pemenang', $data, function($message) use($pem,$p){
                                         $message->to($pem->email, $pem->nama)->subject("Pengumuman Hasil Lelang Proyek ".$p->kode);
                                         $message->from(env('MAIL_USERNAME'),"PT.PALL Indonesia (Persero)");
