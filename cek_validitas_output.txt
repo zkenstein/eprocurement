@@ -1,62 +1,70 @@
-Cek validitas [2017-07-31 16:01:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:01:01]
-Cek validitas [2017-07-31 16:02:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:02:01]
-Cek validitas [2017-07-31 16:03:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:03:01]
-Cek validitas [2017-07-31 16:04:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:04:01]
-Cek validitas [2017-07-31 16:05:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:05:02]
-Cek validitas [2017-07-31 16:06:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:06:02]
-Cek validitas [2017-07-31 16:07:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:07:01]
-Cek validitas [2017-07-31 16:08:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:08:01]
-Cek validitas [2017-07-31 16:09:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:09:01]
-Cek validitas [2017-07-31 16:10:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:10:01]
-Cek validitas [2017-07-31 16:11:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:11:01]
-Cek validitas [2017-07-31 16:12:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:12:01]
-Cek validitas [2017-07-31 16:13:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:13:02]
-Cek validitas [2017-07-31 16:14:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:14:02]
-Cek validitas [2017-07-31 16:15:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:15:01]
-Cek validitas [2017-07-31 16:16:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:16:01]
-Cek validitas [2017-07-31 16:17:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:17:01]
-Cek validitas [2017-07-31 16:18:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:18:01]
-Cek validitas [2017-07-31 16:19:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:19:01]
-Cek validitas [2017-07-31 16:20:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:20:01]
-Cek validitas [2017-07-31 16:21:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:21:02]
-Cek validitas [2017-07-31 16:22:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:22:02]
-Cek validitas [2017-07-31 16:23:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:23:01]
-Cek validitas [2017-07-31 16:24:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:24:01]
-Cek validitas [2017-07-31 16:25:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:25:01]
-Cek validitas [2017-07-31 16:26:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:26:01]
-Cek validitas [2017-07-31 16:27:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:27:01]
-Cek validitas [2017-07-31 16:28:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:28:01]
-Cek validitas [2017-07-31 16:29:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:29:02]
-Cek validitas [2017-07-31 16:30:02]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:30:02]
-Cek validitas [2017-07-31 16:31:01]
-Pengumuman dengan validitas harga sekarang tidak ditemukan [2017-07-31 16:31:01]
+Cek validitas [2017-09-20 13:01:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:02:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:03:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:04:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:05:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:06:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:07:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:08:01]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:09:03]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+
+Cek validitas [2017-09-20 13:10:02]
+
+                                             
+  [PDOException]                             
+  SQLSTATE[HY000] [2002] Connection refused  
+                                             
+

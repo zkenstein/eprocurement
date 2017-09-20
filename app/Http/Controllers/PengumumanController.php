@@ -327,7 +327,10 @@ class PengumumanController extends Controller
         }
         $pengumuman = $pengumuman->where('id',$id)->first();
         if($pengumuman!=null){
-            return response()->download(storage_path('app/berita_acara/berita_acara_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
+            if($pengumuman->jenis=="group")
+                return response()->download(storage_path('app/berita_acara/berita_acara_'.$pengumuman->id.'_'.$pengumuman->pemenang).'.pdf');
+            else
+                return response()->download(storage_path('app/berita_acara/berita_acara_'.$pengumuman->id).'.pdf');
         }
         return response('Anda tidak memiliki akses',403);
     }
